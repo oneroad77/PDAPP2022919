@@ -7,147 +7,162 @@
     android:background="@drawable/rectangle_64"
     tools:context=".profile_page">
 
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:constraint_referenced_ids="button_Create,button_Modify,button_Clear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flow" />
 
-    <ImageView
-        android:id="@+id/iv_head"
-        android:layout_width="200dip"
-        android:layout_height="200dip"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline11"
-        app:layout_constraintStart_toStartOf="@+id/guideline11"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/enter_Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flow2"
+        tools:ignore="MissingConstraints">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/profile_store_button"
-        android:layout_width="150dp"
-        android:layout_height="70dp"
-        android:layout_marginBottom="16dp"
-        android:text='@string/white'
-        app:backgroundTint="#C9018786"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/button_Modify"
         style="@style/a123"
+        android:layout_width="111dp"
+        android:layout_height="54dp"
+        android:text='修改'
+        android:textSize="34sp"
+        app:backgroundTint="#C9018786"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="NotSibling" />
 
-    <LinearLayout
-        android:layout_width="366dp"
-        android:layout_height="521dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="6dp"
-        android:orientation="vertical"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/enter_Button"
+        style="@style/a123"
+        android:layout_width="111dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="224dp"
+        android:text='登入'
+        android:textSize="34sp"
+        app:backgroundTint="#C9018786"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_head">
+        app:layout_constraintTop_toBottomOf="@+id/flow2"
+        tools:ignore="NotSibling" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_Create"
+        style="@style/a123"
+        android:layout_width="111dp"
+        android:layout_height="54dp"
+        android:text='@string/white'
+        android:textSize="34sp"
+        app:backgroundTint="#C9018786"
+        tools:ignore="NotSibling" />
 
-            <TextView
-                android:id="@+id/textView2"
-                style="@style/a2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/name" />
-
-            <EditText
-                android:id="@+id/editTextTextPersonName"
-                style="@style/t1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView3"
-                style="@style/a2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/phone" />
-
-            <EditText
-                android:id="@+id/editTextPhone"
-                style="@style/t1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="phone" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView4"
-                style="@style/a2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/email" />
-
-            <EditText
-                android:id="@+id/editTextTextEmailAddress"
-                style="@style/t1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textEmailAddress" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/tv_birthday_set"
-            style="@style/a2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/dateText"
-                style="@style/a2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="生日" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/dateButton"
-                style="@style/a123"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="選擇日期"
-                android:textSize="30dp"
-                tools:ignore="DuplicateIds" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_Clear"
+        style="@style/a123"
+        android:layout_width="111dp"
+        android:layout_height="54dp"
+        android:text='清空'
+        android:textSize="34sp"
+        app:backgroundTint="#C9018786"
+        tools:ignore="NotSibling" />
 
 
-        </LinearLayout>
-    </LinearLayout>
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:constraint_referenced_ids="textView2,editTextTextPersonName,textView3,editTextPhone,textView4,editTextTextEmailAddress,dateText,dateButton"
+        app:flow_horizontalAlign="start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline11"
+    <TextView
+        android:id="@+id/textView2"
+        style="@style/a2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        android:layout_weight="1"
+        android:text="@string/name" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        style="@style/t1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="textPersonName"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/textView3"
+        style="@style/a2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/phone" />
+
+    <EditText
+        android:id="@+id/editTextPhone"
+        style="@style/t1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="phone"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+
+    <TextView
+        android:id="@+id/textView4"
+        style="@style/a2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/email" />
+
+    <EditText
+        android:id="@+id/editTextTextEmailAddress"
+        style="@style/t1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/dateText"
+        style="@style/a2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="生日" />
+
+    <EditText
+        android:id="@+id/dateButton"
+        style="@style/t1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:ems="10"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        tools:ignore="DuplicateIds,SpeakableTextPresentCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

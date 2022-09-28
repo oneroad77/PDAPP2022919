@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/rectangle_64"
+    tools:context=".user_Page">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/user1_Button"
+        android:layout_width="287dp"
+        android:layout_height="98dp"
+        android:layout_marginBottom="24dp"
+        android:text="User1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/word1"
+        android:textSize="50dp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        style="@style/a123"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/user1_Button2"
+        style="@style/a123"
+        android:layout_width="287dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="24dp"
+        android:text="User2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/word1"
+        android:textSize="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toTopOf="@+id/guideline10" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="32dp"
+        android:textColor="@color/white"
+        android:text="選 擇 使 用 者"
+        app:layout_constraintBottom_toTopOf="@+id/user1_Button"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        style="@style/a2"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+</androidx.constraintlayout.widget.ConstraintLayout>

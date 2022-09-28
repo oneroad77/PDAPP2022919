@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">PDAPP2022919</string>
+    <string name="bold40sp">練習清單</string>
+    <string name="white">儲存</string>
+    <string name="k">←</string>
+    <string name="name">姓名：</string>
+    <string name="phone">電話：</string>
+    <string name="email">e-mail：</string>
+</resources>

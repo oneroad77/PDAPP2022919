@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#77D1D1D1"
+    tools:context=".List_page">
+
+
+  <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/voice_practice_button"
+      android:layout_width="325dp"
+      android:layout_height="115dp"
+      android:layout_marginTop="32dp"
+      android:background="@drawable/group_104"
+      app:layout_constraintEnd_toStartOf="@+id/guideline7"
+      app:layout_constraintHorizontal_bias="1.0"
+      app:layout_constraintStart_toStartOf="@+id/guideline7"
+      app:layout_constraintTop_toTopOf="@+id/guideline2"
+      tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+  <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/keepv_practice_Button"
+      android:layout_width="325dp"
+      android:layout_height="115dp"
+      android:layout_marginTop="20dp"
+      android:background="@drawable/group_106"
+      app:layout_constraintEnd_toStartOf="@+id/guideline7"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="@+id/guideline7"
+      app:layout_constraintTop_toBottomOf="@+id/high_low_practice_button"
+      tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+  <TextView
+      android:id="@+id/practicelist"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:text="@string/bold40sp"
+      android:textColor="#6A6A6A"
+      android:textSize="40sp"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.498"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/back_main_page_button" />
+
+  <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/muscle_train_button"
+      android:layout_width="346dp"
+      android:layout_height="115dp"
+      android:layout_marginTop="20dp"
+      android:layout_marginBottom="20dp"
+      android:background="@drawable/group_107"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="@+id/keepv_practice_Button"
+      app:layout_constraintTop_toBottomOf="@+id/keepv_practice_Button"
+      app:layout_constraintVertical_bias="0.0"
+      tools:ignore="SpeakableTextPresentCheck" />
+
+  <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/high_low_practice_button"
+      android:layout_width="325dp"
+      android:layout_height="115dp"
+      android:layout_marginTop="20dp"
+      android:background="@drawable/group_105"
+      app:layout_constraintEnd_toStartOf="@+id/guideline7"
+      app:layout_constraintHorizontal_bias="0.483"
+      app:layout_constraintStart_toStartOf="@+id/guideline7"
+      app:layout_constraintTop_toBottomOf="@+id/voice_practice_button"
+      tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+  <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/back_main_page_button"
+      android:layout_width="49dp"
+      android:layout_height="43dp"
+      android:layout_marginStart="3dp"
+      android:layout_marginTop="5dp"
+      android:background="#00FFFFFF"
+      android:text="@string/k"
+      android:textColor="#8A8A8A"
+      android:textSize="30sp"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.036"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.013"
+      tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+  <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/guideline2"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      app:layout_constraintGuide_percent="0.15" />
+
+  <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/guideline7"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layout_constraintGuide_percent="0.5" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,10 +24,7 @@ public class recorder extends AppCompatActivity {
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static String fileName = null;
 
-    private RecordButton recordButton = null;
     private MediaRecorder recorder = null;
-
-    private PlayButton   playButton ;
     private MediaPlayer   player = null;
 
     private Button record_btn;
@@ -105,50 +102,6 @@ public class recorder extends AppCompatActivity {
         recorder = null;
     }
 
-    class RecordButton extends androidx.appcompat.widget.AppCompatButton {
-        boolean mStartRecording = true;
-
-        OnClickListener clicker = new OnClickListener() {
-            public void onClick(View v) {
-                onRecord(mStartRecording);
-                if (mStartRecording) {
-                    setText("Stop recording");
-                } else {
-                    setText("Start recording");
-                }
-                mStartRecording = !mStartRecording;
-            }
-        };
-
-        public RecordButton(Context ctx) {
-            super(ctx);
-            setText("Start recording");
-            setOnClickListener(clicker);
-        }
-    }
-
-    class PlayButton extends androidx.appcompat.widget.AppCompatButton {
-        boolean mStartPlaying = true;
-
-        OnClickListener clicker = new OnClickListener() {
-            public void onClick(View v) {
-                onPlay(mStartPlaying);
-                if (mStartPlaying) {
-                    setText("Stop playing");
-                } else {
-                    setText("Start playing");
-                }
-                mStartPlaying = !mStartPlaying;
-            }
-        };
-
-        public PlayButton(Context ctx) {
-            super(ctx);
-            setText("Start playing");
-            setOnClickListener(clicker);
-        }
-    }
-
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -156,7 +109,7 @@ public class recorder extends AppCompatActivity {
 
 
         // Record to the external cache directory for visibility
-        fileName = getExternalCacheDir().getAbsolutePath();
+        fileName = getFileDir() .getAbsolutePath();
         fileName += "/audiorecordtest.3gp";
 
         record_btn=(Button)findViewById(R.id.recorderButton);
@@ -172,9 +125,9 @@ public class recorder extends AppCompatActivity {
             public void onClick(View view) {
                 onRecord(mStartRecording);
                 if (mStartRecording) {
-                    record_btn.setText("Stop recording");
+                    record_btn.setText("停止錄音");
                 } else {
-                    record_btn.setText("Start recording");
+                    record_btn.setText("開始錄音");
                 }
                 mStartRecording = !mStartRecording;
             }
@@ -187,9 +140,9 @@ public class recorder extends AppCompatActivity {
             public void onClick(View view) {
                 onPlay(mStartPlaying);
                 if (mStartPlaying) {
-                    play_btn.setText("Stop playing");
+                    play_btn.setText("停止");
                 } else {
-                    play_btn.setText("Start playing");
+                    play_btn.setText("播放");
                 }
                 mStartPlaying = !mStartPlaying;
             }

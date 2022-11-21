@@ -12,32 +12,32 @@
         style="@style/a123"
         android:layout_width="179dp"
         android:layout_height="62dp"
-        android:layout_marginBottom="284dp"
-        android:text="結束測試"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline12"
-        app:layout_constraintHorizontal_bias="0.586"
-        app:layout_constraintStart_toStartOf="@+id/guideline12"
-        tools:ignore="MissingConstraints,NotSibling" />
+        android:text="播放" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/recorderButton"
         style="@style/a123"
         android:layout_width="179dp"
         android:layout_height="62dp"
-        android:layout_marginBottom="160dp"
-        android:text="開始測試"
-        app:layout_constraintBottom_toTopOf="@+id/playButton"
-        app:layout_constraintEnd_toStartOf="@+id/guideline12"
-        app:layout_constraintHorizontal_bias="0.625"
-        app:layout_constraintStart_toStartOf="@+id/guideline12"
-        tools:ignore="MissingConstraints,NotSibling" />
+        android:text="錄音" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline12"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/historyButton"
+        style="@style/a123"
+        android:layout_width="179dp"
+        android:layout_height="62dp"
+        android:text="歷史紀錄" />
+
+    <androidx.constraintlayout.helper.widget.Flow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:constraint_referenced_ids="recorderButton,playButton,historyButton"
+        app:flow_verticalGap="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,11 +25,11 @@
         style="@style/a123"
         android:layout_width="179dp"
         android:layout_height="62dp"
-        android:layout_marginBottom="160dp"
+        android:layout_marginBottom="32dp"
         android:text="開始測試"
         app:layout_constraintBottom_toTopOf="@+id/playButton"
         app:layout_constraintEnd_toStartOf="@+id/guideline12"
-        app:layout_constraintHorizontal_bias="0.625"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="@+id/guideline12"
         tools:ignore="MissingConstraints,NotSibling" />
 

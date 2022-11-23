@@ -2,23 +2,36 @@ package com.example.pdapp2022919;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-public class recorder extends AppCompatActivity {
+public class recorder<root> extends AppCompatActivity {
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
@@ -27,12 +40,19 @@ public class recorder extends AppCompatActivity {
     private MediaRecorder recorder = null;
     private MediaPlayer   player = null;
 
+    private ListAdapter record_data;
     private Button record_btn;
     private Button play_btn;
+    private Button history_btn;
+    private ListView recorder_list;
+    private File root;
 
     // Requesting permission to RECORD_AUDIO
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
+
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -81,6 +101,10 @@ public class recorder extends AppCompatActivity {
     }
 
     private void startRecording() {
+        // Record to the external cache directory for visibility
+        fileName = new File(getFilesDir(), "record").getAbsolutePath();
+        Date time = new Date(System.currentTimeMillis());
+        fileName += "/" + time + ".3gp";
         recorder = new MediaRecorder();
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -107,13 +131,14 @@ public class recorder extends AppCompatActivity {
         super.onCreate(icicle);
         setContentView(R.layout.activity_recorder);
 
-
-        // Record to the external cache directory for visibility
-        fileName = getFileDir() .getAbsolutePath();
-        fileName += "/audiorecordtest.3gp";
+        File dir = new File(getFilesDir(), "record");
+        if (!dir.exists()) dir.mkdir();
 
         record_btn=(Button)findViewById(R.id.recorderButton);
         play_btn=(Button)findViewById(R.id.playButton);
+        history_btn=(Button)findViewById(R.id.historyButton);
+        recorder_list=(ListView)findViewById(R.id.listview_record);
+
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
 //        recordButton = new RecordButton(this);
@@ -145,6 +170,18 @@ public class recorder extends AppCompatActivity {
                     play_btn.setText("播放");
                 }
                 mStartPlaying = !mStartPlaying;
+            }
+        });
+
+
+        history_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(com.example.pdapp2022919.recorder.this,History.class);
+                startActivity(intent);
+
+
             }
         });
 

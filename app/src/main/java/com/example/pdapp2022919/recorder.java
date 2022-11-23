@@ -107,8 +107,6 @@ public class recorder<root> extends AppCompatActivity {
 
         SimpleDateFormat formatter= new SimpleDateFormat("yyyyMMdd_HHmmss_SSSS");
         Date date = new Date(System.currentTimeMillis());
-
-        //Date time = new Date(System.currentTimeMillis());
         fileName += "/" + formatter.format(date) + ".3gp";
 
         recorder = new MediaRecorder();

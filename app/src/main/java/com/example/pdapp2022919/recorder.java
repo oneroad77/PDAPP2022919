@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -103,8 +104,13 @@ public class recorder<root> extends AppCompatActivity {
     private void startRecording() {
         // Record to the external cache directory for visibility
         fileName = new File(getFilesDir(), "record").getAbsolutePath();
-        Date time = new Date(System.currentTimeMillis());
-        fileName += "/" + time + ".3gp";
+
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyyMMdd_HHmmss_SSSS");
+        Date date = new Date(System.currentTimeMillis());
+
+        //Date time = new Date(System.currentTimeMillis());
+        fileName += "/" + formatter.format(date) + ".3gp";
+
         recorder = new MediaRecorder();
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -175,6 +181,7 @@ public class recorder<root> extends AppCompatActivity {
 
 
         history_btn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();

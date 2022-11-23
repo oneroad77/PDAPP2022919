@@ -28,7 +28,6 @@ public class History extends AppCompatActivity {
         for (File file : Objects.requireNonNull(dir.listFiles())) {
             mData.add(file.getName());
         }
-
             /* 初始Adapter
              *  第一個參數context
              *  第二個參數是列的外觀，這邊用android內建的

@@ -44,6 +44,16 @@ public class History extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                     Toast.makeText(History.this,
                             "您選了" + mData.get(position), Toast.LENGTH_SHORT).show();
+
+                    boolean mStartPlaying = true;
+                    recorder.onPlay(mStartPlaying);
+                    if (mStartPlaying) {
+                        recorder.play_btn.setText("停止");
+                    } else {
+                        recorder.play_btn.setText("播放");
+                    }
+                    mStartPlaying = !mStartPlaying;
+
                 }
             });
 

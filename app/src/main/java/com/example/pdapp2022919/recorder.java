@@ -39,11 +39,11 @@ public class recorder<root> extends AppCompatActivity {
     private static String fileName = null;
 
     private MediaRecorder recorder = null;
-    private MediaPlayer   player = null;
+    private static MediaPlayer   player = null;
 
     private ListAdapter record_data;
     private Button record_btn;
-    private Button play_btn;
+    public static  Button play_btn;
     private Button history_btn;
     private ListView recorder_list;
     private File root;
@@ -77,7 +77,7 @@ public class recorder<root> extends AppCompatActivity {
         }
     }
 
-    private void onPlay(boolean start) {
+    public static void onPlay(boolean start) {
         if (start) {
             startPlaying();
         } else {
@@ -85,7 +85,7 @@ public class recorder<root> extends AppCompatActivity {
         }
     }
 
-    private void startPlaying() {
+    public static void startPlaying() {
         player = new MediaPlayer();
         try {
             player.setDataSource(fileName);
@@ -96,7 +96,7 @@ public class recorder<root> extends AppCompatActivity {
         }
     }
 
-    private void stopPlaying() {
+    public static void stopPlaying() {
         player.release();
         player = null;
     }

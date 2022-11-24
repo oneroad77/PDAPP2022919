@@ -14,17 +14,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.pdapp2022919.Game.GameView;
+
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+
 
 public class recorder_test extends AppCompatActivity {
 
@@ -37,51 +35,15 @@ public class recorder_test extends AppCompatActivity {
     private int recordCount = 0, avg;
     private int[] standard = new int[3];
 
-
-//    private Runnable task = () -> {
-//        for (int i = 0; i < 3; i++) {
-//            startMeasure();
-//            try {
-//                Thread.sleep(3000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            int amp = mediaRecorder.getMaxAmplitude();
-//            stopMeasure();
-//            //公式：Gdb = 20log10(V1/V0)
-//            //Google已提供方法幫你取得麥克風的檢測電壓(V1)以及參考電壓(V0)
-//            double db = 20*(Math.log10(Math.abs(amp)));
-//            //if -Infinity
-//            runOnUiThread(() -> {
-//                if (Math.round(db) == -9223372036854775808.0) tvResult.setText("0 db");
-//                else tvResult.setText(Math.round(db)+" db");
-//            });
-//        }
-//    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recorder_test);
-        //取德麥克風使用權限
+
         checkPermission();
-        Button btStart,btStop ;
-//        btStart = findViewById(R.id.button_Start1);
-//        btStop = findViewById(R.id.button_Stop1);
-//        tvResult = findViewById(R.id.textView_Result);
+
         hint_word = findViewById(R.id.hint_word);
         Green_light = findViewById(R.id.Green_light);
-//        btStart.setOnClickListener(v->{startMeasure();});
-//        btStop.setOnClickListener(v->{stopMeasure();});
-//        Button startgameButton=(Button)findViewById(R.id.start_game_Button);
-
-//        startgameButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent=new Intent(recorder_test.this ,Game1.class);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     /**確認是否有麥克風使用權限*/
@@ -114,7 +76,6 @@ public class recorder_test extends AppCompatActivity {
         try {
             mediaRecorder.prepare();
             mediaRecorder.start();
-//            handlerMeasure.post(taskMeasure);
             isRecoding = true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -124,7 +85,6 @@ public class recorder_test extends AppCompatActivity {
     /**關閉檢測*/
     private void stopMeasure(){
         if (!hasPermission || !isRecoding)return;
-//        handlerMeasure.removeCallbacks(taskMeasure);
         try {
             mediaRecorder.release();
             mediaRecorder.stop();
@@ -164,8 +124,6 @@ public class recorder_test extends AppCompatActivity {
                     Green_light.setVisibility(View.INVISIBLE);
                     int amp = mediaRecorder.getMaxAmplitude();
                     standard[recordCount++] = amp;
-//                    tvResult.setText(String.valueOf(amp));
-//                    Log.w("amp", String.valueOf(amp));  //跑在run中
                     if (recordCount == standard.length) {
                         int sum = 0;
                         for (int i : standard) {
@@ -176,26 +134,11 @@ public class recorder_test extends AppCompatActivity {
                         intent.putExtra(MAX_AVG, 20*(Math.log10(Math.abs(amp))));
                         startActivity(intent);
                     }
-                    //公式：Gdb = 20log10(V1/V0)
-//                    //Google已提供方法幫你取得麥克風的檢測電壓(V1)以及參考電壓(V0)
-//                    double db = 20*(Math.log10(Math.abs(amp)));
-//                    //if -Infinity
-//                    if (Math.round(db) == -9223372036854775808.0) tvResult.setText("0 db");
-//                    else tvResult.setText(Math.round(db)+" db");
                     break;
             }
             super.handleMessage(msg);
         }
     };
-//    private Runnable taskMeasure = new Runnable() {
-//        @Override
-//        public void run() {
-//            handlerMeasure.sendEmptyMessage(1);
-//            //每500毫秒抓取一次檢測結果
-//            handlerMeasure.postDelayed(this,3000);
-//        }
-//    };
-
 
     @Override
     protected void onPause() {

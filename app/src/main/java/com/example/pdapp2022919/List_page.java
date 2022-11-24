@@ -33,7 +33,7 @@ public class List_page extends AppCompatActivity {
         });
         keeppracticeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {openrecorder_test();}
+            public void onClick(View view) {openGame1();}
         });
         muscletrainButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +47,10 @@ public class List_page extends AppCompatActivity {
     }
     private void openrecorder_test(){
         Intent intent=new Intent(this,recorder_test.class);
+        startActivity(intent);
+    }
+    private void openGame1(){
+        Intent intent=new Intent(this,Game1.class);
         startActivity(intent);
     }
     private void openrecorder(){

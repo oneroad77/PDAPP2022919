@@ -6,49 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".recorder_test">
 
+<!--    <TextView-->
+<!--        android:id="@+id/textView_Result"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="0 db"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
+<!--        android:textSize="30sp" />-->
+
+    <ImageView
+        android:id="@+id/Green_light"
+        android:layout_width="304dp"
+        android:layout_height="154dp"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/group_106" />
+
     <TextView
-        android:id="@+id/textView_Result"
+        android:id="@+id/hint_word"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0 db"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/button_Start1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="TextView"
+        android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/button_Start1"
+    <androidx.constraintlayout.helper.widget.Flow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="開始偵測"
+        android:orientation="vertical"
+        app:constraint_referenced_ids="hint_word,Green_light"
+        app:flow_horizontalAlign="center"
+        app:flow_verticalGap="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button_Stop1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="結束偵測"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_Start1" />
-
-    <Button
-        android:id="@+id/start_game_Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="開始遊戲"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_Stop1" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.522" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,8 +14,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.pdapp2022919.Game.GameView;
@@ -30,9 +32,11 @@ public class recorder_test extends AppCompatActivity {
 
     private boolean hasPermission = false, isRecoding;
     private MediaRecorder mediaRecorder;
-    private TextView tvResult;
+    private TextView tvResult,hint_word;
+    private ImageView Green_light;
     private int recordCount = 0, avg;
     private int[] standard = new int[3];
+
 
 //    private Runnable task = () -> {
 //        for (int i = 0; i < 3; i++) {
@@ -62,20 +66,22 @@ public class recorder_test extends AppCompatActivity {
         //取德麥克風使用權限
         checkPermission();
         Button btStart,btStop ;
-        btStart = findViewById(R.id.button_Start1);
+//        btStart = findViewById(R.id.button_Start1);
 //        btStop = findViewById(R.id.button_Stop1);
-        tvResult = findViewById(R.id.textView_Result);
-        btStart.setOnClickListener(v->{startMeasure();});
+//        tvResult = findViewById(R.id.textView_Result);
+        hint_word = findViewById(R.id.hint_word);
+        Green_light = findViewById(R.id.Green_light);
+//        btStart.setOnClickListener(v->{startMeasure();});
 //        btStop.setOnClickListener(v->{stopMeasure();});
-        Button startgameButton=(Button)findViewById(R.id.start_game_Button);
+//        Button startgameButton=(Button)findViewById(R.id.start_game_Button);
 
-        startgameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(recorder_test.this ,Game1.class);
-                startActivity(intent);
-            }
-        });
+//        startgameButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent=new Intent(recorder_test.this ,Game1.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     /**確認是否有麥克風使用權限*/
@@ -131,8 +137,9 @@ public class recorder_test extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        for (int i = 0; i < 3; i++) {
-            handlerMeasure.sendEmptyMessageDelayed(0, i * 5500);
+        recordCount = 0 ;
+        for (int i = 0; i < standard.length; i++) {
+            handlerMeasure.sendEmptyMessageDelayed(0, i * 6000);
         }
     }
 
@@ -144,15 +151,21 @@ public class recorder_test extends AppCompatActivity {
             switch (msg.what){
                 case 0:
                     // TODO display text
+                    hint_word.setText("綠燈亮時請ah");
                     handlerMeasure.sendEmptyMessageDelayed(1, 2000);
                     break;
                 case 1:
                     startMeasure();
+                    mediaRecorder.getMaxAmplitude();
+                    Green_light.setVisibility(View.VISIBLE);
                     handlerMeasure.sendEmptyMessageDelayed(2, 3000);
                     break;
                 case 2:
-                    standard[recordCount++] = mediaRecorder.getMaxAmplitude();
-                    stopMeasure();
+                    Green_light.setVisibility(View.INVISIBLE);
+                    int amp = mediaRecorder.getMaxAmplitude();
+                    standard[recordCount++] = amp;
+//                    tvResult.setText(String.valueOf(amp));
+//                    Log.w("amp", String.valueOf(amp));  //跑在run中
                     if (recordCount == standard.length) {
                         int sum = 0;
                         for (int i : standard) {
@@ -160,7 +173,7 @@ public class recorder_test extends AppCompatActivity {
                         }
                         avg = sum / standard.length;
                         Intent intent = new Intent(recorder_test.this, Game1.class);
-                        intent.putExtra(MAX_AVG, avg);
+                        intent.putExtra(MAX_AVG, 20*(Math.log10(Math.abs(amp))));
                         startActivity(intent);
                     }
                     //公式：Gdb = 20log10(V1/V0)
@@ -183,10 +196,17 @@ public class recorder_test extends AppCompatActivity {
 //        }
 //    };
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopMeasure();
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
-        stopMeasure();
+        handlerMeasure.removeCallbacksAndMessages(null);
     }
 
 }

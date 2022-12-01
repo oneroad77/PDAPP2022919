@@ -4,13 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#6E6969"
     tools:context=".recorder">
 
-    <Button
-        android:id="@+id/button"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/playButton"
+        style="@style/a123"
+        android:layout_width="179dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="284dp"
+        android:text="結束測試"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline12"
+        app:layout_constraintHorizontal_bias="0.586"
+        app:layout_constraintStart_toStartOf="@+id/guideline12"
+        tools:ignore="MissingConstraints,NotSibling" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/recorderButton"
+        style="@style/a123"
+        android:layout_width="179dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="32dp"
+        android:text="開始測試"
+        app:layout_constraintBottom_toTopOf="@+id/playButton"
+        app:layout_constraintEnd_toStartOf="@+id/guideline12"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="@+id/guideline12"
+        tools:ignore="MissingConstraints,NotSibling" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="189dp"
-        tools:layout_editor_absoluteY="227dp" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

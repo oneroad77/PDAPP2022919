@@ -29,20 +29,28 @@ public class List_page extends AppCompatActivity {
         });
         higlowButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {openrecorder();}
+            public void onClick(View view) {openrecorder_test();}
         });
         keeppracticeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {openrecorder();}
+            public void onClick(View view) {openGame1();}
         });
         muscletrainButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {openrecorder();}
+            public void onClick(View view) {openrecorder_test();}
         });
     }
 
     private void  openMain_page(){
         Intent intent=new Intent(this,Main_page.class);
+        startActivity(intent);
+    }
+    private void openrecorder_test(){
+        Intent intent=new Intent(this,recorder_test.class);
+        startActivity(intent);
+    }
+    private void openGame1(){
+        Intent intent=new Intent(this,Game1.class);
         startActivity(intent);
     }
     private void openrecorder(){

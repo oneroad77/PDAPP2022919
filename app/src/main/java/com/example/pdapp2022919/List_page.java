@@ -25,7 +25,7 @@ public class List_page extends AppCompatActivity {
         });
         voicepButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {openrecorder();}
+            public void onClick(View view) {openrecorder_test();}
         });
         higlowButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +45,7 @@ public class List_page extends AppCompatActivity {
         Intent intent=new Intent(this,Main_page.class);
         startActivity(intent);
     }
+
     private void openrecorder_test(){
         Intent intent=new Intent(this,recorder_test.class);
         startActivity(intent);

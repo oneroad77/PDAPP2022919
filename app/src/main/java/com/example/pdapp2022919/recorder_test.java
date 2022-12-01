@@ -46,7 +46,6 @@ public class recorder_test extends AppCompatActivity {
         Green_light = findViewById(R.id.Green_light);
         tvResult = findViewById(R.id.tvResult);
     }
-
     /**確認是否有麥克風使用權限*/
     private void checkPermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&

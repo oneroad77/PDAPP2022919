@@ -79,13 +79,13 @@ public class recorder<root> extends AppCompatActivity {
 
     public static void onPlay(boolean start) {
         if (start) {
-            startPlaying();
+            startPlaying(fileName);
         } else {
             stopPlaying();
         }
     }
 
-    public static void startPlaying() {
+    public static void startPlaying(String fileName) {
         player = new MediaPlayer();
         try {
             player.setDataSource(fileName);

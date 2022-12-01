@@ -45,14 +45,15 @@ public class History extends AppCompatActivity {
                     Toast.makeText(History.this,
                             "您選了" + mData.get(position), Toast.LENGTH_SHORT).show();
 
-                    boolean mStartPlaying = true;
-                    recorder.onPlay(mStartPlaying);
-                    if (mStartPlaying) {
-                        recorder.play_btn.setText("停止");
-                    } else {
-                        recorder.play_btn.setText("播放");
-                    }
-                    mStartPlaying = !mStartPlaying;
+//                    boolean mStartPlaying = true;
+                    String path = new File(getFilesDir(), "record").getAbsolutePath();
+                    recorder.startPlaying(path + "/" + mData.get(position));
+//                    if (mStartPlaying) {
+//                        recorder.play_btn.setText("停止");
+//                    } else {
+//                        recorder.play_btn.setText("播放");
+//                    }
+//                    mStartPlaying = !mStartPlaying;
 
                 }
             });

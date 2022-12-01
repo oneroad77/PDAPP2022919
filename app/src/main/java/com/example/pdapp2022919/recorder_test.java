@@ -30,7 +30,7 @@ public class recorder_test extends AppCompatActivity {
 
     private boolean hasPermission = false, isRecoding;
     private MediaRecorder mediaRecorder;
-    private TextView tvResult,hint_word;
+    private TextView hint_word,tvResult;
     private ImageView Green_light;
     private int recordCount = 0, avg;
     private int[] standard = new int[3];
@@ -44,6 +44,7 @@ public class recorder_test extends AppCompatActivity {
 
         hint_word = findViewById(R.id.hint_word);
         Green_light = findViewById(R.id.Green_light);
+        tvResult = findViewById(R.id.tvResult);
     }
 
     /**確認是否有麥克風使用權限*/
@@ -110,7 +111,6 @@ public class recorder_test extends AppCompatActivity {
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what){
                 case 0:
-                    // TODO display text
                     hint_word.setText("綠燈亮時請ah");
                     handlerMeasure.sendEmptyMessageDelayed(1, 2000);
                     break;
@@ -124,6 +124,7 @@ public class recorder_test extends AppCompatActivity {
                     Green_light.setVisibility(View.INVISIBLE);
                     int amp = mediaRecorder.getMaxAmplitude();
                     standard[recordCount++] = amp;
+                    tvResult.setText(String.valueOf(amp));
                     if (recordCount == standard.length) {
                         int sum = 0;
                         for (int i : standard) {
@@ -151,5 +152,4 @@ public class recorder_test extends AppCompatActivity {
         super.onStop();
         handlerMeasure.removeCallbacksAndMessages(null);
     }
-
 }

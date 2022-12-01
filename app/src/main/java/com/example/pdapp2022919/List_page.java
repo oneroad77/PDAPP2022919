@@ -13,32 +13,17 @@ public class List_page extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_page);
-        Button backmainpageButton =(Button)findViewById(R.id.back_main_page_button);
-        Button voicepButton=(Button)findViewById(R.id.voice_practice_button);
-        Button higlowButton=(Button)findViewById(R.id.high_low_practice_button);
-        Button keeppracticeButton=(Button)findViewById(R.id.keepv_practice_Button);
-        Button muscletrainButton=(Button)findViewById(R.id.muscle_train_button);
+        Button backmainpageButton = findViewById(R.id.back_main_page_button);
+        Button voicepButton= findViewById(R.id.voice_practice_button);
+        Button higlowButton= findViewById(R.id.high_low_practice_button);
+        Button keeppracticeButton= findViewById(R.id.keepv_practice_Button);
+        Button muscletrainButton= findViewById(R.id.muscle_train_button);
 
-        backmainpageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {openMain_page();}
-        });
-        voicepButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {openrecorder_test();}
-        });
-        higlowButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {openrecorder_test();}
-        });
-        keeppracticeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {openGame1();}
-        });
-        muscletrainButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {openrecorder_test();}
-        });
+        backmainpageButton.setOnClickListener(view -> openMain_page());
+        voicepButton.setOnClickListener(view -> openrecorder_test());
+        higlowButton.setOnClickListener(view -> openGame1());
+        keeppracticeButton.setOnClickListener(view -> openrecorder());
+        muscletrainButton.setOnClickListener(view -> openrecorder_test());
     }
 
     private void  openMain_page(){

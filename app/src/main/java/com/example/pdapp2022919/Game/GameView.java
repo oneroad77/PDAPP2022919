@@ -1,17 +1,17 @@
 package com.example.pdapp2022919.Game;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.example.pdapp2022919.R;
-
-import java.util.LinkedList;
 import java.util.Random;
 
 public class GameView extends View {
@@ -19,9 +19,14 @@ public class GameView extends View {
     private static Random random = new Random();
 
     private int viewWidth, viewHeight;
-    private int size = 100, x = 0, y = 0, distance = 0;
+    private int ground, speed = 10, xSpeed = 10;
+    private int size = 50, x = -size, y = -size, distance = 0,level = -1, gap = 0;
+    private double stander;
     private Paint p = new Paint();
-    private LinkedList<Gap> gaps = new LinkedList<>();
+    private int blockIndex = 0;
+    private Block[] blocks = new Block[2];
+    private boolean isGameOver = false ;
+
 
     public GameView(Context context) {
         super(context);
@@ -35,21 +40,95 @@ public class GameView extends View {
         super(context, attrs, defStyleAttr);
     }
 
-    private void update() {
-        distance++;
-        y++;
+    public void update(double volume) {
+        if(isGameOver){
+            return;
+        }
+        volume = 20*(Math.log10(Math.abs(volume)));
+        Block nowBlock = blocks[blockIndex];
+        // move ball
+        if (volume > stander) {
+            if (y < getLimit(volume)) {
+               y += speed;
+            }
+            else y -= speed*5 ;
+        }
+        else y += speed;
+        if (collision()) {
+            if (y < nowBlock.y) y = nowBlock.y - size;
+            else {
+                x = nowBlock.x - size;
+                y += speed;
+            }
+        }
+        if (viewWidth <= 0) return;
+        // generate block
+        if (nowBlock.x + nowBlock.length < viewWidth / 10) {
+            if (blockIndex == 0) blockIndex = 1;
+            else blockIndex = 0;
+            blocks[blockIndex] = new Block(false);
+            gap++;
+        }
+        // move block
+        for (Block block : blocks) {
+            if (block == null) continue;
+            block.x -= xSpeed;
+        }
+        if (x<0 || y>viewHeight){
+            isGameOver= true;
+        }
+    }
+
+    public void startGame(){
+        if (!isGameOver) this.level++;
+        gap=0;
+        isGameOver = false;
+        x = viewWidth / 10;
+        y = (int) getLimit(stander + 3 * level)- size - 10;
+        blocks[blockIndex] = new Block(true);
+    }
+
+    public void setStander(double avg){
+        stander = avg;
+    }
+
+    public int getLevel(){
+        return level + 1;
+    }
+
+    public int getGap() {
+        return gap;
+    }
+
+    public boolean isGameOver() {
+        return isGameOver;
+    }
+
+    private double getLimit(double volume) {
+        return ground - (volume - stander) / (90 - stander) * ground;
+    }
+
+    private boolean collision() {
+        Block nowBlock = blocks[blockIndex];
+        if (nowBlock == null) return false;
+        if (x + size < nowBlock.x) return false;
+        if (x - size > nowBlock.x + nowBlock.length) return false;
+        return y + size >= nowBlock.y;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        update();
         p.setStyle(Paint.Style.FILL);
-        // draw background
-        p.setColor(Color.WHITE);
-//        canvas.drawRect(0, 0, 1000, 1000, p);
-        p.setColor(Color.RED);
-        canvas.drawRect(x, y, x + size, y + size, p);
+        // draw block
+        p.setShader(new LinearGradient(0, ground, 0, getHeight(), Color.BLACK, Color.WHITE, Shader.TileMode.CLAMP));
+        for (Block block : blocks) {
+            if (block == null) continue;
+            canvas.drawRoundRect(block.x, block.y, block.x + block.length, viewHeight, size, size, p);
+        }
+        // draw ball
+        p.setShader(new LinearGradient(0, 0, 0, getHeight(), Color.BLACK, Color.WHITE, Shader.TileMode.CLAMP));
+        canvas.drawCircle(x, y, size, p);
         invalidate();
     }
 
@@ -59,17 +138,27 @@ public class GameView extends View {
         if (!changed) return;
         viewWidth = right - left;
         viewHeight = bottom - top;
-        x = viewWidth / 10;
-        y = viewHeight / 2;
+//        x = viewWidth / 10;
+        ground = viewHeight / 3 * 2;
+//        y = ground - size + 10;
+//        blocks[blockIndex] = new Block(true);
     }
 
-    private class Gap {
+    private class Block {
 
-        int x, length;
+        int x, y, length;
 
-        public Gap() {
-            x = distance + random.nextInt(viewWidth);
-            length = random.nextInt(viewWidth / 2);
+        public Block(boolean init) {
+            if (init) {
+                x = 0;
+                y = (int) getLimit(stander + 3 * level);
+                length = viewWidth;
+            }
+            else {
+                x = xSpeed * 60 * 3 + random.nextInt(xSpeed * 60 );
+                y = (int) getLimit(stander + 3 * level);
+                length = xSpeed * 60 *2;
+            }
         }
 
     }

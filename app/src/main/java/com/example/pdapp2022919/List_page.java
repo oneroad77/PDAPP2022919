@@ -19,7 +19,7 @@ public class List_page extends AppCompatActivity {
         Button keeppracticeButton= findViewById(R.id.keepv_practice_Button);
         Button muscletrainButton= findViewById(R.id.muscle_train_button);
 
-        backmainpageButton.setOnClickListener(view -> openMain_page());
+        backmainpageButton.setOnClickListener(view -> finish());
         voicepButton.setOnClickListener(view -> openrecorder_test());
         higlowButton.setOnClickListener(view -> openGame1());
         keeppracticeButton.setOnClickListener(view -> openrecorder());
@@ -37,6 +37,7 @@ public class List_page extends AppCompatActivity {
     }
     private void openGame1(){
         Intent intent=new Intent(this,Game1.class);
+        intent.putExtra(recorder_test.MAX_AVG, 60.0);
         startActivity(intent);
     }
     private void openrecorder(){

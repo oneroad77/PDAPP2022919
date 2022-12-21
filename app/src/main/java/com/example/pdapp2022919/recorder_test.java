@@ -34,14 +34,18 @@ public class recorder_test extends AppCompatActivity {
     private ImageView Green_light;
     private int recordCount = 0, avg;
     private int[] standard = new int[3];
+    private boolean post_test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        post_test = getIntent().getBooleanExtra(Game1.POST,false);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recorder_test);
-
         checkPermission();
-
+        TextView Post_Retest = findViewById(R.id.Post_Retest);
+        if(post_test){
+            Post_Retest.setText("後測");
+        }
         hint_word = findViewById(R.id.hint_word);
         Green_light = findViewById(R.id.Green_light);
         tvResult = findViewById(R.id.tvResult);
@@ -110,7 +114,7 @@ public class recorder_test extends AppCompatActivity {
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what){
                 case 0:
-                    hint_word.setText("綠燈亮時請ah");
+                    hint_word.setText("綠燈亮時請「啊」持續3秒");
                     handlerMeasure.sendEmptyMessageDelayed(1, 2000);
                     break;
                 case 1:
@@ -123,16 +127,24 @@ public class recorder_test extends AppCompatActivity {
                     Green_light.setVisibility(View.INVISIBLE);
                     int amp = mediaRecorder.getMaxAmplitude();
                     standard[recordCount++] = amp;
-                    tvResult.setText(String.valueOf(amp));
+                    double db = 20 * (Math.log10(Math.abs(amp)));
+                    if (Math.round(db) == -9223372036854775808.0) tvResult.setText("0 db");
+                    else tvResult.setText(String.format("%2.0f",db));
                     if (recordCount == standard.length) {
                         int sum = 0;
                         for (int i : standard) {
                             sum += i;
                         }
                         avg = sum / standard.length;
-                        Intent intent = new Intent(recorder_test.this, Game1.class);
-                        intent.putExtra(MAX_AVG, 20*(Math.log10(Math.abs(amp))));
-                        startActivity(intent);
+                        if(post_test){
+                            Intent intent = new Intent(recorder_test.this,Game_Result.class);
+                            startActivity(intent);
+                        }
+                        else{
+                            Intent intent = new Intent(recorder_test.this, Game1.class);
+                            intent.putExtra(MAX_AVG, db);
+                            startActivity(intent);
+                        }
                     }
                     break;
             }

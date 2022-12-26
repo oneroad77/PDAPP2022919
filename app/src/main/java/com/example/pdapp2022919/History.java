@@ -1,5 +1,7 @@
 package com.example.pdapp2022919;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,7 +20,6 @@ public class History extends AppCompatActivity {
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> mData = new ArrayList<>();
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +58,40 @@ public class History extends AppCompatActivity {
 
                 }
             });
+
+            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+
+                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                    String path = new File(getFilesDir(), "record").getAbsolutePath();
+                    File dir = new File(path + "/" + mData.get(position));
+                    new AlertDialog.Builder(History.this)
+                            .setTitle("want to delete?")
+                            .setMessage("Want to delete"+ mData.get(position))
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    adapter.remove(mData.get(position));
+                                    adapter.notifyDataSetChanged();
+                                    dir.delete();
+
+//                                    adapter.remove(path + "/" + mData.get(position));
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .show();
+
+
+                    return false;
+                }
+            });
+
 
 
     }

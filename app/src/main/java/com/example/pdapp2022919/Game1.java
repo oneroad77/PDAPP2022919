@@ -23,15 +23,18 @@ import java.io.IOException;
 
 public class Game1 extends AppCompatActivity {
     public final static String POST =  "post_test";
+    public final static String RECORD_DATA =  "RECORD_DATA";
     private MediaRecorder mediaRecorder;
     private GameView gameView;
-    private Button startGameButton,back,see_result_button;
+    private Button startGameButton,back,see_result_button,continue_game_button;
     private TextView real_time_db,hint_text,level_text;
     private boolean status = false ;
     private boolean first_time = true ;
     private Recode_Data recode_data = new Recode_Data();
+    private long startTime ;
 
     private void startMeasure(){
+        startTime = System.currentTimeMillis();
         mediaRecorder = new MediaRecorder();
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -49,6 +52,7 @@ public class Game1 extends AppCompatActivity {
     }
 
     private void stopMeasure(){
+        recode_data.play_how_long += System.currentTimeMillis()-startTime ;
         handlerMeasure.removeCallbacksAndMessages(null);
         try {
             mediaRecorder.release();
@@ -69,11 +73,19 @@ public class Game1 extends AppCompatActivity {
         gameView.setStander(max_db_avg);
         TextView db_avg_tv = findViewById(R.id.db_avg_tv);
         see_result_button = findViewById(R.id.see_result_button);
+
         real_time_db = findViewById(R.id.realtimedb);
         real_time_db.setVisibility(View.GONE);
         String avgdb = String.format("前測分貝 %2.0f", max_db_avg);
         db_avg_tv.setText(avgdb);
         level_text = findViewById(R.id.level_text);
+        continue_game_button = findViewById(R.id.continue_game_button);
+        continue_game_button.setOnClickListener(view -> {
+            recode_data.start_play_time = System.currentTimeMillis();
+            view.setVisibility(View.GONE);
+            status = true;
+            startMeasure();
+        });
         startGameButton = findViewById(R.id.startGameButton);
         startGameButton.setOnClickListener(view -> {
             if(first_time){
@@ -83,7 +95,7 @@ public class Game1 extends AppCompatActivity {
             view.setVisibility(View.GONE);
             hint_text.setVisibility(View.GONE);
             gameView.startGame();
-            level_text.setText(" Level "+ gameView.getLevel()+" ");
+            level_text.setText("關卡  "+ gameView.getLevel());
             startMeasure();
             status = true;
         });
@@ -104,6 +116,14 @@ public class Game1 extends AppCompatActivity {
             switch (msg.what) {
                 case 1:
                     if (gameView.isGameOver()) {
+                        if(gameView.failCount()>=3){
+                            hint_text.setVisibility(View.VISIBLE);
+                            hint_text.setText("訓練結束");
+                            see_result_button.setVisibility(View.VISIBLE);
+                            see_result_button.setOnClickListener(view -> openRecorder_test()) ;
+                            stopMeasure();
+                            return;
+                        }
                         hint_text.setText("失敗");
                         hint_text.setVisibility(View.VISIBLE);
                         startGameButton.setText(" 重新開始 ");
@@ -117,7 +137,6 @@ public class Game1 extends AppCompatActivity {
                             hint_text.setText("訓練結束");
                             see_result_button.setVisibility(View.VISIBLE);
                             see_result_button.setOnClickListener(view -> openRecorder_test()) ;
-                            recode_data.stop_play_time = System.currentTimeMillis();
                             stopMeasure();
                             return;
                         }
@@ -149,9 +168,11 @@ public class Game1 extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if(gameView.getLevel()>=3){
+            return;
+        }
         if(status) {
-            startGameButton.setText(" 繼續遊戲 ");
-            startGameButton.setVisibility(View.VISIBLE);
+            continue_game_button.setVisibility(View.VISIBLE);
         }
         else{
             startGameButton.setText(" 開始遊戲 ");
@@ -177,6 +198,7 @@ public class Game1 extends AppCompatActivity {
         recode_data.stop_play_time = System.currentTimeMillis() ;
         Intent intent = new Intent(this, recorder_test.class);
         intent.putExtra(POST,true);
+        intent.putExtra(RECORD_DATA, recode_data);
         startActivity(intent);
     }
 }

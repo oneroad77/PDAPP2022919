@@ -2,6 +2,8 @@ package com.example.pdapp2022919.Game;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
@@ -12,6 +14,8 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.example.pdapp2022919.R;
+
 import java.util.Random;
 
 public class GameView extends View {
@@ -20,12 +24,13 @@ public class GameView extends View {
 
     private int viewWidth, viewHeight;
     private int ground, speed = 10, xSpeed = 10;
-    private int size = 50, x = -size, y = -size, distance = 0,level = -1, gap = 0;
+    private int size = 50, x = -size, y = -size, distance = 0, level = -1, gap = 0, failcount = 0;
     private double stander;
     private Paint p = new Paint();
     private int blockIndex = 0;
     private Block[] blocks = new Block[2];
-    private boolean isGameOver = false ;
+    private boolean isGameOver = false;
+    private Bitmap heart = createBitmap(R.drawable.heart, 55, 60);
 
 
     public GameView(Context context) {
@@ -41,19 +46,17 @@ public class GameView extends View {
     }
 
     public void update(double volume) {
-        if(isGameOver){
+        if (isGameOver) {
             return;
         }
-        volume = 20*(Math.log10(Math.abs(volume)));
+        volume = 20 * (Math.log10(Math.abs(volume)));
         Block nowBlock = blocks[blockIndex];
         // move ball
         if (volume > stander) {
             if (y < getLimit(volume)) {
-               y += speed;
-            }
-            else y -= speed*5 ;
-        }
-        else y += speed;
+                y += speed;
+            } else y -= speed * 5;
+        } else y += speed;
         if (collision()) {
             if (y < nowBlock.y) y = nowBlock.y - size;
             else {
@@ -74,25 +77,26 @@ public class GameView extends View {
             if (block == null) continue;
             block.x -= xSpeed;
         }
-        if (x<0 || y>viewHeight){
-            isGameOver= true;
+        if (x < 0 || y > viewHeight) {
+            isGameOver = true;
+            failcount++;
         }
     }
 
-    public void startGame(){
+    public void startGame() {
         if (!isGameOver) this.level++;
-        gap=0;
+        gap = 0;
         isGameOver = false;
         x = viewWidth / 10;
-        y = (int) getLimit(stander + 3 * level)- size - 10;
+        y = (int) getLimit(stander + 3 * level) - size - 10;
         blocks[blockIndex] = new Block(true);
     }
 
-    public void setStander(double avg){
+    public void setStander(double avg) {
         stander = avg;
     }
 
-    public int getLevel(){
+    public int getLevel() {
         return level + 1;
     }
 
@@ -102,6 +106,10 @@ public class GameView extends View {
 
     public boolean isGameOver() {
         return isGameOver;
+    }
+
+    public int failCount() {
+        return failcount;
     }
 
     private double getLimit(double volume) {
@@ -114,6 +122,12 @@ public class GameView extends View {
         if (x + size < nowBlock.x) return false;
         if (x - size > nowBlock.x + nowBlock.length) return false;
         return y + size >= nowBlock.y;
+    }
+
+    public Bitmap createBitmap(int drawableId, int newHeight, int newWidth) {
+        Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), drawableId);
+        myBitmap = Bitmap.createScaledBitmap(myBitmap, newWidth, newHeight, false);
+        return myBitmap;
     }
 
     @Override
@@ -129,8 +143,13 @@ public class GameView extends View {
         // draw ball
         p.setShader(new LinearGradient(0, 0, 0, getHeight(), Color.BLACK, Color.WHITE, Shader.TileMode.CLAMP));
         canvas.drawCircle(x, y, size, p);
+
+        float center = viewWidth * 0.5f - 30;
+        for (int i = 0; i < 3 - failcount; i++) {
+            canvas.drawBitmap(heart, center + 60 * (i - 1) + i * 10, viewHeight * 0.08f, null);
+        }
         invalidate();
-    }
+}
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {

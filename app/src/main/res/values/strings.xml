@@ -6,5 +6,9 @@
     <string name="name">姓名：</string>
     <string name="phone">電話：</string>
     <string name="email">e-mail：</string>
-    <string name="retest">前測</string>
+    <string name="pretest">前測</string>
+    <string name="post_test_db">後測分貝: %2.0f%n</string>
+    <string name="pretest_db">前測分貝: %2.0f%n</string>
+    <string name="play_how_long">遊玩時長: %s%n</string>
+    <string name="start_play_time">遊玩時間: %s~%s%n</string>
 </resources>

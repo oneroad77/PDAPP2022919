@@ -136,15 +136,18 @@ public class recorder_test extends AppCompatActivity {
                             sum += i;
                         }
                         avg = sum / standard.length;
+                        Intent intent;
                         if(post_test){
-                            Intent intent = new Intent(recorder_test.this,Game_Result.class);
-                            startActivity(intent);
+                            intent = new Intent(recorder_test.this, Game_Result.class);
+                            Recode_Data recode_data = getIntent().getParcelableExtra(Game1.RECORD_DATA);
+                            recode_data.post_test_db = db;
+                            intent.putExtra(Game1.RECORD_DATA, recode_data);
                         }
                         else{
-                            Intent intent = new Intent(recorder_test.this, Game1.class);
+                            intent = new Intent(recorder_test.this, Game1.class);
                             intent.putExtra(MAX_AVG, db);
-                            startActivity(intent);
                         }
+                        startActivity(intent);
                     }
                     break;
             }

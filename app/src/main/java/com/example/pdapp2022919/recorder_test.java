@@ -32,8 +32,9 @@ public class recorder_test extends AppCompatActivity {
     private MediaRecorder mediaRecorder;
     private TextView hint_word,tvResult;
     private ImageView Green_light;
-    private int recordCount = 0, avg;
+    private int recordCount = 0;
     private int[] standard = new int[3];
+    private double avg;
     private boolean post_test;
 
     @Override
@@ -135,7 +136,7 @@ public class recorder_test extends AppCompatActivity {
                         for (int i : standard) {
                             sum += i;
                         }
-                        avg = sum / standard.length;
+                        avg = 20 * (Math.log10(Math.abs(sum / standard.length)));
                         Intent intent;
                         if(post_test){
                             intent = new Intent(recorder_test.this, Game_Result.class);
@@ -145,7 +146,7 @@ public class recorder_test extends AppCompatActivity {
                         }
                         else{
                             intent = new Intent(recorder_test.this, Game1.class);
-                            intent.putExtra(MAX_AVG, db);
+                            intent.putExtra(MAX_AVG, avg);
                         }
                         startActivity(intent);
                     }

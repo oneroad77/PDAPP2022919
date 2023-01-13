@@ -4,39 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#6E6969"
+    android:background="#FFFEFE"
     tools:context=".recorder">
 
-    <ListView
-        android:id="@+id/listview_record"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/playButton"
-        style="@style/a123"
-        android:layout_width="179dp"
-        android:layout_height="62dp"
-        android:text="播放" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/recorderButton"
-        style="@style/a123"
-        android:layout_width="179dp"
-        android:layout_height="62dp"
-        android:text="錄音" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/historyButton"
-        style="@style/a123"
-        android:layout_width="179dp"
-        android:layout_height="62dp"
-        android:text="歷史紀錄" />
-
     <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -45,12 +17,51 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.863" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/recorderButton"
+        style="@style/logging_page_button"
+        android:layout_width="179dp"
+        android:layout_height="62dp"
+        android:text="錄音"
+        tools:layout_editor_absoluteX="116dp"
+        tools:layout_editor_absoluteY="436dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/playButton"
+        style="@style/logging_page_button"
+        android:layout_width="179dp"
+        android:layout_height="62dp"
+        android:text="播放"
+        tools:layout_editor_absoluteX="116dp"
+        tools:layout_editor_absoluteY="518dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/historyButton"
+        style="@style/logging_page_button"
+        android:layout_width="179dp"
+        android:layout_height="62dp"
+        android:text="歷史紀錄"
+        tools:layout_editor_absoluteX="116dp"
+        tools:layout_editor_absoluteY="600dp" />
 
     <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="217dp"
         tools:layout_editor_absoluteY="51dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/flow2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

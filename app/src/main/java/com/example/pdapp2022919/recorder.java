@@ -140,7 +140,7 @@ public class recorder<root> extends AppCompatActivity {
         record_btn= findViewById(R.id.recorderButton);
         play_btn= findViewById(R.id.playButton);
         history_btn= findViewById(R.id.historyButton);
-        recorder_list= findViewById(R.id.listview_record);
+//        recorder_list= findViewById(R.id.listview2_record);
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 

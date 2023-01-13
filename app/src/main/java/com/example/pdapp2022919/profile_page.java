@@ -48,17 +48,17 @@ public class profile_page extends AppCompatActivity {
 
 
         Button eneterButton = findViewById(R.id.enter_Button);
-        Button btCreate = findViewById(R.id.button_Create);
-        Button btModify = findViewById(R.id.button_Modify);
-        Button btClear = findViewById(R.id.button_Clear);
+//        Button btCreate = findViewById(R.id.button_Create);
+//        Button btModify = findViewById(R.id.button_Modify);
+//        Button btClear = findViewById(R.id.button_Clear);
         EditText edName = findViewById(R.id.editTextTextPersonName);
         EditText edPhone = findViewById(R.id.editTextPhone);
-        EditText edMail = findViewById(R.id.editTextTextEmailAddress);
-        EditText edDate = findViewById(R.id.dateButton);
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));//設置分隔線
-        setRecyclerFunction(recyclerView);//設置RecyclerView左滑刪除
+//        EditText edMail = findViewById(R.id.editTextTextEmailAddress);
+//        EditText edDate = findViewById(R.id.dateButton);
+//        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));//設置分隔線
+//        setRecyclerFunction(recyclerView);//設置RecyclerView左滑刪除
 
         eneterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,97 +66,97 @@ public class profile_page extends AppCompatActivity {
         });
 
 //呼叫日期選擇器
-        edDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick (View view){
-                final Calendar c = Calendar.getInstance();
-                mYear = c.get(Calendar.YEAR);
-                mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH);
-
-                new DatePickerDialog(profile_page.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int day) {
-                        String format =  setDateFormat(year, month, day);
-                        edDate.setText(format);
-                    }
-
-                }, mYear, mMonth, mDay).show();
-            }
-        });
+//        edDate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick (View view){
+//                final Calendar c = Calendar.getInstance();
+//                mYear = c.get(Calendar.YEAR);
+//                mMonth = c.get(Calendar.MONTH);
+//                mDay = c.get(Calendar.DAY_OF_MONTH);
+//
+//                new DatePickerDialog(profile_page.this, new DatePickerDialog.OnDateSetListener() {
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year, int month, int day) {
+//                        String format =  setDateFormat(year, month, day);
+//                        edDate.setText(format);
+//                    }
+//
+//                }, mYear, mMonth, mDay).show();
+//            }
+//        });
         /**=======================================================================================*/
         /**設置修改資料的事件*/
-        btModify.setOnClickListener((v) -> {
-            new Thread(() -> {
-                if (nowSelectedData == null) return;//如果目前沒前台沒有資料，則以下程序不執行
-                String name = edName.getText().toString();
-                String phone = edPhone.getText().toString();
-                String mail = edMail.getText().toString();
-                String BD = edDate.getText().toString();
-                MyData data = new MyData(nowSelectedData.getId(), name, phone, mail, BD);
-                DataBase.getInstance(this).getDataUao().updateData(data);
-                runOnUiThread(() -> {
-                    edName.setText("");
-                    edPhone.setText("");
-                    edMail.setText("");
-                    edDate.setText("");
-                    nowSelectedData = null;
-                    myAdapter.refreshView();
-                    Toast.makeText(this, "已更新資訊！", Toast.LENGTH_LONG).show();
-                });
-            }).start();
-        });
-        /**=======================================================================================*/
-        /**清空資料*/
-        btClear.setOnClickListener((v -> {
-            edName.setText("");
-            edPhone.setText("");
-            edMail.setText("");
-            edDate.setText("");
-            nowSelectedData = null;
-        }));
-        /**=======================================================================================*/
-        /**新增資料*/
-        btCreate.setOnClickListener((v -> {
-            new Thread(() -> {
-                String name = edName.getText().toString();
-                String phone = edPhone.getText().toString();
-                String mail = edMail.getText().toString();
-                String BD = edDate.getText().toString();
-
-                if (name.length() == 0) return;//如果名字欄沒填入任何東西，則不執行下面的程序
-                MyData data = new MyData(name, phone, mail, BD/*遷移後新增*/);
-                DataBase.getInstance(this).getDataUao().insertData(data);
-                runOnUiThread(() -> {
-                    myAdapter.refreshView();
-                    edName.setText("");
-                    edPhone.setText("");
-                    edMail.setText("");
-                    edDate.setText("");
-                });
-            }).start();
-        }));
+//        btModify.setOnClickListener((v) -> {
+//            new Thread(() -> {
+//                if (nowSelectedData == null) return;//如果目前沒前台沒有資料，則以下程序不執行
+//                String name = edName.getText().toString();
+//                String phone = edPhone.getText().toString();
+//                String mail = edMail.getText().toString();
+//                String BD = edDate.getText().toString();
+//                MyData data = new MyData(nowSelectedData.getId(), name, phone, mail, BD);
+//                DataBase.getInstance(this).getDataUao().updateData(data);
+//                runOnUiThread(() -> {
+//                    edName.setText("");
+//                    edPhone.setText("");
+//                    edMail.setText("");
+//                    edDate.setText("");
+//                    nowSelectedData = null;
+//                    myAdapter.refreshView();
+//                    Toast.makeText(this, "已更新資訊！", Toast.LENGTH_LONG).show();
+//                });
+//            }).start();
+//        });
+//        /**=======================================================================================*/
+//        /**清空資料*/
+//        btClear.setOnClickListener((v -> {
+//            edName.setText("");
+//            edPhone.setText("");
+//            edMail.setText("");
+//            edDate.setText("");
+//            nowSelectedData = null;
+//        }));
+//        /**=======================================================================================*/
+//        /**新增資料*/
+//        btCreate.setOnClickListener((v -> {
+//            new Thread(() -> {
+//                String name = edName.getText().toString();
+//                String phone = edPhone.getText().toString();
+//                String mail = edMail.getText().toString();
+//                String BD = edDate.getText().toString();
+//
+//                if (name.length() == 0) return;//如果名字欄沒填入任何東西，則不執行下面的程序
+//                MyData data = new MyData(name, phone, mail, BD/*遷移後新增*/);
+//                DataBase.getInstance(this).getDataUao().insertData(data);
+//                runOnUiThread(() -> {
+//                    myAdapter.refreshView();
+//                    edName.setText("");
+//                    edPhone.setText("");
+//                    edMail.setText("");
+//                    edDate.setText("");
+//                });
+//            }).start();
+//        }));
         /**=======================================================================================*/
         /**初始化RecyclerView*/
         new Thread(() -> {
             List<MyData> data = DataBase.getInstance(this).getDataUao().displayAll();
             myAdapter = new MyAdapter(this, data);
             runOnUiThread(() -> {
-                recyclerView.setAdapter(myAdapter);
-                /**===============================================================================*/
-                myAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {//原本的樣貌
-                    @Override
-                    public void onItemClick(MyData myData) {
-                    }
-                });
+//                recyclerView.setAdapter(myAdapter);
+//                /**===============================================================================*/
+//                myAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {//原本的樣貌
+//                    @Override
+//                    public void onItemClick(MyData myData) {
+//                    }
+//                });
                 /**===============================================================================*/
                 /**取得被選中的資料，並顯示於畫面*/
                 myAdapter.setOnItemClickListener((myData) -> {//匿名函式(原貌在上方)
                     nowSelectedData = myData;
                     edName.setText(myData.getName());
                     edPhone.setText(myData.getPhone());
-                    edMail.setText(myData.getMail());
-                    edDate.setText(myData.getBD());
+//                    edMail.setText(myData.getMail());
+//                    edDate.setText(myData.getBD());
                 });
                 /**===============================================================================*/
             });

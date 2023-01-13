@@ -13,13 +13,13 @@ public class user_Page extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_page);
-        Button user1Button = (Button) findViewById(R.id.user1_Button);
+//        Button user1Button = (Button) findViewById(R.id.user1_Button);
         Button user2Button = (Button) findViewById(R.id.user1_Button2);
 
-        user1Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {openMain_page();}
-        });
+//        user1Button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {openMain_page();}
+//        });
         user2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {openMain_page();}

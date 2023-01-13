@@ -4,28 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/log_in_page"
+    android:background="@drawable/drawable"
     tools:context=".Login_page">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/sign_up_button"
-        style="@style/a123"
-        android:layout_width="180dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="16dp"
+        style="@style/logging_page_button"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:text="登入"
         android:textColor="@color/word1"
-        android:visibility="gone"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline22"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/guideline22"
         tools:ignore="TextContrastCheck" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/sign_in_button"
-        style="@style/a123"
-        android:layout_width="180dp"
-        android:layout_height="80dp"
+        style="@style/logging_page_button"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
         android:text="註冊"
         android:textColor="@color/word1"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
@@ -39,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.6" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline20"
@@ -59,10 +60,35 @@
         android:id="@+id/imageView2"
         android:layout_width="86dp"
         android:layout_height="67dp"
+        android:alpha="0.5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline20"
         app:srcCompat="@drawable/dtx_logo_black" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.52" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.34" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="256dp"
+        android:layout_height="97dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline23"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline23"
+        app:srcCompat="@drawable/_3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

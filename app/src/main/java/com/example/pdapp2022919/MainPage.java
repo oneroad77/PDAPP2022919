@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Main_page extends AppCompatActivity {
+public class MainPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,12 +16,12 @@ public class Main_page extends AppCompatActivity {
         Button profilestoreButton =(Button)findViewById(R.id.start_button);
         profilestoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {openList_page();}
+            public void onClick(View view) {openEnvironmentTest();}
         });
     }
 
-    private void  openList_page(){
-        Intent intent=new Intent(this,List_page.class);
+    private void  openEnvironmentTest(){
+        Intent intent=new Intent(this, EnvironmentTest.class);
         startActivity(intent);
     }
 }

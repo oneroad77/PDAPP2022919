@@ -1,14 +1,14 @@
-package com.example.pdapp2022919;
+package com.example.pdapp2022919.Recode;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Recode_Data implements Parcelable {
+public class RecodeData implements Parcelable {
     public double pretest_db,post_test_db;
     public long play_how_long,start_play_time,stop_play_time;
 
-    public Recode_Data() {}
-    protected Recode_Data(Parcel in) {
+    public RecodeData() {}
+    protected RecodeData(Parcel in) {
         pretest_db = in.readDouble();
         post_test_db = in.readDouble();
         play_how_long = in.readLong();
@@ -16,15 +16,15 @@ public class Recode_Data implements Parcelable {
         stop_play_time = in.readLong();
     }
 
-    public static final Creator<Recode_Data> CREATOR = new Creator<Recode_Data>() {
+    public static final Creator<RecodeData> CREATOR = new Creator<RecodeData>() {
         @Override
-        public Recode_Data createFromParcel(Parcel in) {
-            return new Recode_Data(in);
+        public RecodeData createFromParcel(Parcel in) {
+            return new RecodeData(in);
         }
 
         @Override
-        public Recode_Data[] newArray(int size) {
-            return new Recode_Data[size];
+        public RecodeData[] newArray(int size) {
+            return new RecodeData[size];
         }
     };
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/drawable"
-    tools:context=".Login_page">
+    tools:context=".LoginPage">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/sign_up_button"

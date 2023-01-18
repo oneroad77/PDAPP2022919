@@ -1,4 +1,4 @@
-package com.example.pdapp2022919;
+package com.example.pdapp2022919.Game;
 
 import android.content.Intent;
 import android.media.MediaRecorder;
@@ -17,6 +17,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pdapp2022919.Game.GameView;
+import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.Recode.RecodeData;
+import com.example.pdapp2022919.Recode.RecorderTest;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +33,7 @@ public class Game1 extends AppCompatActivity {
     private TextView real_time_db,hint_text,level_text;
     private boolean status = false ;
     private boolean first_time = true ;
-    private Recode_Data recode_data = new Recode_Data();
+    private RecodeData recode_data = new RecodeData();
     private long startTime ;
 
     private void startMeasure(){
@@ -68,7 +71,7 @@ public class Game1 extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         gameView =findViewById(R.id.gameView);
         Intent intent = getIntent();
-        double max_db_avg = intent.getDoubleExtra(recorder_test.MAX_AVG, 0);
+        double max_db_avg = intent.getDoubleExtra(RecorderTest.MAX_AVG, 0);
         recode_data.pretest_db = max_db_avg;
         gameView.setStander(max_db_avg);
         TextView db_avg_tv = findViewById(R.id.db_avg_tv);
@@ -196,7 +199,7 @@ public class Game1 extends AppCompatActivity {
     }
     private void openRecorder_test(){
         recode_data.stop_play_time = System.currentTimeMillis() ;
-        Intent intent = new Intent(this, recorder_test.class);
+        Intent intent = new Intent(this, RecorderTest.class);
         intent.putExtra(POST,true);
         intent.putExtra(RECORD_DATA, recode_data);
         startActivity(intent);

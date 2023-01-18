@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".recorder_test">
+    tools:context=".Recode.RecorderTest">
 
     <ImageView
         android:id="@+id/Green_light"
@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05" />
+        app:layout_constraintGuide_percent="0.2" />
 
     <TextView
         android:id="@+id/Post_Retest"
@@ -61,6 +61,7 @@
         android:text="@string/pretest"
         android:textSize="40sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvResult"
         app:layout_constraintTop_toTopOf="@+id/guideline14" />

@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class user_Page extends AppCompatActivity {
+public class UserPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class user_Page extends AppCompatActivity {
     }
 
     private void openMain_page(){
-        Intent intent = new Intent(this, Main_page.class);
+        Intent intent = new Intent(this, MainPage.class);
         startActivity(intent);
     }
 }

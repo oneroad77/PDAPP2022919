@@ -1,7 +1,6 @@
-package com.example.pdapp2022919;
+package com.example.pdapp2022919.ShortRecorder;
 
 import android.Manifest;
-import android.content.Context;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,32 +8,24 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.pdapp2022919.R;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-public class recorder<root> extends AppCompatActivity {
+public class Recorder<root> extends AppCompatActivity {
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
@@ -178,7 +169,7 @@ public class recorder<root> extends AppCompatActivity {
 
         history_btn.setOnClickListener(view -> {
             Intent intent = new Intent();
-            intent.setClass(com.example.pdapp2022919.recorder.this,History.class);
+            intent.setClass(Recorder.this, History.class);
             startActivity(intent);
 
 

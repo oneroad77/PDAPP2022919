@@ -1,4 +1,4 @@
-package com.example.pdapp2022919;
+package com.example.pdapp2022919.Recode;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,17 +19,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.example.pdapp2022919.Game.Game1;
+import com.example.pdapp2022919.GameResult;
+import com.example.pdapp2022919.R;
 
 import java.io.File;
 import java.io.IOException;
 
 
-public class recorder_test extends AppCompatActivity {
+public class RecorderTest extends AppCompatActivity {
 
     public final static String MAX_AVG =  "Max_Avg";
 
-    private boolean hasPermission = false, isRecoding;
-    private MediaRecorder mediaRecorder;
     private TextView hint_word,tvResult;
     private ImageView Green_light;
     private int recordCount = 0;
@@ -42,7 +43,6 @@ public class recorder_test extends AppCompatActivity {
         post_test = getIntent().getBooleanExtra(Game1.POST,false);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recorder_test);
-        checkPermission();
         TextView Post_Retest = findViewById(R.id.Post_Retest);
         if(post_test){
             Post_Retest.setText("後測");
@@ -51,58 +51,11 @@ public class recorder_test extends AppCompatActivity {
         Green_light = findViewById(R.id.Green_light);
         tvResult = findViewById(R.id.tvResult);
     }
-    /**確認是否有麥克風使用權限*/
-    private void checkPermission(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                ActivityCompat.checkSelfPermission(this
-                        , Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this
-                    ,new String[]{Manifest.permission.RECORD_AUDIO},100);
-        }else hasPermission = true;
-    }
-    /**取得權限回傳*/
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 100 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            hasPermission = true;
-        }
-    }
-    /**開啟檢測*/
-    private void startMeasure(){
-        if (!hasPermission || isRecoding)return;
-        mediaRecorder = new MediaRecorder();
-        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mediaRecorder.setOutputFile(new File(getFilesDir(), "recording.gp3"));
-        }
-        try {
-            mediaRecorder.prepare();
-            mediaRecorder.start();
-            isRecoding = true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**關閉檢測*/
-    private void stopMeasure(){
-        if (!hasPermission || !isRecoding)return;
-        try {
-            mediaRecorder.release();
-            mediaRecorder.stop();
-        }catch (IllegalStateException e){
-            e.printStackTrace();
-        }
-        isRecoding = false;
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        recordCount = 0 ;
+        recordCount = 0;
         for (int i = 0; i < standard.length; i++) {
             handlerMeasure.sendEmptyMessageDelayed(0, i * 6000);
         }
@@ -119,18 +72,16 @@ public class recorder_test extends AppCompatActivity {
                     handlerMeasure.sendEmptyMessageDelayed(1, 2000);
                     break;
                 case 1:
-                    startMeasure();
-                    mediaRecorder.getMaxAmplitude();
+                    RecorderManager.startMeasure(new File(getFilesDir(), "recording.gp3"));
                     Green_light.setVisibility(View.VISIBLE);
                     handlerMeasure.sendEmptyMessageDelayed(2, 3000);
                     break;
                 case 2:
                     Green_light.setVisibility(View.INVISIBLE);
-                    int amp = mediaRecorder.getMaxAmplitude();
+                    int amp = RecorderManager.getMaxRaw();
                     standard[recordCount++] = amp;
-                    double db = 20 * (Math.log10(Math.abs(amp)));
-                    if (Math.round(db) == -9223372036854775808.0) tvResult.setText("0 db");
-                    else tvResult.setText(String.format("%2.0f",db));
+                    double db = RecorderManager.dbTransfer(amp);
+                    tvResult.setText(String.format("%2.0f", db));
                     if (recordCount == standard.length) {
                         int sum = 0;
                         for (int i : standard) {
@@ -139,13 +90,13 @@ public class recorder_test extends AppCompatActivity {
                         avg = 20 * (Math.log10(Math.abs(sum / standard.length)));
                         Intent intent;
                         if(post_test){
-                            intent = new Intent(recorder_test.this, Game_Result.class);
-                            Recode_Data recode_data = getIntent().getParcelableExtra(Game1.RECORD_DATA);
+                            intent = new Intent(RecorderTest.this, GameResult.class);
+                            RecodeData recode_data = getIntent().getParcelableExtra(Game1.RECORD_DATA);
                             recode_data.post_test_db = db;
                             intent.putExtra(Game1.RECORD_DATA, recode_data);
                         }
                         else{
-                            intent = new Intent(recorder_test.this, Game1.class);
+                            intent = new Intent(RecorderTest.this, Game1.class);
                             intent.putExtra(MAX_AVG, avg);
                         }
                         startActivity(intent);
@@ -159,7 +110,7 @@ public class recorder_test extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        stopMeasure();
+        RecorderManager.stopMeasure();
     }
 
     @Override

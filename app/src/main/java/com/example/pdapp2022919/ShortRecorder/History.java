@@ -1,4 +1,4 @@
-package com.example.pdapp2022919;
+package com.example.pdapp2022919.ShortRecorder;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.pdapp2022919.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -48,11 +50,11 @@ public class History extends AppCompatActivity {
 
 //                    boolean mStartPlaying = true;
                 String path = new File(getFilesDir(), "record").getAbsolutePath();
-                recorder.startPlaying(path + "/" + mData.get(position));
+                Recorder.startPlaying(path + "/" + mData.get(position));
 //                    if (mStartPlaying) {
-//                        recorder.play_btn.setText("停止");
+//                        Recorder.play_btn.setText("停止");
 //                    } else {
-//                        recorder.play_btn.setText("播放");
+//                        Recorder.play_btn.setText("播放");
 //                    }
 //                    mStartPlaying = !mStartPlaying;
 

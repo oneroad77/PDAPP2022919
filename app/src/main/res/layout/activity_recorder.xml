@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFEFE"
-    tools:context=".recorder">
+    tools:context=".ShortRecorder.Recorder">
 
     <androidx.constraintlayout.helper.widget.Flow
         android:id="@+id/flow2"

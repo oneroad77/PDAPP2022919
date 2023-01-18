@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#77D1D1D1"
-    tools:context=".List_page">
+    tools:context=".ListPage">
 
 
   <androidx.appcompat.widget.AppCompatButton
@@ -35,14 +35,15 @@
 
   <TextView
       android:id="@+id/practicelist"
-      android:layout_width="227dp"
-      android:layout_height="48dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       android:layout_marginTop="8dp"
       android:text="@string/bold40sp"
       android:textAlignment="center"
       android:textColor="#6A6A6A"
       android:textSize="40sp"
       android:textStyle="normal"
+      app:layout_constraintBottom_toTopOf="@+id/guideline2"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.498"
       app:layout_constraintStart_toStartOf="parent"

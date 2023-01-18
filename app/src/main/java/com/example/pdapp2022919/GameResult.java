@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.pdapp2022919.Game.Game1;
+import com.example.pdapp2022919.Recode.RecodeData;
+
 import java.text.SimpleDateFormat;
 
-public class Game_Result extends AppCompatActivity {
+public class GameResult extends AppCompatActivity {
 
     private static final SimpleDateFormat DATE = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
     private TextView result_text;
@@ -16,7 +19,7 @@ public class Game_Result extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_result);
-        Recode_Data recode_data = getIntent().getParcelableExtra(Game1.RECORD_DATA);
+        RecodeData recode_data = getIntent().getParcelableExtra(Game1.RECORD_DATA);
         result_text = findViewById(R.id.result_text);
         result_text.append(getString(R.string.pretest_db, recode_data.pretest_db));
         result_text.append(getString(R.string.post_test_db, recode_data.post_test_db));

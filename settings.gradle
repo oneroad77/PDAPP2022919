@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "PDAPP2022919"
 include ':app'
+includeBuild 'C:\\Users\\user\\AndroidStudioProjects\\fc_message'
+

@@ -31,6 +31,7 @@ public class LoginPage extends AppCompatActivity {
         Intent intent=new Intent(this, ProfilePage.class);
         startActivity(intent);
     }
+
     private void openUserPage(){
         Intent intent=new Intent(this, UserPage.class);
         startActivity(intent);

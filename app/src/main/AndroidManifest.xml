@@ -10,8 +10,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
-    <uses-feature android:name="android.hardware.camera.front" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -38,7 +40,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".GameResult"
+            android:name=".Game.GameResult"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -52,14 +54,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Recode.RecorderTest"
+            android:name=".Game.RecorderTest"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Recode.RecorderTest"
+            android:name=".Game.ChooseLevel"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

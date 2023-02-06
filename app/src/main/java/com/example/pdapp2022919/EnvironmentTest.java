@@ -25,7 +25,7 @@ public class EnvironmentTest extends AppCompatActivity {
                 case 1:
                     handler.sendEmptyMessageDelayed(1, 500);
                     double db = RecorderManager.dbTransfer(RecorderManager.getMaxRaw());
-                    realTimeDBText.setText(String.format("當前環境\n%2.0fdB", db));
+                    realTimeDBText.setText(String.format("%2.0fdB", db));
                     break;
 
             }

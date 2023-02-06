@@ -14,11 +14,11 @@
         android:orientation="vertical"
         app:constraint_referenced_ids="recorderButton,playButton,historyButton"
         app:flow_verticalGap="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline41"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.863" />
+        app:layout_constraintTop_toTopOf="@+id/guideline41"
+        app:layout_constraintVertical_bias="0.85" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/recorderButton"
@@ -35,6 +35,7 @@
         android:layout_width="179dp"
         android:layout_height="62dp"
         android:text="播放"
+        android:visibility="gone"
         tools:layout_editor_absoluteX="116dp"
         tools:layout_editor_absoluteY="518dp" />
 
@@ -47,21 +48,34 @@
         tools:layout_editor_absoluteX="116dp"
         tools:layout_editor_absoluteY="600dp" />
 
-    <androidx.constraintlayout.helper.widget.Flow
-        android:id="@+id/flow3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="217dp"
-        tools:layout_editor_absoluteY="51dp" />
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="TextView"
+        android:gravity="center"
+        android:text="早上，\n太陽出來了，\n向天空說早安\n\n晚上，\n月亮出來了，\n向天空說晚安"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/flow2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/guideline36"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline41"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.88" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

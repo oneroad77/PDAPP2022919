@@ -6,9 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.example.pdapp2022919.Game.ChooseLevel;
 import com.example.pdapp2022919.Game.Game1;
 import com.example.pdapp2022919.ShortRecorder.Recorder;
-import com.example.pdapp2022919.Recode.RecorderTest;
+import com.example.pdapp2022919.Game.RecorderTest;
 
 public class ListPage extends AppCompatActivity {
 
@@ -23,10 +24,9 @@ public class ListPage extends AppCompatActivity {
         Button muscletrainButton= findViewById(R.id.muscle_train_button);
 
         backmainpageButton.setOnClickListener(view -> finish());
-        voicepButton.setOnClickListener(view -> openrecorder_test());
+        voicepButton.setOnClickListener(view -> openChooseLevel());
         higlowButton.setOnClickListener(view -> openGame1());
         keeppracticeButton.setOnClickListener(view -> openrecorder());
-        muscletrainButton.setOnClickListener(view -> openrecorder_test());
     }
 
     private void  openMain_page(){
@@ -34,8 +34,8 @@ public class ListPage extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void openrecorder_test(){
-        Intent intent=new Intent(this, RecorderTest.class);
+    private void openChooseLevel(){
+        Intent intent=new Intent(this,ChooseLevel.class);
         startActivity(intent);
     }
     private void openGame1(){

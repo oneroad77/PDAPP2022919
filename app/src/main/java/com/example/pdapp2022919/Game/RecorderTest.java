@@ -1,15 +1,10 @@
-package com.example.pdapp2022919.Recode;
+package com.example.pdapp2022919.Game;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.media.MediaRecorder;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -19,33 +14,39 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import com.example.pdapp2022919.Game.Game1;
-import com.example.pdapp2022919.GameResult;
+import com.example.pdapp2022919.FileManager;
 import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.Recode.RecodeData;
+import com.example.pdapp2022919.Recode.RecorderManager;
 
 import java.io.File;
-import java.io.IOException;
 
 
 public class RecorderTest extends AppCompatActivity {
 
     public final static String MAX_AVG =  "Max_Avg";
-
     private TextView hint_word,tvResult;
     private ImageView Green_light;
     private int recordCount = 0;
     private int[] standard = new int[3];
     private double avg;
     private boolean post_test;
+    private int level_difficulty;
+    private File savingFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         post_test = getIntent().getBooleanExtra(Game1.POST,false);
+        level_difficulty = getIntent().getIntExtra(ChooseLevel.level_difficulty,1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recorder_test);
         TextView Post_Retest = findViewById(R.id.Post_Retest);
         if(post_test){
             Post_Retest.setText("後測");
+            savingFile = FileManager.getPostTestFile();
+        }
+        else {
+            savingFile = FileManager.getPreTestFile();
         }
         hint_word = findViewById(R.id.hint_word);
         Green_light = findViewById(R.id.Green_light);
@@ -56,6 +57,7 @@ public class RecorderTest extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         recordCount = 0;
+        RecorderManager.startMeasure(savingFile);
         for (int i = 0; i < standard.length; i++) {
             handlerMeasure.sendEmptyMessageDelayed(0, i * 6000);
         }
@@ -72,7 +74,6 @@ public class RecorderTest extends AppCompatActivity {
                     handlerMeasure.sendEmptyMessageDelayed(1, 2000);
                     break;
                 case 1:
-                    RecorderManager.startMeasure(new File(getFilesDir(), "recording.gp3"));
                     Green_light.setVisibility(View.VISIBLE);
                     handlerMeasure.sendEmptyMessageDelayed(2, 3000);
                     break;
@@ -98,6 +99,7 @@ public class RecorderTest extends AppCompatActivity {
                         else{
                             intent = new Intent(RecorderTest.this, Game1.class);
                             intent.putExtra(MAX_AVG, avg);
+                            intent.putExtra(ChooseLevel.level_difficulty,level_difficulty);
                         }
                         startActivity(intent);
                     }

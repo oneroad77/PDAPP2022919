@@ -90,7 +90,7 @@ public class History extends AppCompatActivity {
                         .show();
 
 
-                return false;
+                return true;
             }
         });
 

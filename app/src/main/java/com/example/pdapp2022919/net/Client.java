@@ -42,7 +42,7 @@ public class Client {
     private static final SecretKeySpec aesKeySpec;
     private static final IvParameterSpec ivSpec;
 
-    private static UUID uuid = null;
+    private static UUID uuid = new UUID(0, 563178952L);
 
     static {
         Dotenv dotenv = Dotenv.configure()
@@ -74,6 +74,10 @@ public class Client {
             data[i] |= Character.digit(s.charAt(i * 2 + 1), 16);
         }
         return data;
+    }
+
+    public static UUID getUuid() {
+        return uuid;
     }
 
     public static void login(int id, String name, CallbackUUID callback) {

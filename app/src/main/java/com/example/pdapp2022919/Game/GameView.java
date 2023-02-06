@@ -1,7 +1,6 @@
 package com.example.pdapp2022919.Game;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -21,7 +20,7 @@ import java.util.Random;
 public class GameView extends View {
 
     private static Random random = new Random();
-
+    private int level_difficulty;
     private int viewWidth, viewHeight;
     private int ground, speed = 10, xSpeed = 10;
     private int size = 50, x = -size, y = -size, distance = 0, level = -1, gap = 0, failcount = 0;
@@ -90,6 +89,9 @@ public class GameView extends View {
         x = viewWidth / 10;
         y = (int) getLimit(stander + 3 * level) - size - 10;
         blocks[blockIndex] = new Block(true);
+    }
+    public void setLevelDifficulty(int level_difficulty) {
+        this.level_difficulty =  level_difficulty;
     }
 
     public void setStander(double avg) {
@@ -170,12 +172,12 @@ public class GameView extends View {
         public Block(boolean init) {
             if (init) {
                 x = 0;
-                y = (int) getLimit(stander + 3 * level);
+                y = (int) getLimit(stander + level_difficulty * level);
                 length = viewWidth;
             }
             else {
                 x = xSpeed * 60 * 3 + random.nextInt(xSpeed * 60 );
-                y = (int) getLimit(stander + 3 * level);
+                y = (int) getLimit(stander + level_difficulty * level);
                 length = xSpeed * 60 *2;
             }
         }

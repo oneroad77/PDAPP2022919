@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.pdapp2022919.FileManager;
 import com.example.pdapp2022919.R;
 
 import java.io.File;
@@ -29,7 +31,6 @@ public class Recorder<root> extends AppCompatActivity {
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
-    private static String fileName = null;
 
     private MediaRecorder recorder = null;
     private static MediaPlayer   player = null;
@@ -41,25 +42,6 @@ public class Recorder<root> extends AppCompatActivity {
     private ListView recorder_list;
     private File root;
 
-    // Requesting permission to RECORD_AUDIO
-    private boolean permissionToRecordAccepted = false;
-    private final String [] permissions = {Manifest.permission.RECORD_AUDIO};
-
-
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-
-        if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION) {
-            permissionToRecordAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-        }
-        if (!permissionToRecordAccepted ) finish();
-
-    }
-
     private void onRecord(boolean start) {
         if (start) {
             startRecording();
@@ -70,7 +52,7 @@ public class Recorder<root> extends AppCompatActivity {
 
     public static void onPlay(boolean start) {
         if (start) {
-            startPlaying(fileName);
+            startPlaying(FileManager.getShortLineFile().getAbsolutePath());
         } else {
             stopPlaying();
         }
@@ -93,17 +75,14 @@ public class Recorder<root> extends AppCompatActivity {
     }
 
     private void startRecording() {
-        // Record to the external cache directory for visibility
-        fileName = new File(getFilesDir(), "record").getAbsolutePath();
-
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyyMMdd_HHmmss_SSSS");
-        Date date = new Date(System.currentTimeMillis());
-        fileName += "/" + formatter.format(date) + ".3gp";
-
+        FileManager.setTimestamp(FileManager.FileType.SHORT_LINE);
+        play_btn.setEnabled(false);
         recorder = new MediaRecorder();
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        recorder.setOutputFile(fileName);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            recorder.setOutputFile(FileManager.getShortLineFile());
+        }
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         try {
@@ -116,6 +95,7 @@ public class Recorder<root> extends AppCompatActivity {
     }
 
     private void stopRecording() {
+        play_btn.setEnabled(true);
         recorder.stop();
         recorder.release();
         recorder = null;
@@ -125,17 +105,11 @@ public class Recorder<root> extends AppCompatActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_recorder);
-        File dir = new File(getFilesDir(), "record");
-        if (!dir.exists()) dir.mkdir();
 
         record_btn= findViewById(R.id.recorderButton);
         play_btn= findViewById(R.id.playButton);
+        play_btn.setVisibility(View.GONE);
         history_btn= findViewById(R.id.historyButton);
-//        recorder_list= findViewById(R.id.listview2_record);
-
-        ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
-
-//        recordButton = new RecordButton(this);
 
         record_btn.setOnClickListener(new View.OnClickListener() {
             boolean mStartRecording = true;
@@ -171,23 +145,7 @@ public class Recorder<root> extends AppCompatActivity {
             Intent intent = new Intent();
             intent.setClass(Recorder.this, History.class);
             startActivity(intent);
-
-
         });
-//        LinearLayout ll = new LinearLayout(this);
-//        recordButton = new RecordButton(this);
-//        ll.addView(recordButton,
-//                new LinearLayout.LayoutParams(
-//                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        0));
-//        playButton = new PlayButton(this);
-//        ll.addView(playButton,
-//                new LinearLayout.LayoutParams(
-//                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        0));
-//        setContentView(ll);
     }
 
     @Override

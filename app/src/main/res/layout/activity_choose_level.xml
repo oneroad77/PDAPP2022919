@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Game.ChooseLevel">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline38"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.54" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline39"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.32" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="難度選擇"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline37"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline37" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/levl1_Button"
+        style="@style/logging_page_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="簡單"
+        android:textColor="@color/word1" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/levl2_Button"
+        style="@style/logging_page_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="中等"
+        android:textColor="@color/word1" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/levl3_Button"
+        style="@style/logging_page_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="困難"
+        android:textColor="@color/word1" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:constraint_referenced_ids="levl1_Button,levl2_Button,levl3_Button"
+        app:flow_verticalGap="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline39"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline39" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,4 +11,5 @@
     <string name="pretest_db">前測分貝: %2.0f%n</string>
     <string name="play_how_long">遊玩時長: %s%n</string>
     <string name="start_play_time">遊玩時間:%n%s~%n%s%n</string>
+    <string name="level_difficulty">難度: %s%n</string>
 </resources>

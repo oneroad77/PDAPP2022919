@@ -10,7 +10,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -19,12 +19,14 @@ public class LoginPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
         checkPermission();
+        FileManager.setFileDir(getFilesDir().getAbsolutePath());
 
         Button signupButton=(Button) findViewById(R.id.sign_up_button);
         Button signinButton=(Button) findViewById(R.id.sign_in_button);
-
+        ImageView DTxlablogo = (ImageView) findViewById(R.id.DTxLabLogo);
         signinButton.setOnClickListener(view -> openProfile());
         signupButton.setOnClickListener(view -> openUserPage());
+        DTxlablogo.setOnClickListener(view -> startActivity(new Intent(this, MainPage.class)));
     }
 
     private void openProfile(){

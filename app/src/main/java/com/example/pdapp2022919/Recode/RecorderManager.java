@@ -13,7 +13,7 @@ public class RecorderManager {
 
     /**開啟檢測*/
     public static void startMeasure(File file){
-        if (isRecoding)return;
+        if (isRecoding) return;
         mediaRecorder = new MediaRecorder();
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -34,8 +34,8 @@ public class RecorderManager {
     public static void stopMeasure(){
         if (!isRecoding)return;
         try {
-            mediaRecorder.release();
             mediaRecorder.stop();
+            mediaRecorder.release();
         }catch (IllegalStateException e){
             e.printStackTrace();
         }

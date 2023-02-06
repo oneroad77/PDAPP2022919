@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.PointF;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import java.io.IOException;
 public class DistanceMeasure extends AppCompatActivity {
     private Button finishButton;
     private ImageView demoPicture;
+    private TextView disHint;
     static final int IMAGE_WIDTH = 1024;
     static final int IMAGE_HEIGHT = 1024;
 
@@ -49,6 +51,7 @@ public class DistanceMeasure extends AppCompatActivity {
         setContentView(R.layout.activity_distance_measure);
         demoPicture = findViewById(R.id.demoPicture);
         finishButton = findViewById(R.id.finishButton);
+        disHint = findViewById(R.id.DistanceHint);
         finishButton.setOnClickListener(view -> {
             startActivity(new Intent(this, ListPage.class));
         });
@@ -66,73 +69,74 @@ public class DistanceMeasure extends AppCompatActivity {
     }
 
 
-  private Camera frontCam() {
+    private Camera frontCam() {
         int cameraCount = 0;
         Camera cam = null;
         Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
         cameraCount = Camera.getNumberOfCameras();
         for (int camIdx = 0; camIdx < cameraCount; camIdx++) {
-        Camera.getCameraInfo(camIdx, cameraInfo);
-        Log.v("CAMID", camIdx + "");
-        if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-        try {
-        cam = Camera.open(camIdx);
-        } catch (RuntimeException e) {
-        Log.e("FAIL", "Camera failed to open: " + e.getLocalizedMessage());
-        }
-        }
+            Camera.getCameraInfo(camIdx, cameraInfo);
+            Log.v("CAMID", camIdx + "");
+            if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                try {
+                    cam = Camera.open(camIdx);
+                } catch (RuntimeException e) {
+                    Log.e("FAIL", "Camera failed to open: " + e.getLocalizedMessage());
+                }
+            }
         }
 
         return cam;
-        }
+    }
 
 
-        @SuppressLint("MissingPermission")
-        public void createCameraSource() {
+    @SuppressLint("MissingPermission")
+    public void createCameraSource() {
         FaceDetector detector = new FaceDetector.Builder(this)
-        .setTrackingEnabled(true)
-        .setClassificationType(FaceDetector.ALL_CLASSIFICATIONS)
-        .setLandmarkType(FaceDetector.ALL_LANDMARKS)
-        .setMode(FaceDetector.FAST_MODE)
-        .build();
+                .setTrackingEnabled(true)
+                .setClassificationType(FaceDetector.ALL_CLASSIFICATIONS)
+                .setLandmarkType(FaceDetector.ALL_LANDMARKS)
+                .setMode(FaceDetector.FAST_MODE)
+                .build();
         detector.setProcessor(new LargestFaceFocusingProcessor(detector, new FaceTracker()));
 
         CameraSource cameraSource = new CameraSource.Builder(this, detector)
-        .setFacing(CameraSource.CAMERA_FACING_FRONT)
-        .setRequestedFps(0.1f)
-        .build();
+                .setFacing(CameraSource.CAMERA_FACING_FRONT)
+                .setRequestedFps(100f)
+                .build();
         System.out.println(cameraSource.getPreviewSize());
 
         try {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-        // TODO: Consider calling
-        //    ActivityCompat#requestPermissions
-        // here to request the missing permissions, and then overriding
-        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-        //                                          int[] grantResults)
-        // to handle the case where the user grants the permission. See the documentation
-        // for ActivityCompat#requestPermissions for more details.
-        return;
-        }
-        cameraSource.start();
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            cameraSource.start();
         } catch (IOException e) {
-        e.printStackTrace();
+            e.printStackTrace();
         }
 
 
-        }
+    }
 
-        public void showStatus(final String message) {
+    public void showStatus(final String message) {
         runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-        textView.setText(message);
-        }
+            @Override
+            public void run() {
+                textView.setText(message);
+            }
         });
-        }
+    }
 
-        private class FaceTracker extends Tracker<Face> {
+    private class FaceTracker extends Tracker<Face> {
 
+        private int delay = 0;
 
         private FaceTracker() {
 
@@ -140,41 +144,61 @@ public class DistanceMeasure extends AppCompatActivity {
 
         @Override
         public void onUpdate(Detector.Detections<Face> detections, Face face) {
-        PointF leftEyePos = face.getLandmarks().get(LEFT_EYE).getPosition();
-        PointF rightEyePos = face.getLandmarks().get(RIGHT_EYE).getPosition();
+            if (delay++ % 5 != 0) return;
+            PointF leftEyePos = face.getLandmarks().get(LEFT_EYE).getPosition();
+            PointF rightEyePos = face.getLandmarks().get(RIGHT_EYE).getPosition();
 
-        float deltaX = Math.abs(leftEyePos.x - rightEyePos.x);
-        float deltaY = Math.abs(leftEyePos.y - rightEyePos.y);
+            float deltaX = Math.abs(leftEyePos.x - rightEyePos.x);
+            float deltaY = Math.abs(leftEyePos.y - rightEyePos.y);
 
-        float distance;
-        if (deltaX >= deltaY) {
-        distance = F * (AVERAGE_EYE_DISTANCE / sensorX) * (IMAGE_WIDTH / deltaX);
-        } else {
-        distance = F * (AVERAGE_EYE_DISTANCE / sensorY) * (IMAGE_HEIGHT / deltaY);
-        }
-
-        showStatus("距離: " + String.format("%.0f", distance/10) + "公分");
-
-            if ( distance >= 300) {
-                demoPicture.setImageResource(R.drawable.more_close);
-            } else if (distance <= 250) {
-                demoPicture.setImageResource(R.drawable.more_far);
+            float distance;
+            if (deltaX >= deltaY) {
+                distance = F * (AVERAGE_EYE_DISTANCE / sensorX) * (IMAGE_WIDTH / deltaX);
             } else {
-                demoPicture.setImageResource(R.drawable.ok);
+                distance = F * (AVERAGE_EYE_DISTANCE / sensorY) * (IMAGE_HEIGHT / deltaY);
+            }
+
+            showStatus("距離: " + String.format("%.0f", distance / 10) + "公分");
+
+            if (distance >= 400) {
+                runOnUiThread(() -> {
+                    demoPicture.setImageResource(R.drawable.more_close);
+                    disHint.setText("請拿近一些");
+                    disHint.setTextColor(Color.parseColor("#FF0000"));
+                });
+            } else if (distance <= 350) {
+                runOnUiThread(() -> {
+                    demoPicture.setImageResource(R.drawable.more_far);
+                    disHint.setText("請拿遠一些");
+                    disHint.setTextColor(Color.parseColor("#FF0000"));
+                });
+            } else {
+                runOnUiThread(() -> {
+                    demoPicture.setImageResource(R.drawable.ok);
+                    disHint.setText("很好~~!");
+                    disHint.setTextColor(Color.parseColor("#008000"));
+                });
             }
         }
 
 
         @Override
         public void onMissing(Detector.Detections<Face> detections) {
-        super.onMissing(detections);
-        showStatus("未偵測到臉部");
+            super.onMissing(detections);
+            showStatus("未偵測到臉部");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    demoPicture.setImageResource(R.drawable.question);
+                    disHint.setTextColor(Color.parseColor("#FFFFFF"));
+                }
+            });
         }
 
         @Override
         public void onDone() {
-        super.onDone();
+            super.onDone();
         }
-        }
+    }
 
-        }
+}

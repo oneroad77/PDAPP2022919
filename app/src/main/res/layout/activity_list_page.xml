@@ -10,8 +10,8 @@
 
   <androidx.appcompat.widget.AppCompatButton
       android:id="@+id/voice_practice_button"
-      android:layout_width="325dp"
-      android:layout_height="115dp"
+      android:layout_width="313dp"
+      android:layout_height="110dp"
       android:layout_marginTop="32dp"
       android:background="@drawable/group_104"
       app:layout_constraintEnd_toStartOf="@+id/guideline7"
@@ -22,8 +22,8 @@
 
   <androidx.appcompat.widget.AppCompatButton
       android:id="@+id/keepv_practice_Button"
-      android:layout_width="325dp"
-      android:layout_height="115dp"
+      android:layout_width="313dp"
+      android:layout_height="110dp"
       android:layout_marginTop="16dp"
       android:background="@drawable/group_114"
       android:visibility="visible"

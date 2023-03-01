@@ -97,8 +97,8 @@ public class Client {
                         callback.failed();
                     }
                     else {
-                        callback.succeed();
                         Client.uuid = uuid;
+                        callback.succeed();
                     }
                 }
             }
@@ -122,8 +122,8 @@ public class Client {
                         callback.failed();
                     }
                     else {
-                        callback.succeed();
                         Client.uuid = uuid;
+                        callback.succeed();
                     }
                 }
             }

@@ -1,4 +1,4 @@
-package com.example.pdapp2022919;
+package com.example.pdapp2022919.Profile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,16 +9,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.pdapp2022919.FileManager;
+import com.example.pdapp2022919.MainPage;
+import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.net.CallbackUUID;
 import com.example.pdapp2022919.net.Client;
 
-public class UserPage extends AppCompatActivity {
+public class LoginPage extends AppCompatActivity {
     private EditText editTextPatientID3,editTextTextPersonName3;
     private TextView hint;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_page);
+        setContentView(R.layout.activity_login_page);
         hint = findViewById(R.id.hint);
         editTextPatientID3 = findViewById(R.id.editTextPatientID3);
         editTextTextPersonName3 = findViewById(R.id.editTextTextPersonName3);
@@ -35,7 +38,8 @@ public class UserPage extends AppCompatActivity {
                     @Override
                     public void succeed() {
                         runOnUiThread(() -> hint.setVisibility(View.GONE));
-                        startActivity(new Intent(UserPage.this, MainPage.class));
+                        // TODO 從雲端下載profile
+                        startActivity(new Intent(LoginPage.this, MainPage.class));
                     }
 
                     @Override

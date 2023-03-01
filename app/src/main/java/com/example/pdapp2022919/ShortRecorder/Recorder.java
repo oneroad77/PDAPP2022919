@@ -1,31 +1,27 @@
 package com.example.pdapp2022919.ShortRecorder;
 
-import android.Manifest;
-
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.example.pdapp2022919.FileManager;
+import com.example.pdapp2022919.History.Calendar;
 import com.example.pdapp2022919.R;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Recorder<root> extends AppCompatActivity {
 
@@ -110,6 +106,8 @@ public class Recorder<root> extends AppCompatActivity {
         play_btn= findViewById(R.id.playButton);
         play_btn.setVisibility(View.GONE);
         history_btn= findViewById(R.id.historyButton);
+        TextView sentence = findViewById(R.id.sentence);
+        sentence.setMovementMethod(new ScrollingMovementMethod());
 
         record_btn.setOnClickListener(new View.OnClickListener() {
             boolean mStartRecording = true;
@@ -143,7 +141,7 @@ public class Recorder<root> extends AppCompatActivity {
 
         history_btn.setOnClickListener(view -> {
             Intent intent = new Intent();
-            intent.setClass(Recorder.this, History.class);
+            intent.setClass(Recorder.this, Calendar.class);
             startActivity(intent);
         });
     }

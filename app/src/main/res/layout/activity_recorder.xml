@@ -49,11 +49,11 @@
         tools:layout_editor_absoluteY="600dp" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/sentence"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
-        android:text="早上，\n太陽出來了，\n向天空說早安\n\n晚上，\n月亮出來了，\n向天空說晚安"
+        android:scrollbars="vertical"
+        android:text="@string/short_sentence"
         android:textAlignment="center"
         android:textSize="34sp"
         android:textStyle="bold"

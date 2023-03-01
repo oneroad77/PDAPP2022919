@@ -25,15 +25,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.32" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="難度選擇"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline37"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,33 +41,36 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/levl1_Button"
         style="@style/logging_page_button"
-        android:layout_width="150dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="簡單"
-        android:textColor="@color/word1" />
+        android:textColor="@color/word1"
+        android:textSize="34sp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/levl2_Button"
         style="@style/logging_page_button"
-        android:layout_width="150dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="中等"
-        android:textColor="@color/word1" />
+        android:textColor="@color/word1"
+        android:textSize="34sp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/levl3_Button"
         style="@style/logging_page_button"
-        android:layout_width="150dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="困難"
-        android:textColor="@color/word1" />
+        android:textColor="@color/word1"
+        android:textSize="34sp" />
 
     <androidx.constraintlayout.helper.widget.Flow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:constraint_referenced_ids="levl1_Button,levl2_Button,levl3_Button"
-        app:flow_verticalGap="20dp"
+        app:flow_verticalGap="40dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline39"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

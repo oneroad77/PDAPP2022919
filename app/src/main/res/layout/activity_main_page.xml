@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#77E6E6E6"
+    android:background="#F2F2F2"
     tools:context=".MainPage">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/start_button"
-        android:layout_width="330dp"
-        android:layout_height="169dp"
+        android:layout_width="306dp"
+        android:layout_height="144dp"
         android:background="@drawable/group_69__1_"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,9 +19,9 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/day_Button"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:id="@+id/history_Button"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/group_108"
@@ -33,12 +33,12 @@
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/alarm_set_button"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:id="@+id/personal_button"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/group_109"
+        android:background="@drawable/group_112"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -51,14 +51,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.47" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="214dp" />
+        app:layout_constraintGuide_percent="0.3" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline46"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.04" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
@@ -72,18 +79,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="624dp" />
+        app:layout_constraintGuide_percent="0.72" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="351dp"
-        android:layout_height="242dp"
+        android:layout_width="263dp"
+        android:layout_height="93dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline24"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toTopOf="@+id/guideline24"
         app:srcCompat="@drawable/_3" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/signOutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="47dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/sign_out"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#00BFA5"
+        app:backgroundTint="#F1F1F1"
+        app:icon="@drawable/_345293"
+        app:iconGravity="textStart"
+        app:iconSize="25dp"
+        app:iconTint="#00BFA5"
+        app:layout_constraintBottom_toTopOf="@+id/guideline46"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline46"
+        app:layout_constraintVertical_bias="0.425"
+        app:rippleColor="#00FFFFFF" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

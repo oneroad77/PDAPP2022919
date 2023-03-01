@@ -18,7 +18,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class History extends AppCompatActivity {
+public class ShortHistory extends AppCompatActivity {
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> mData = new ArrayList<>();
@@ -45,7 +45,7 @@ public class History extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(History.this,
+                Toast.makeText(ShortHistory.this,
                         "您選了" + mData.get(position), Toast.LENGTH_SHORT).show();
 
 //                    boolean mStartPlaying = true;
@@ -68,7 +68,7 @@ public class History extends AppCompatActivity {
 
                 String path = new File(getFilesDir(), "record").getAbsolutePath();
                 File dir = new File(path + "/" + mData.get(position));
-                new AlertDialog.Builder(History.this)
+                new AlertDialog.Builder(ShortHistory.this)
                         .setTitle("want to delete?")
                         .setMessage("Want to delete"+ mData.get(position))
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {

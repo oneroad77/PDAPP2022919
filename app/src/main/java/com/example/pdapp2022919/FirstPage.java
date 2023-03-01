@@ -12,12 +12,18 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 
-public class LoginPage extends AppCompatActivity {
+import com.example.pdapp2022919.FileManager;
+import com.example.pdapp2022919.MainPage;
+import com.example.pdapp2022919.Profile.LoginPage;
+import com.example.pdapp2022919.Profile.SignUpPage;
+import com.example.pdapp2022919.R;
+
+public class FirstPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_page);
+        setContentView(R.layout.activity_first_page);
         checkPermission();
         FileManager.setFileDir(getFilesDir().getAbsolutePath());
 
@@ -30,12 +36,12 @@ public class LoginPage extends AppCompatActivity {
     }
 
     private void openProfile(){
-        Intent intent=new Intent(this, ProfilePage.class);
+        Intent intent=new Intent(this, SignUpPage.class);
         startActivity(intent);
     }
 
     private void openUserPage(){
-        Intent intent=new Intent(this, UserPage.class);
+        Intent intent=new Intent(this, LoginPage.class);
         startActivity(intent);
     }
 

@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.example.pdapp2022919.History.Calendar;
 import com.example.pdapp2022919.Profile.PersonalData;
+import com.example.pdapp2022919.net.Client;
 
 public class MainPage extends AppCompatActivity {
 
@@ -33,6 +34,8 @@ public class MainPage extends AppCompatActivity {
         });
         singoutButton.setOnClickListener(view -> {
             startActivity(new Intent(this,FirstPage.class));
+            Client.logout();
+            //回到初始值
         });
     }
 

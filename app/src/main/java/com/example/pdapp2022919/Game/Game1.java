@@ -16,8 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pdapp2022919.FileManager;
 import com.example.pdapp2022919.R;
-import com.example.pdapp2022919.Recode.RecodeData;
+import com.example.pdapp2022919.Recode.RecordData;
+import com.example.pdapp2022919.Recode.WavRecorder;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,43 +27,26 @@ import java.io.IOException;
 public class Game1 extends AppCompatActivity {
     public final static String POST = "post_test";
     public final static String RECORD_DATA = "RECORD_DATA";
-    private MediaRecorder mediaRecorder;
     private GameView gameView;
     private Button startGameButton, back, see_result_button, continue_game_button;
-    private TextView real_time_db, hint_text, level_text;
+    private TextView real_time_db, hint_text, level_text,game_illustrate;
     private boolean status = false;
     private boolean first_time = true;
-    private RecodeData recode_data = new RecodeData();
+    private RecordData recode_data = new RecordData();
     private long startTime;
     private int level_difficulty;
 
     private void startMeasure() {
         startTime = System.currentTimeMillis();
-        mediaRecorder = new MediaRecorder();
-        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mediaRecorder.setOutputFile(new File(getFilesDir(), "recording.gp3"));
-        }
-        try {
-            mediaRecorder.prepare();
-            mediaRecorder.start();
-            handlerMeasure.sendEmptyMessage(1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        WavRecorder.startRecording();
+        handlerMeasure.sendEmptyMessage(1);
     }
 
     private void stopMeasure() {
         recode_data.play_how_long += System.currentTimeMillis() - startTime;
         handlerMeasure.removeCallbacksAndMessages(null);
-        try {
-            mediaRecorder.stop();
-            mediaRecorder.release();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        }
+        File file = FileManager.getGameFile(gameView.getLevel(), gameView.failCount());
+        WavRecorder.stopRecording(file);
     }
 
     @Override
@@ -78,7 +63,7 @@ public class Game1 extends AppCompatActivity {
         gameView.setLevelDifficulty(level_difficulty);
         TextView db_avg_tv = findViewById(R.id.db_avg_tv);
         see_result_button = findViewById(R.id.see_result_button);
-
+        game_illustrate = findViewById(R.id.gameIllustrate);
         real_time_db = findViewById(R.id.realtimedb);
         real_time_db.setVisibility(View.GONE);
         String avgdb = String.format("前測分貝 %2.0f", max_db_avg);
@@ -99,8 +84,9 @@ public class Game1 extends AppCompatActivity {
             }
             view.setVisibility(View.GONE);
             hint_text.setVisibility(View.GONE);
+            game_illustrate.setVisibility(View.GONE);
             gameView.startGame();
-            level_text.setText("關卡  " + gameView.getLevel());
+            level_text.setText(getLevelDifficulty(level_difficulty));
             startMeasure();
             status = true;
         });
@@ -120,6 +106,7 @@ public class Game1 extends AppCompatActivity {
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what) {
                 case 1:
+                    System.out.println(gameView.isGameOver());
                     if (gameView.isGameOver()) {
                         if (gameView.failCount() >= 3) {
                             hint_text.setVisibility(View.VISIBLE);
@@ -136,8 +123,8 @@ public class Game1 extends AppCompatActivity {
                         stopMeasure();
                         return;
                     }
-                    if (gameView.getGap() >= 3) {
-                        if (gameView.getLevel() >= 3) {
+                    if (gameView.getGap() >= 4) {
+                        if (gameView.getLevel() >= 1) {
                             hint_text.setVisibility(View.VISIBLE);
                             hint_text.setText("訓練結束");
                             see_result_button.setVisibility(View.VISIBLE);
@@ -152,15 +139,13 @@ public class Game1 extends AppCompatActivity {
                         stopMeasure();
                         return;
                     }
-                    int amp = mediaRecorder.getMaxAmplitude();
+                    int amp = WavRecorder.getMaxAmplitude();
                     gameView.update(amp);
                     handlerMeasure.sendEmptyMessageDelayed(1, 15);
                     //刷新率計算到15次時settext，最後歸零重新計算
                     if (frame > 15) {
-                        double db = 20 * (Math.log10(Math.abs(amp)));
-                        if (Math.round(db) == -9223372036854775808.0)
-                            real_time_db.setText("即時分貝 0 ");
-                        else real_time_db.setText("即時分貝 " + String.format("%2.0f", db));
+                        double db = WavRecorder.getDB((short) amp);
+                        real_time_db.setText("即時分貝 " + String.format("%2.0f", db));
                         real_time_db.setVisibility(View.VISIBLE);
                         frame = 0;
                     }
@@ -207,5 +192,17 @@ public class Game1 extends AppCompatActivity {
         intent.putExtra(POST, true);
         intent.putExtra(RECORD_DATA, recode_data);
         startActivity(intent);
+    }
+    private String getLevelDifficulty(int difficulty){
+        switch (difficulty){
+            case 1:
+                return "簡單";
+            case 2:
+                return "中等";
+            case 3:
+                return "困難";
+            default:
+                return "";
+        }
     }
 }

@@ -1,7 +1,5 @@
 package com.example.pdapp2022919.Game;
 
-import static com.example.pdapp2022919.Game.ChooseLevel.level_difficulty;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,10 +8,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.pdapp2022919.FileManager;
-import com.example.pdapp2022919.Game.Game1;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
-import com.example.pdapp2022919.Recode.RecodeData;
+import com.example.pdapp2022919.Recode.RecordData;
 
 import java.text.SimpleDateFormat;
 
@@ -29,13 +26,12 @@ public class GameResult extends AppCompatActivity {
         setContentView(R.layout.activity_game_result);
         PlayAgain = findViewById(R.id.playAgain);
         BackHome = findViewById(R.id.backHome);
-        RecodeData recode_data = getIntent().getParcelableExtra(Game1.RECORD_DATA);
+        RecordData recode_data = getIntent().getParcelableExtra(Game1.RECORD_DATA);
         result_text = findViewById(R.id.result_text);
         result_text.append(getString(R.string.level_difficulty, getLevelDifficulty(recode_data.level_difficulty)));
         result_text.append(getString(R.string.pretest_db, recode_data.pretest_db));
         result_text.append(getString(R.string.post_test_db, recode_data.post_test_db));
         result_text.append(getString(R.string.play_how_long, covertTime(recode_data.play_how_long)));
-        System.out.println(recode_data.play_how_long);
         result_text.append(getString(
                 R.string.start_play_time,
                 DATE.format(recode_data.start_play_time),

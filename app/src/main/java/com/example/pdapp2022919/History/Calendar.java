@@ -2,9 +2,14 @@ package com.example.pdapp2022919.History;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +29,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.example.pdapp2022919.FileManager;
+import com.example.pdapp2022919.MainPage;
+import com.example.pdapp2022919.MediaManager;
 import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.ShortRecorder.Recorder;
 import com.example.pdapp2022919.net.Client;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,7 +45,9 @@ import java.util.Map;
 
 public class Calendar extends AppCompatActivity {
 
-    private final Map<String, List<FileManager.HistoryData>> historyData = FileManager.getRecordFiles(Client.getUuid());
+    public static final String HISTORY_DATA = "HISTORY DATA";
+
+    private final Map<String, List<FileManager.HistoryData>> historyData = FileManager.getRecords(Client.getUuid());
     private CalendarView CalendarView;
     private final HistoryListAdapter adapter = new HistoryListAdapter();
     private String selectedDate = "";
@@ -54,7 +66,10 @@ public class Calendar extends AppCompatActivity {
                 String now = FileManager.DATE_FORMAT.format(new Date());
                 adapter.setList(historyData.get(now));
                 selectedDate = now;
-
+                Button backHome = findViewById(R.id.back_main_page_button2);
+                backHome.setOnClickListener(view -> {
+                    startActivity(new Intent(this, MainPage.class));
+                });
                 RecyclerView historyList = findViewById(R.id.historylist);
                 historyList.setLayoutManager(new LinearLayoutManager(this));
                 historyList.setNestedScrollingEnabled(false);
@@ -65,8 +80,15 @@ public class Calendar extends AppCompatActivity {
 
                 CalendarView.setOnDayClickListener(eventDay -> {
                     String date = FileManager.DATE_FORMAT.format(eventDay.getCalendar().getTime());
-                    if (selectedDate.equals(date) || !historyData.containsKey(date)) return;
-                    adapter.setList(historyData.get(date));
+                    if (selectedDate.equals(date)) {
+                        return;
+                    }
+                    if (historyData.containsKey(date)) {
+                        adapter.setList(historyData.get(date));
+                    }
+                    else {
+                        adapter.hideData();
+                    }
                     selectedDate = date;
                 });
 
@@ -97,6 +119,12 @@ public class Calendar extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MediaManager.releasePlayer();
+    }
+
     private static class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.ViewHolder> {
 
         public final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
@@ -125,6 +153,11 @@ public class Calendar extends AppCompatActivity {
             notifyDataSetChanged();
         }
 
+        public void hideData() {
+            historyList = new ArrayList<>();
+            notifyDataSetChanged();
+        }
+
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -142,9 +175,18 @@ public class Calendar extends AppCompatActivity {
             switch (data.type) {
                 case GAME:
                     holder.typeText.setText(R.string.volume_game);
+                    holder.itemView.setOnClickListener((view) -> {
+                        Intent intent = new Intent(holder.ctx, GameHistory.class);
+                        intent.putExtra(HISTORY_DATA, data);
+                        holder.ctx.startActivity(intent);
+                    });
                     break;
                 case SHORT_LINE:
                     holder.typeText.setText(R.string.short_line_game);
+                    holder.itemView.setOnClickListener((view) -> {
+                        String audioName = FileManager.getShortLinePath(data.date);
+                        MediaManager.playAudio(audioName, null);
+                    });
                     break;
                 case PROFILE:
                     break;
@@ -172,6 +214,26 @@ public class Calendar extends AppCompatActivity {
                         }).setPositiveButton(R.string.cancel, (dialog, which) -> {})
                         .show();
             });
+            holder.upload.setOnClickListener(view -> {
+                new AlertDialog.Builder(holder.ctx)
+                        .setTitle(R.string.make_sure_upload)
+                        .setNegativeButton(R.string.ok, (dialog, which) -> {
+                            new Thread(() -> {
+                                File[] files = FileManager.getFiles(data);
+                                Client.upload(holder.ctx, files, isSucceed -> {
+                                    new Handler(Looper.getMainLooper()).post(() -> {
+                                        if (isSucceed) {
+                                            Toast.makeText(holder.ctx, R.string.upload_success, Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+                                            Toast.makeText(holder.ctx, R.string.upload_failed, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                });
+                            }).start();
+                        }).setPositiveButton(R.string.cancel, (dialog, which) -> {})
+                        .show();
+            });
         }
 
         @Override
@@ -180,5 +242,4 @@ public class Calendar extends AppCompatActivity {
             return historyList.size();
         }
     }
-
 }

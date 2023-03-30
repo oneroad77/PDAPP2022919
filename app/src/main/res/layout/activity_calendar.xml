@@ -6,10 +6,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+  <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/back_main_page_button2"
+      android:layout_width="49dp"
+      android:layout_height="43dp"
+      android:layout_marginStart="3dp"
+      android:layout_marginTop="5dp"
+      android:background="#00FFFFFF"
+      android:text="@string/k"
+      android:textColor="#8A8A8A"
+      android:textSize="30sp"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.036"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.013"
+      tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
   <com.applandeo.materialcalendarview.CalendarView
       android:id="@+id/calendarView"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
       app:eventsEnabled="true"
       app:headerColor="#1FA7DE"
       app:layout_constraintEnd_toEndOf="parent"
@@ -25,6 +45,7 @@
       style="@style/logging_page_button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_marginBottom="16dp"
       android:text="回到今日"
       android:textSize="12sp"
       app:layout_constraintBottom_toTopOf="@+id/calendarView"

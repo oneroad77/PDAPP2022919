@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:constraint_referenced_ids="recorderButton,playButton,historyButton"
+        app:constraint_referenced_ids="recorderButton,historyButton"
         app:flow_verticalGap="20dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline41"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,16 +30,6 @@
         tools:layout_editor_absoluteY="436dp" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/playButton"
-        style="@style/logging_page_button"
-        android:layout_width="179dp"
-        android:layout_height="62dp"
-        android:text="播放"
-        android:visibility="gone"
-        tools:layout_editor_absoluteX="116dp"
-        tools:layout_editor_absoluteY="518dp" />
-
-    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/historyButton"
         style="@style/logging_page_button"
         android:layout_width="179dp"
@@ -52,9 +42,12 @@
         android:id="@+id/sentence"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
         android:scrollbars="vertical"
         android:text="@string/short_sentence"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/flow2"
@@ -69,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.04" />
+        app:layout_constraintGuide_percent="0.03" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline41"

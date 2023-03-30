@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -14,11 +16,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pdapp2022919.FileManager;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.net.Client;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -67,6 +72,17 @@ public class PersonalData extends AppCompatActivity {
             } else {
                 changeButton.setText("修改");
                 FileManager.writeProfile(profile);
+                File[] files = new File[] { FileManager.getProfile() };
+                Client.upload(this, files, isSucceed -> {
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        if (isSucceed) {
+                            Toast.makeText(this, R.string.upload_success, Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(this, R.string.upload_failed, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                });
             }
             //2.輸入狀態
             BirthdayText.setEnabled(ismodification);

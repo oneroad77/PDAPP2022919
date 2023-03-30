@@ -1,5 +1,4 @@
 package com.example.pdapp2022919.Game;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -27,7 +26,7 @@ public class ChooseLevel extends AppCompatActivity {
 
     private void next(int difficulty) {
         FileManager.setTimestamp(FileManager.FileType.GAME);
-        Intent intent = new Intent(this, RecorderTest.class);
+        Intent intent = new Intent(this,PretestCaption.class);
         intent.putExtra(level_difficulty,difficulty);
         startActivity(intent);
     }

@@ -1,8 +1,5 @@
 package com.example.pdapp2022919;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,9 +8,10 @@ import android.os.Message;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.pdapp2022919.Recode.RecorderManager;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.File;
+import com.example.pdapp2022919.Recode.WavRecorder;
 
 public class EnvironmentTest extends AppCompatActivity {
     private Button nextstepButton;
@@ -24,7 +22,7 @@ public class EnvironmentTest extends AppCompatActivity {
             switch (msg.what){
                 case 1:
                     handler.sendEmptyMessageDelayed(1, 500);
-                    double db = RecorderManager.dbTransfer(RecorderManager.getMaxRaw());
+                    double db = WavRecorder.getDB(WavRecorder.getMaxAmplitude());
                     realTimeDBText.setText(String.format("%2.0fdB", db));
                     break;
 
@@ -45,7 +43,7 @@ public class EnvironmentTest extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        RecorderManager.startMeasure(new File(getFilesDir(), "recording.gp3"));
+        WavRecorder.startRecording();
         handler.sendEmptyMessage(1);
 
     }
@@ -53,7 +51,7 @@ public class EnvironmentTest extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        RecorderManager.stopMeasure();
+        WavRecorder.stopRecording((String) null);
         handler.removeCallbacksAndMessages(null);
     }
 }

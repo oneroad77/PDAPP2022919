@@ -9,10 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.pdapp2022919.FileManager;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
-import com.example.pdapp2022919.net.CallbackUUID;
 import com.example.pdapp2022919.net.Client;
 
 public class LoginPage extends AppCompatActivity {
@@ -34,18 +32,13 @@ public class LoginPage extends AppCompatActivity {
             String name = editTextTextPersonName3.getText().toString();
             System.out.println(id + ": " + name);
             new Thread(() -> {
-                Client.login(id, name, new CallbackUUID() {
-                    @Override
-                    public void succeed() {
+                Client.login(this, id, name, isSucceed -> {
+                    if (isSucceed) {
                         runOnUiThread(() -> hint.setVisibility(View.GONE));
                         // TODO 從雲端下載profile
                         startActivity(new Intent(LoginPage.this, MainPage.class));
                     }
-
-                    @Override
-                    public void failed() {
-                        runOnUiThread(() -> hint.setVisibility(View.VISIBLE));
-                    }
+                    else runOnUiThread(() -> hint.setVisibility(View.VISIBLE));
                 });
             }).start();
         });

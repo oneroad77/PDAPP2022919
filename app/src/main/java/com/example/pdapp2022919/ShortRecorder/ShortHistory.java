@@ -50,7 +50,7 @@ public class ShortHistory extends AppCompatActivity {
 
 //                    boolean mStartPlaying = true;
                 String path = new File(getFilesDir(), "record").getAbsolutePath();
-                Recorder.startPlaying(path + "/" + mData.get(position));
+//                Recorder.startPlaying(path + "/" + mData.get(position));
 //                    if (mStartPlaying) {
 //                        Recorder.play_btn.setText("停止");
 //                    } else {

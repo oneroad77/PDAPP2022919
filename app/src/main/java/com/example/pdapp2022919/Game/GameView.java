@@ -23,7 +23,8 @@ public class GameView extends View {
     private int level_difficulty;
     private int viewWidth, viewHeight;
     private int ground, speed = 10, xSpeed = 10;
-    private int size = 50, x = -size, y = -size, distance = 0, level = -1, gap = 0, failcount = 0;
+    private int size = 50, x = -size, y = -size, distance = 0, gap = 0, failCount = 0;
+    private int level = 0;
     private double stander;
     private Paint p = new Paint();
     private int blockIndex = 0;
@@ -45,9 +46,7 @@ public class GameView extends View {
     }
 
     public void update(double volume) {
-        if (isGameOver) {
-            return;
-        }
+        if (isGameOver) return;
         volume = 20 * (Math.log10(Math.abs(volume)));
         Block nowBlock = blocks[blockIndex];
         // move ball
@@ -78,16 +77,19 @@ public class GameView extends View {
         }
         if (x < 0 || y > viewHeight) {
             isGameOver = true;
-            failcount++;
+            failCount++;
         }
     }
 
     public void startGame() {
-        if (!isGameOver) this.level++;
+        if (!isGameOver) {
+//            this.level++;
+            failCount = 0;
+        }
         gap = 0;
         isGameOver = false;
         x = viewWidth / 10;
-        y = (int) getLimit(stander + 3 * level) - size - 10;
+        y = (int) getLimit(stander + 3) - size - 10;
         blocks[blockIndex] = new Block(true);
     }
     public void setLevelDifficulty(int level_difficulty) {
@@ -111,7 +113,7 @@ public class GameView extends View {
     }
 
     public int failCount() {
-        return failcount;
+        return failCount;
     }
 
     private double getLimit(double volume) {
@@ -147,7 +149,7 @@ public class GameView extends View {
         canvas.drawCircle(x, y, size, p);
 
         float center = viewWidth * 0.5f - 30;
-        for (int i = 0; i < 3 - failcount; i++) {
+        for (int i = 0; i < 3 - failCount; i++) {
             canvas.drawBitmap(heart, center + 60 * (i - 1) + i * 10, viewHeight * 0.08f, null);
         }
         invalidate();
@@ -159,10 +161,7 @@ public class GameView extends View {
         if (!changed) return;
         viewWidth = right - left;
         viewHeight = bottom - top;
-//        x = viewWidth / 10;
         ground = viewHeight / 3 * 2;
-//        y = ground - size + 10;
-//        blocks[blockIndex] = new Block(true);
     }
 
     private class Block {
@@ -172,12 +171,12 @@ public class GameView extends View {
         public Block(boolean init) {
             if (init) {
                 x = 0;
-                y = (int) getLimit(stander + level_difficulty * level);
+                y = (int) getLimit(stander + level_difficulty);
                 length = viewWidth;
             }
             else {
-                x = xSpeed * 60 * 3 + random.nextInt(xSpeed * 60 );
-                y = (int) getLimit(stander + level_difficulty * level);
+                x = xSpeed * 60 * 3 + random.nextInt(xSpeed * 60);
+                y = (int) getLimit(stander + level_difficulty);
                 length = xSpeed * 60 *2;
             }
         }

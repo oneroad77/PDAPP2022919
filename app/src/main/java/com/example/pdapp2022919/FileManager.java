@@ -1,16 +1,24 @@
 package com.example.pdapp2022919;
 
+import android.media.MediaMetadataRetriever;
 import android.os.Build;
-import android.os.FileUtils;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 
 import com.example.pdapp2022919.Profile.ProfileData;
-import com.example.pdapp2022919.Recode.RecodeData;
+import com.example.pdapp2022919.Recode.RecordData;
 import com.example.pdapp2022919.net.Client;
 import com.google.gson.Gson;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,23 +33,69 @@ import java.util.UUID;
 public class FileManager {
 
     public enum FileType {
-        GAME("game"), SHORT_LINE("shortLine"), PROFILE("profile");
+
+        GAME(0,"game"),
+        SHORT_LINE(1,"shortLine"),
+        PROFILE(2,"profile");
 
         final String displayName;
+        final int order;
 
-        FileType(String displayName) {
+        FileType(int order, String displayName) {
+            this.order = order;
             this.displayName = displayName;
+        }
+
+        static FileType getType(int i) {
+            switch (i) {
+                case 0:
+                    return GAME;
+                case 1:
+                    return SHORT_LINE;
+                case 2:
+                    return PROFILE;
+                default:
+                    return null;
+            }
         }
 
     }
 
-    public static class HistoryData {
+    public static class HistoryData implements Parcelable {
         public final Date date;
         public final FileType type;
 
         private HistoryData(FileType type, Date date) {
             this.type = type;
             this.date = date;
+        }
+
+        protected HistoryData(Parcel in) {
+            date = new Date(in.readLong());
+            type = FileType.getType(in.readInt());
+        }
+
+        public static final Creator<HistoryData> CREATOR = new Creator<HistoryData>() {
+            @Override
+            public HistoryData createFromParcel(Parcel in) {
+                return new HistoryData(in);
+            }
+
+            @Override
+            public HistoryData[] newArray(int size) {
+                return new HistoryData[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(@NonNull Parcel parcel, int i) {
+            parcel.writeLong(date.getTime());
+            parcel.writeInt(type.order);
         }
     }
 
@@ -60,32 +114,36 @@ public class FileManager {
         fileDir = path;
     }
 
+    public static String getFileDir() {
+        return fileDir;
+    }
+
     public static void setTimestamp(FileType type) {
         long timestamp = System.currentTimeMillis();
         switch (type) {
             case GAME:
-                gameFilePrefix = String.join("_", new String[]{
-                        Client.getUuid().toString(), type.displayName, Long.toString(timestamp)
+                gameFilePrefix = String.join("_", new String[] {
+                        type.displayName, Long.toString(timestamp)
                 });
-                gameFolder = String.join("/", new String[]{
+                gameFolder = String.join("/", new String[] {
                         fileDir, Client.getUuid().toString(), type.displayName, Long.toString(timestamp)
                 });
                 checkFolder(gameFolder);
                 break;
             case SHORT_LINE:
-                shortLineFilePrefix = String.join("_", new String[]{
-                        Client.getUuid().toString(), type.displayName, Long.toString(timestamp)
-                });
-                shortLineFolder = String.join("/", new String[]{
+                shortLineFilePrefix = String.join("_", new String[] {
+                    type.displayName, Long.toString(timestamp)
+            });
+                shortLineFolder = String.join("/", new String[] {
                         fileDir, Client.getUuid().toString(), type.displayName, Long.toString(timestamp)
                 });
                 checkFolder(shortLineFolder);
                 break;
             case PROFILE:
-                profilePrefix = String.join("_", new String[]{
-                        Client.getUuid().toString(), type.displayName
+                profilePrefix = String.join("_", new String[] {
+                        type.displayName
                 });
-                profileFolder = String.join("/", new String[]{
+                profileFolder = String.join("/", new String[] {
                         fileDir, Client.getUuid().toString(), type.displayName
                 });
                 checkFolder(profileFolder);
@@ -93,12 +151,17 @@ public class FileManager {
         }
     }
 
+    public static File getGameFile(int level, int life) {
+        String fileName = gameFilePrefix + "_game" + level + "_" + life + ".wav";
+        return new File(gameFolder, fileName);
+    }
+
     public static File getPreTestFile() {
-        return new File(gameFolder, gameFilePrefix + "_preTest.gp3");
+        return new File(gameFolder, gameFilePrefix + "_preTest.wav");
     }
 
     public static File getPostTestFile() {
-        return new File(gameFolder, gameFilePrefix + "_postTest.gp3");
+        return new File(gameFolder, gameFilePrefix + "_postTest.wav");
     }
 
     public static void writeProfile(ProfileData data) {
@@ -135,10 +198,10 @@ public class FileManager {
         } catch (IOException exp) {   //確保讀取是否崩潰，如果崩潰將顯示在run
             exp.printStackTrace();
         }
-        return new Gson().fromJson(builder.toString(), ProfileData.class);//回傳profildata(gson把String轉為Class)
+        return new Gson().fromJson(builder.toString(), ProfileData.class);//回傳profile data(gson把String轉為Class)
     }
 
-    public static void writeHistoryFile(RecodeData data) {
+    public static void writeHistoryFile(RecordData data) {
         File history = new File(gameFolder, gameFilePrefix + "_history.json");
         String gson = new Gson().toJson(data);
         try {
@@ -149,26 +212,64 @@ public class FileManager {
         }
     }
 
+    public static RecordData readHistoryFile(HistoryData data) {
+        File[] files = getFiles(data, (file, name) -> name.endsWith("history.json"));
+        if (files == null || files.length < 1) return null;
+        System.out.println(files.length);
+        try {
+            FileReader reader = new FileReader(files[0]);
+            return new Gson().fromJson(reader, RecordData.class);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static File getShortLineFile() {
-        return new File(shortLineFolder, shortLineFilePrefix + "_shortLine.gp3");
+        return new File(shortLineFolder, shortLineFilePrefix + "_shortLine.wav");
+    }
+
+    public static String getShortLinePath(Date date) {
+        String fileType = FileType.SHORT_LINE.displayName;
+        String time = Long.toString(date.getTime());
+        String fileName = String.join("_", new String[] {
+                fileType, time, "shortLine.wav"
+        });
+        return String.join("/", new String[] {
+                fileDir, Client.getUuid().toString(), fileType, time, fileName
+        });
     }
 
     public static File getProfile() {
         return new File(profileFolder, profilePrefix + "_profile.json");
     }
 
+    public static File[] getFiles(HistoryData data) {
+        return getFiles(data, null);
+    }
+
+    public static File[] getFiles(HistoryData data, FilenameFilter filter) {
+        String path = String.join("/", new String[] {
+                fileDir, Client.getUuid().toString(), data.type.displayName, Long.toString(data.date.getTime())
+        });
+        File folder = new File(path);
+        if (!folder.exists()) return null;
+        if (filter == null) return folder.listFiles();
+        return folder.listFiles(filter);
+    }
+
     //把所有的紀錄放在日曆中，需所有有遊玩的日期，
-    public static Map<String, List<HistoryData>> getRecordFiles(UUID uuid) {
+    public static Map<String, List<HistoryData>> getRecords(UUID uuid) {
         HashMap<String, List<HistoryData>> result = new HashMap<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            List<Date> gameList = getFiles(uuid, FileType.GAME);
+            List<Date> gameList = getDateList(uuid, FileType.GAME);
             gameList.forEach(date -> {
                 String key = DATE_FORMAT.format(date);
                 //如未有List創建新的並將資料帶入
                 List<HistoryData> list = result.computeIfAbsent(key, k -> new ArrayList<>());
                 list.add(new HistoryData(FileType.GAME, date));
             });
-            List<Date> shortLineList = getFiles(uuid, FileType.SHORT_LINE);
+            List<Date> shortLineList = getDateList(uuid, FileType.SHORT_LINE);
             shortLineList.forEach(date -> {
                 String key = DATE_FORMAT.format(date);
                 List<HistoryData> list = result.computeIfAbsent(key, k -> new ArrayList<>());
@@ -183,7 +284,6 @@ public class FileManager {
                 fileDir, Client.getUuid().toString(), data.type.displayName, Long.toString(data.date.getTime())
         });
         File folder = new File(path);
-        System.out.println(folder.getAbsolutePath());
         if (!folder.exists()) return false;
         File[] files = folder.listFiles();
         if (files != null) {
@@ -195,7 +295,7 @@ public class FileManager {
     }
 
     //從資料中取得個人遊玩紀錄，根據遊戲類型取得路徑
-    private static List<Date> getFiles(UUID uuid, FileType type) {
+    private static List<Date> getDateList(UUID uuid, FileType type) {
         String path = String.join("/", new String[]{
                 fileDir, uuid.toString(), type.displayName
         });

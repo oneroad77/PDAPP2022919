@@ -27,6 +27,8 @@ import com.google.android.gms.vision.face.LargestFaceFocusingProcessor;
 import java.io.IOException;
 
 public class DistanceMeasure extends AppCompatActivity {
+
+    private CameraSource cameraSource;
     private Button finishButton;
     private ImageView demoPicture;
     private TextView disHint;
@@ -38,8 +40,7 @@ public class DistanceMeasure extends AppCompatActivity {
 
     static final int AVERAGE_EYE_DISTANCE = 63; // in mm
 
-    TextView textView;
-    Context context;
+    private TextView textView;
 
     float F = 1f;           //focal length
     float sensorX, sensorY; //camera sensor dimensions
@@ -100,7 +101,7 @@ public class DistanceMeasure extends AppCompatActivity {
                 .build();
         detector.setProcessor(new LargestFaceFocusingProcessor(detector, new FaceTracker()));
 
-        CameraSource cameraSource = new CameraSource.Builder(this, detector)
+        cameraSource = new CameraSource.Builder(this, detector)
                 .setFacing(CameraSource.CAMERA_FACING_FRONT)
                 .setRequestedFps(100f)
                 .build();
@@ -122,7 +123,6 @@ public class DistanceMeasure extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
     }
 
     public void showStatus(final String message) {
@@ -132,6 +132,24 @@ public class DistanceMeasure extends AppCompatActivity {
                 textView.setText(message);
             }
         });
+    }
+
+    @SuppressLint("MissingPermission")
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (cameraSource == null) return;
+        try {
+            cameraSource.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cameraSource.stop();
     }
 
     private class FaceTracker extends Tracker<Face> {

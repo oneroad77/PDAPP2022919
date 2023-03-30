@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.pdapp2022919.FileManager;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
-import com.example.pdapp2022919.net.CallbackUUID;
 import com.example.pdapp2022919.net.Client;
 
 public class SignUpPage extends AppCompatActivity {
@@ -36,9 +35,8 @@ public class SignUpPage extends AppCompatActivity {
             String name = editTextTextPersonName.getText().toString();
             System.out.println(id + ": " + name);
             new Thread(() -> {
-                Client.register(id, name, new CallbackUUID() {
-                    @Override
-                    public void succeed() {
+                Client.register(this, id, name, isSucceed -> {
+                    if (isSucceed) {
                         runOnUiThread(() -> hintText1.setVisibility(View.GONE));
                         FileManager.setTimestamp(FileManager.FileType.PROFILE);
                         ProfileData profile = new ProfileData();
@@ -47,13 +45,8 @@ public class SignUpPage extends AppCompatActivity {
 
                         FileManager.writeProfile(profile);
                         startActivity(new Intent(SignUpPage.this, MainPage.class));
-
                     }
-
-                    @Override
-                    public void failed() {
-                        runOnUiThread(() -> hintText1.setVisibility(View.VISIBLE));
-                    }
+                    else runOnUiThread(() -> hintText1.setVisibility(View.VISIBLE));
                 });
             }).start();
         });

@@ -21,7 +21,7 @@ public class ListPage extends AppCompatActivity {
         Button voicepButton= findViewById(R.id.voice_practice_button);
         Button higlowButton= findViewById(R.id.high_low_practice_button);
         Button keeppracticeButton= findViewById(R.id.keepv_practice_Button);
-        Button muscletrainButton= findViewById(R.id.muscle_train_button);
+//        Button muscletrainButton= findViewById(R.id.muscle_train_button);
 
         backmainpageButton.setOnClickListener(view -> finish());
         voicepButton.setOnClickListener(view -> openChooseLevel());

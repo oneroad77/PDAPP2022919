@@ -26,7 +26,7 @@ import com.google.android.gms.vision.face.LargestFaceFocusingProcessor;
 
 import java.io.IOException;
 
-public class DistanceMeasure extends AppCompatActivity {
+public class DistanceMeasure extends ScreenSetting{
 
     private CameraSource cameraSource;
     private Button finishButton;
@@ -50,6 +50,7 @@ public class DistanceMeasure extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_distance_measure);
+        hideSystemUI();
         demoPicture = findViewById(R.id.demoPicture);
         finishButton = findViewById(R.id.finishButton);
         disHint = findViewById(R.id.DistanceHint);

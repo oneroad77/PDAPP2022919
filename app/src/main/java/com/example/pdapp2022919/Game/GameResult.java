@@ -11,10 +11,11 @@ import com.example.pdapp2022919.FileManager;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.Recode.RecordData;
+import com.example.pdapp2022919.ScreenSetting;
 
 import java.text.SimpleDateFormat;
 
-public class GameResult extends AppCompatActivity {
+public class GameResult extends ScreenSetting {
 
     private static final SimpleDateFormat DATE = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
     private TextView result_text;
@@ -24,11 +25,13 @@ public class GameResult extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_result);
+        hideSystemUI();
         PlayAgain = findViewById(R.id.playAgain);
         BackHome = findViewById(R.id.backHome);
         RecordData recode_data = getIntent().getParcelableExtra(Game1.RECORD_DATA);
         result_text = findViewById(R.id.result_text);
         result_text.append(getString(R.string.level_difficulty, getLevelDifficulty(recode_data.level_difficulty)));
+
         result_text.append(getString(R.string.pretest_db, recode_data.pretest_db));
         result_text.append(getString(R.string.post_test_db, recode_data.post_test_db));
         result_text.append(getString(R.string.play_how_long, covertTime(recode_data.play_how_long)));

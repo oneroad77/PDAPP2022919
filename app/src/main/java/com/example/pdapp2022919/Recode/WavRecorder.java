@@ -31,7 +31,10 @@ public class WavRecorder {
     private static final byte[] HEADER = new byte[44];
 
     private static boolean isRecording = false;
+    private static boolean isMark = false;
     private static short maxAmplitude = -1;
+    private static int markCount = 0;
+    private static long markDataSum = 0;
     private static AudioRecord recorder;
 
     static {
@@ -118,9 +121,21 @@ public class WavRecorder {
         return result;
     }
 
-    public static double getDB(short amp) {
+    public static double getDB(double amp) {
         if (amp <= 0) return 0;
         return 20 * Math.log10(amp);
+    }
+
+    public static void enableMark(boolean enable) {
+        isMark = enable;
+        if (enable) {
+            markCount = 0;
+            markDataSum = 0;
+        }
+    }
+
+    public static double getMarkAverage() {
+        return (double) markDataSum / markCount;
     }
 
     private static void recordRawData() {
@@ -132,7 +147,7 @@ public class WavRecorder {
             while (isRecording) {
                 if (recorder.read(buffer, BUFFER_SIZE) != AudioRecord.ERROR_INVALID_OPERATION) {
                     channel.write(buffer);
-                    setMax(buffer.compact().order(ByteOrder.LITTLE_ENDIAN).asShortBuffer());
+                    dataProcessing(buffer.compact().order(ByteOrder.LITTLE_ENDIAN).asShortBuffer());
                 }
                 buffer.clear();
             }
@@ -141,15 +156,18 @@ public class WavRecorder {
         }
     }
 
-    private static void setMax(ShortBuffer buffer) {
+    private static void dataProcessing(ShortBuffer buffer) {
         short[] data = new short[buffer.remaining()];
-        System.out.println(buffer.remaining());
         buffer.get(data);
         for (short s : data) {
+            // max
             if (s < 0) s = (short) -s;
             if (maxAmplitude == -1 || maxAmplitude < s) maxAmplitude = s;
+            // average
+            if (!isMark) return;
+            markDataSum += s;
+            markCount++;
         }
-        System.out.println(maxAmplitude);
     }
 
     private static void outputWavFile(String saveFilePath) {

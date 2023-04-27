@@ -1,35 +1,27 @@
 package com.example.pdapp2022919.ShortRecorder;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
-import android.os.Build;
 import android.os.Bundle;
 
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pdapp2022919.FileManager;
 import com.example.pdapp2022919.History.Calendar;
+import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.Recode.WavRecorder;
-
-import java.io.File;
-import java.io.IOException;
 
 public class Recorder<root> extends AppCompatActivity {
 
     private static final String LOG_TAG = "AudioRecordTest";
 
     private Button record_btn;
-    private Button history_btn;
+    private Button backhomeButton;
 
     private void onRecord(boolean start) {
         if (start) {
@@ -54,7 +46,7 @@ public class Recorder<root> extends AppCompatActivity {
         setContentView(R.layout.activity_recorder);
 
         record_btn= findViewById(R.id.recorderButton);
-        history_btn= findViewById(R.id.historyButton);
+        backhomeButton= findViewById(R.id.backhomeButton);
         TextView sentence = findViewById(R.id.sentence);
         sentence.setMovementMethod(new ScrollingMovementMethod());
 
@@ -74,9 +66,9 @@ public class Recorder<root> extends AppCompatActivity {
 
         });
 
-        history_btn.setOnClickListener(view -> {
+        backhomeButton.setOnClickListener(view -> {
             Intent intent = new Intent();
-            intent.setClass(Recorder.this, Calendar.class);
+            intent.setClass(Recorder.this, MainPage.class);
             startActivity(intent);
         });
     }

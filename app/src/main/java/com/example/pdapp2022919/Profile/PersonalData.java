@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.pdapp2022919.FileManager;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.ScreenSetting;
 import com.example.pdapp2022919.net.Client;
 
 import java.io.File;
@@ -28,7 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class PersonalData extends AppCompatActivity {
+public class PersonalData extends ScreenSetting {
 
     private boolean ismodification = false;
 
@@ -36,6 +37,7 @@ public class PersonalData extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_data);
+        hideSystemUI();
         Button changeButton = findViewById(R.id.changeStore);
         Button backHome = findViewById(R.id.backhome);
         TextView NameText = findViewById(R.id.NameText);

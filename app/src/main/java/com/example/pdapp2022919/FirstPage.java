@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -18,7 +19,7 @@ import com.example.pdapp2022919.Profile.LoginPage;
 import com.example.pdapp2022919.Profile.SignUpPage;
 import com.example.pdapp2022919.R;
 
-public class FirstPage extends AppCompatActivity {
+public class FirstPage extends ScreenSetting {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,10 @@ public class FirstPage extends AppCompatActivity {
         setContentView(R.layout.activity_first_page);
         checkPermission();
         FileManager.setFileDir(getFilesDir().getAbsolutePath());
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN |  View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        decorView.setSystemUiVisibility(uiOptions);
+
 
         Button signupButton=(Button) findViewById(R.id.sign_up_button);
         Button signinButton=(Button) findViewById(R.id.sign_in_button);
@@ -44,6 +49,7 @@ public class FirstPage extends AppCompatActivity {
         Intent intent=new Intent(this, LoginPage.class);
         startActivity(intent);
     }
+
 
     /**確認是否有麥克風使用權限*/
     private void checkPermission(){

@@ -67,7 +67,7 @@ public class Client {
     public static final UUID FAILED_UUID = new UUID(0, 0);
 
     private static final int bufferSize = 1024 * 32;
-    private static final String host = "140.135.101.71";
+    private static final String host = "140.135.101.62";
     private static final RSAPublicKey publicKey;
     private static final SecretKeySpec aesKeySpec;
     private static final IvParameterSpec ivSpec;

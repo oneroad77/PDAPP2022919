@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,19 +19,26 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.pdapp2022919.FileManager;
+import com.example.pdapp2022919.Game.PretestCaption;
 import com.example.pdapp2022919.MediaManager;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.Recode.RecordData;
+import com.example.pdapp2022919.ScreenSetting;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 
-public class GameHistory extends AppCompatActivity {
-
+public class GameHistory extends ScreenSetting {
+private Button back_history;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_history);
+        back_history = findViewById(R.id.back_history_page);
+        back_history.setOnClickListener(view -> {
+            startActivity( new Intent(this, Calendar.class));
+        });
+        hideSystemUI();
         FileManager.HistoryData data = getIntent().getParcelableExtra(Calendar.HISTORY_DATA);
         GameHistory.gameHistoryListAdapter adapter = new gameHistoryListAdapter(data);
 
@@ -64,6 +72,12 @@ public class GameHistory extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         MediaManager.releasePlayer();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MediaManager.stopPlayer();
     }
 
     private static class gameHistoryListAdapter extends RecyclerView.Adapter<gameHistoryListAdapter.ViewHolder> {

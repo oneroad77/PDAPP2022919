@@ -32,6 +32,7 @@ import com.example.pdapp2022919.FileManager;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.MediaManager;
 import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.ScreenSetting;
 import com.example.pdapp2022919.ShortRecorder.Recorder;
 import com.example.pdapp2022919.net.Client;
 
@@ -43,7 +44,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class Calendar extends AppCompatActivity {
+public class Calendar extends ScreenSetting {
 
     public static final String HISTORY_DATA = "HISTORY DATA";
 
@@ -55,6 +56,7 @@ public class Calendar extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        hideSystemUI();
         ProgressDialog dialog = ProgressDialog.show(this, "", "請稍候");
         new Thread(() -> {
             /** 由於此開源庫的Calender為耗時工作，故加入背景執行使載入介面時不會閃退 */
@@ -89,6 +91,7 @@ public class Calendar extends AppCompatActivity {
                     else {
                         adapter.hideData();
                     }
+                    MediaManager.stopPlayer();
                     selectedDate = date;
                 });
 
@@ -123,6 +126,12 @@ public class Calendar extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         MediaManager.releasePlayer();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MediaManager.stopPlayer();
     }
 
     private static class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.ViewHolder> {

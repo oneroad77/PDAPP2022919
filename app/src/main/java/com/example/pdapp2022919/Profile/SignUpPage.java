@@ -11,23 +11,31 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pdapp2022919.FileManager;
+import com.example.pdapp2022919.FirstPage;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.ScreenSetting;
 import com.example.pdapp2022919.net.Client;
 
-public class SignUpPage extends AppCompatActivity {
+public class SignUpPage extends ScreenSetting {
     private TextView hintText1;
     private EditText editTextTextPersonName,editTextPatientID;
-    private Button enter_Button;
+    private Button enter_Button,backFirst;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_page);
+        hideSystemUI();
         editTextPatientID = findViewById(R.id.editTextPatientID);
         editTextTextPersonName = findViewById(R.id.editTextTextPersonName);
         hintText1 = findViewById(R.id.hintText1);
         enter_Button = findViewById(R.id.enter_Button);
+
+        backFirst = findViewById(R.id.back_first_page_button4);
+        backFirst.setOnClickListener(view -> {
+            startActivity(new Intent(this, FirstPage.class));
+        });
 
         // TODO 判斷輸入格式
         enter_Button.setOnClickListener(view -> {

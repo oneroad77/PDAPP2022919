@@ -13,12 +13,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.ScreenSetting;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class ShortHistory extends AppCompatActivity {
+public class ShortHistory extends ScreenSetting {
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> mData = new ArrayList<>();
@@ -26,7 +27,7 @@ public class ShortHistory extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recorderlist);
-
+        hideSystemUI();
         File dir = new File(getFilesDir(), "record");
         for (File file : Objects.requireNonNull(dir.listFiles())) {
             mData.add(file.getName());

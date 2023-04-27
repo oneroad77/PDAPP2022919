@@ -11,9 +11,9 @@
         android:id="@+id/flow2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:constraint_referenced_ids="recorderButton,historyButton"
-        app:flow_verticalGap="20dp"
+        android:orientation="horizontal"
+        app:constraint_referenced_ids="recorderButton,backhomeButton"
+        app:flow_horizontalGap="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline41"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,18 +23,18 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/recorderButton"
         style="@style/logging_page_button"
-        android:layout_width="179dp"
+        android:layout_width="150dp"
         android:layout_height="62dp"
-        android:text="錄音"
+        android:text="開始錄音"
         tools:layout_editor_absoluteX="116dp"
         tools:layout_editor_absoluteY="436dp" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/historyButton"
+        android:id="@+id/backhomeButton"
         style="@style/logging_page_button"
-        android:layout_width="179dp"
+        android:layout_width="150dp"
         android:layout_height="62dp"
-        android:text="歷史紀錄"
+        android:text="回到首頁"
         tools:layout_editor_absoluteX="116dp"
         tools:layout_editor_absoluteY="600dp" />
 
@@ -69,6 +69,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.88" />
+        app:layout_constraintGuide_percent="0.93" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

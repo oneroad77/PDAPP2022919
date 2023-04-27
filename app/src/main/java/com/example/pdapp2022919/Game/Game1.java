@@ -20,11 +20,12 @@ import com.example.pdapp2022919.FileManager;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.Recode.RecordData;
 import com.example.pdapp2022919.Recode.WavRecorder;
+import com.example.pdapp2022919.ScreenSetting;
 
 import java.io.File;
 import java.io.IOException;
 
-public class Game1 extends AppCompatActivity {
+public class Game1 extends ScreenSetting {
     public final static String POST = "post_test";
     public final static String RECORD_DATA = "RECORD_DATA";
     private GameView gameView;
@@ -53,6 +54,7 @@ public class Game1 extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        hideSystemUI();
         gameView = findViewById(R.id.gameView);
         Intent intent = getIntent();
         level_difficulty = intent.getIntExtra(ChooseLevel.level_difficulty, 1);
@@ -139,12 +141,14 @@ public class Game1 extends AppCompatActivity {
                         stopMeasure();
                         return;
                     }
-                    int amp = WavRecorder.getMaxAmplitude();
+                    WavRecorder.enableMark(false);
+                    double amp = WavRecorder.getMarkAverage();
                     gameView.update(amp);
+                    WavRecorder.enableMark(true);
                     handlerMeasure.sendEmptyMessageDelayed(1, 15);
                     //刷新率計算到15次時settext，最後歸零重新計算
                     if (frame > 15) {
-                        double db = WavRecorder.getDB((short) amp);
+                        double db = WavRecorder.getDB(amp);
                         real_time_db.setText("即時分貝 " + String.format("%2.0f", db));
                         real_time_db.setVisibility(View.VISIBLE);
                         frame = 0;

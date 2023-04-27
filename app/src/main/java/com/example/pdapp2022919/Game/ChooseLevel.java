@@ -7,8 +7,9 @@ import android.widget.Button;
 
 import com.example.pdapp2022919.FileManager;
 import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.ScreenSetting;
 
-public class ChooseLevel extends AppCompatActivity {
+public class ChooseLevel extends ScreenSetting {
 
     public final static String level_difficulty ="Level_difficulty";
 
@@ -16,6 +17,7 @@ public class ChooseLevel extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_level);
+        hideSystemUI();
         Button easy = findViewById(R.id.levl1_Button);
         Button medium = findViewById(R.id.levl2_Button);
         Button hard = findViewById(R.id.levl3_Button);

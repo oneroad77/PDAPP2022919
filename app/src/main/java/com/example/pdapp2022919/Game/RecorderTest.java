@@ -17,25 +17,29 @@ import com.example.pdapp2022919.FileManager;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.Recode.RecordData;
 import com.example.pdapp2022919.Recode.WavRecorder;
+import com.example.pdapp2022919.ScreenSetting;
 
 import java.io.File;
 
 
-public class RecorderTest extends AppCompatActivity {
+public class RecorderTest extends ScreenSetting {
 
     public final static String MAX_AVG = "Max_Avg";
     private TextView hint_word, tvResult;
     private ImageView Green_light, Red_light;
     private int recordCount = 0;
-    private int[] standard = new int[3];
+    private double[] standard = new double[3];
     private double avg;
     private boolean post_test;
     private int level_difficulty;
     private File savingFile;
     private TextView countDown;
+    private int restTime = 5000;
+    private int recordTime = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        hideSystemUI();
         post_test = getIntent().getBooleanExtra(Game1.POST, false);
         level_difficulty = getIntent().getIntExtra(ChooseLevel.level_difficulty, 1);
         super.onCreate(savedInstanceState);
@@ -60,7 +64,7 @@ public class RecorderTest extends AppCompatActivity {
         recordCount = 0;
         WavRecorder.startRecording();
         for (int i = 0; i < standard.length; i++) {
-            handlerMeasure.sendEmptyMessageDelayed(0, i * 6000);
+            handlerMeasure.sendEmptyMessageDelayed(0, i * (recordTime + restTime));
         }
     }
 
@@ -74,30 +78,36 @@ public class RecorderTest extends AppCompatActivity {
             switch (msg.what) {
                 case 0:
                     hint_word.setText("綠燈亮時請「啊」持續3秒");
-                    handlerMeasure.sendEmptyMessageDelayed(1, 3000);
+                    handlerMeasure.sendEmptyMessageDelayed(1, restTime);
                     Message count = new Message();
                     count.what = 4;
-                    count.arg1 = 3;
+                    count.arg1 = restTime / 1000;
                     handlerMeasure.sendMessage(count);
                     break;
                 case 1:
                     Green_light.setVisibility(View.VISIBLE);
                     Red_light.setVisibility(View.INVISIBLE);
-                    handlerMeasure.sendEmptyMessageDelayed(2, 3000);
+                    WavRecorder.enableMark(true);
+                    handlerMeasure.sendEmptyMessageDelayed(2, recordTime);
+                    Message count1 = new Message();
+                    count1.what = 4;
+                    count1.arg1 = recordTime / 1000;
+                    handlerMeasure.sendMessage(count1);
                     break;
                 case 2:
                     Green_light.setVisibility(View.INVISIBLE);
                     Red_light.setVisibility(View.VISIBLE);
-                    short amp = WavRecorder.getMaxAmplitude();
+                    WavRecorder.enableMark(false);
+                    double amp = WavRecorder.getMarkAverage();
                     standard[recordCount++] = amp;
                     double db = WavRecorder.getDB(amp);
                     tvResult.setText(String.format("%2.0f", db));
                     if (recordCount == standard.length) {
-                        int sum = 0;
-                        for (int i : standard) {
+                        double sum = 0;
+                        for (double i : standard) {
                             sum += i;
                         }
-                        avg = 20 * (Math.log10(Math.abs(sum / standard.length)));
+                        avg = WavRecorder.getDB(sum / standard.length);
                         Intent intent;
                         if (post_test) {
                             intent = new Intent(RecorderTest.this, GameResult.class);
@@ -114,9 +124,9 @@ public class RecorderTest extends AppCompatActivity {
                     break;
                 case 4:
                     countDown.setText(Integer.toString(msg.arg1));
-                    countDown.setVisibility(View.VISIBLE);
-                    if (msg.arg1 == 0) {
-                        countDown.setVisibility(View.GONE);
+//                    countDown.setVisibility(View.VISIBLE);
+                    if (msg.arg1 == 1) {
+//                        countDown.setVisibility(View.GONE);
                         return;
                     }
                     count = new Message();

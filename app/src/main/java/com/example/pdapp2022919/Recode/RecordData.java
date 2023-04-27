@@ -8,9 +8,10 @@ import com.example.pdapp2022919.MediaManager;
 
 public class RecordData implements Parcelable {
 
-    public int level_difficulty, level;
+    public int level_difficulty, level,success_loss;
     public double pretest_db,post_test_db;
     public long play_how_long,start_play_time,stop_play_time;
+
 
     public RecordData() {}
     protected RecordData(Parcel in) {
@@ -21,6 +22,7 @@ public class RecordData implements Parcelable {
         play_how_long = in.readLong();
         start_play_time = in.readLong();
         stop_play_time = in.readLong();
+        success_loss = in.readInt();
     }
 
     public static final Creator<RecordData> CREATOR = new Creator<RecordData>() {
@@ -49,6 +51,7 @@ public class RecordData implements Parcelable {
         parcel.writeLong(play_how_long);
         parcel.writeLong(start_play_time);
         parcel.writeLong(stop_play_time);
+        parcel.writeInt(success_loss);
     }
 
     public String getPlayTimeText() {

@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pdapp2022919.Recode.WavRecorder;
 
-public class EnvironmentTest extends AppCompatActivity {
+public class EnvironmentTest extends ScreenSetting {
     private Button nextstepButton;
     private TextView realTimeDBText;
     private Handler handler = new Handler(Looper.getMainLooper()) {
@@ -23,7 +23,10 @@ public class EnvironmentTest extends AppCompatActivity {
                 case 1:
                     handler.sendEmptyMessageDelayed(1, 500);
                     double db = WavRecorder.getDB(WavRecorder.getMaxAmplitude());
-                    realTimeDBText.setText(String.format("%2.0fdB", db));
+                    WavRecorder.enableMark(false);
+                    double avgdb = WavRecorder.getDB(WavRecorder.getMarkAverage());
+                    WavRecorder.enableMark(true);
+                    realTimeDBText.setText(String.format("max:%2.0fdB\navg:%2.0fdB", db, avgdb));
                     break;
 
             }
@@ -33,6 +36,7 @@ public class EnvironmentTest extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_environment_test);
+        hideSystemUI();
         nextstepButton = findViewById(R.id.nextStepButton);
         realTimeDBText = findViewById(R.id.realTimeDB);
         nextstepButton.setOnClickListener(view -> {

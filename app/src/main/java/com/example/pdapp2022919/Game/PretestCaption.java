@@ -7,8 +7,9 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.ScreenSetting;
 
-public class PretestCaption extends AppCompatActivity {
+public class PretestCaption extends ScreenSetting {
     private int level_difficulty;
 
     @Override
@@ -16,6 +17,7 @@ public class PretestCaption extends AppCompatActivity {
         level_difficulty = getIntent().getIntExtra(ChooseLevel.level_difficulty,1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pretest_caption);
+        hideSystemUI();
         Button pretestcaption = (Button) findViewById(R.id.PretestNextButton);
         pretestcaption.setOnClickListener(view -> {
             Intent intent = new Intent(PretestCaption.this, RecorderTest.class);

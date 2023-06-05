@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:constraint_referenced_ids="recorderButton,backhomeButton"
+        app:constraint_referenced_ids="pre_page,recorderButton,next_page"
         app:flow_horizontalGap="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline41"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,37 +32,30 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/backhomeButton"
         style="@style/logging_page_button"
-        android:layout_width="150dp"
-        android:layout_height="62dp"
-        android:text="回到首頁"
-        tools:layout_editor_absoluteX="116dp"
-        tools:layout_editor_absoluteY="600dp" />
+        android:layout_width="64dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/ic_backhome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/sentence"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
         android:scrollbars="vertical"
-        android:text="@string/short_sentence"
         android:textAlignment="textStart"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/flow2"
+        app:layout_constraintBottom_toTopOf="@+id/page_count"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline36"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline36"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.03" />
+        app:layout_constraintTop_toBottomOf="@+id/backhomeButton" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline41"
@@ -70,5 +63,38 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.93" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/next_page"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
+        android:background="@drawable/ic_start"
+        android:rotation="0"
+        tools:layout_editor_absoluteX="291dp"
+        tools:layout_editor_absoluteY="790dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/pre_page"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
+        android:background="@drawable/ic_start"
+        android:rotation="-180"
+        tools:layout_editor_absoluteX="44dp"
+        tools:layout_editor_absoluteY="790dp" />
+
+    <TextView
+        android:id="@+id/page_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="1/4"
+        android:textColor="#7C000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/flow2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sentence" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

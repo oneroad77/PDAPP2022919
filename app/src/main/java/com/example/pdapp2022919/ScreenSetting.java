@@ -1,11 +1,21 @@
 package com.example.pdapp2022919;
 
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ScreenSetting extends AppCompatActivity {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //鎖住螢幕不能轉向
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+    }
 
     protected void hideSystemUI() {
         View decorView = getWindow().getDecorView();

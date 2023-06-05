@@ -1,4 +1,4 @@
-package com.example.pdapp2022919;
+package com.example.pdapp2022919.Correction;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -17,6 +17,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.pdapp2022919.ListPage;
+import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.ScreenSetting;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.Tracker;
@@ -26,7 +29,7 @@ import com.google.android.gms.vision.face.LargestFaceFocusingProcessor;
 
 import java.io.IOException;
 
-public class DistanceMeasure extends ScreenSetting{
+public class DistanceMeasure extends ScreenSetting {
 
     private CameraSource cameraSource;
     private Button finishButton;

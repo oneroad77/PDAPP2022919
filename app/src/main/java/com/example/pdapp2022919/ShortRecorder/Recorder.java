@@ -8,21 +8,32 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.pdapp2022919.FileManager;
-import com.example.pdapp2022919.History.Calendar;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.Recode.WavRecorder;
+import com.example.pdapp2022919.ScreenSetting;
 
-public class Recorder<root> extends AppCompatActivity {
+public class Recorder<root> extends ScreenSetting {
 
     private static final String LOG_TAG = "AudioRecordTest";
 
     private Button record_btn;
-    private Button backhomeButton;
-
+    private Button backhomeButton,next_page,pre_page;
+    private TextView page_count,textSentence;
+    private String[] short_sentence;
+    private int sentence = 0;
+    private void setSentence(){
+        StringBuilder builder = new StringBuilder();
+        page_count.setText((this.sentence /5)+1 + "/" + (short_sentence.length/5));
+        for (int i = 0; i < 5; i++) {
+            builder.append(this.sentence +i+1);
+            builder.append(".\n");
+            builder.append(short_sentence[this.sentence + i]);
+            builder.append("\n");
+        }
+        textSentence.setText(builder.toString());
+    }
     private void onRecord(boolean start) {
         if (start) {
             startRecording();
@@ -44,12 +55,32 @@ public class Recorder<root> extends AppCompatActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_recorder);
-
+        hideSystemUI();
         record_btn= findViewById(R.id.recorderButton);
         backhomeButton= findViewById(R.id.backhomeButton);
-        TextView sentence = findViewById(R.id.sentence);
-        sentence.setMovementMethod(new ScrollingMovementMethod());
+        next_page = findViewById(R.id.next_page);
+        pre_page = findViewById(R.id.pre_page);
+        page_count = findViewById(R.id.page_count);
+        textSentence = findViewById(R.id.sentence);
+        short_sentence = getResources().getStringArray(R.array.short_sentence);
+        setSentence();
 
+
+        textSentence.setMovementMethod(new ScrollingMovementMethod());
+        next_page.setOnClickListener(view -> {
+            if ((this.sentence/5)+1==(short_sentence.length/5)){
+                return;
+            }
+            this.sentence +=5;
+            setSentence();
+        });
+        pre_page.setOnClickListener(view -> {
+            if ((this.sentence/5)+1==1){
+                return;
+            }
+            this.sentence -=5;
+            setSentence();
+        });
         record_btn.setOnClickListener(new View.OnClickListener() {
             boolean mStartRecording = true;
             @Override

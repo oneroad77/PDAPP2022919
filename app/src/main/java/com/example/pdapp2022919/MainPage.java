@@ -1,12 +1,11 @@
 package com.example.pdapp2022919;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.pdapp2022919.Correction.EnvironmentTest;
 import com.example.pdapp2022919.History.Calendar;
 import com.example.pdapp2022919.Profile.PersonalData;
 import com.example.pdapp2022919.net.Client;

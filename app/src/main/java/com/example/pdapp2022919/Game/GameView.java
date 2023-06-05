@@ -39,8 +39,8 @@ public class GameView extends View {
     private Bitmap heart = createBitmap(R.drawable.heart, 60, 55);
     private RandomVegetable randomVegetable = RandomVegetable.getInstance();
     private Bitmap vegetable;
-    private Bitmap redlight = createBitmap(R.drawable.group_107,400,400);
-    private Bitmap greenlight = createBitmap(R.drawable.group_118,400,400);
+    private Bitmap redlight = createBitmap(R.drawable.group127,400,400);
+    private Bitmap greenlight = createBitmap(R.drawable.group129,400,400);
     private Rect vegSrc, lightSrc,  lightDest;
     private BitmapShader grassShader = new BitmapShader(
             createBitmap(R.drawable.grass, 498, 100),

@@ -13,7 +13,8 @@
     <string name="start_play_time">遊玩時間:%n%s~%n%s%n</string>
     <string name="level_difficulty">難度: %s%n</string>
     <string name="game_illustrate">請發出大於前測分貝更大的音量來控制球上升，小心別掉下懸崖囉~!</string>
-    <string name="short_sentence">有一天，北風跟太陽說，自己是最強的。\n\n此時剛好一個路人經過，北風說：「現在我們來比賽，看看誰能把這個行人的大衣弄下來，就是最強的。」說完，北風便呼呼的吹向行人，但吹得越猛，行人就把大衣裹得越緊。最後，北風只好放棄。</string>
+    <string name="short_sentence"></string>
+
     <string name="volume_game">音量練習</string>
     <string name="short_line_game">短句練習</string>
     <string name="make_sure_del">確認刪除</string>

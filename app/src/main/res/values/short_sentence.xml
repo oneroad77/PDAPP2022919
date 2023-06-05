@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="short_sentence">
+        <item>這個超市的東西很便宜</item>
+        <item>我每天早上都要喝杯茶</item>
+        <item>因為下大雨比賽取消了</item>
+        <item>大家晚上睡覺要點蚊香</item>
+        <item>這位醫生手術做得很好</item>
+        <item>樓下的叔叔喜歡聽歌劇</item>
+        <item>台南火車站有很多遊客</item>
+        <item>她學校規定學生穿制服</item>
+        <item>弟弟拿了相機出去照相</item>
+        <item>她的數學成績全班第一</item>
+        <item>下雨後馬路上積滿水坑</item>
+        <item>我們中秋節一起去賞月</item>
+        <item>他仔細幫病人檢查牙齒</item>
+        <item>這家書店今天正式營業</item>
+        <item>大家晚上睡覺要點蚊香</item>
+        <item>爸爸戴老花眼鏡看報紙</item>
+        <item>媽媽最喜歡做麻婆豆腐</item>
+        <item>婆婆今天炒菜放多鹽巴</item>
+        <item>我完全同意你們的觀點</item>
+        <item>她聽到落榜消息很傷心</item>
+    </string-array>
+</resources>

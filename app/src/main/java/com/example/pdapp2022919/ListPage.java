@@ -1,7 +1,5 @@
 package com.example.pdapp2022919;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -10,6 +8,7 @@ import com.example.pdapp2022919.Game.ChooseLevel;
 import com.example.pdapp2022919.Game.Game1;
 import com.example.pdapp2022919.ShortRecorder.Recorder;
 import com.example.pdapp2022919.Game.RecorderTest;
+import com.example.pdapp2022919.SystemManager.ScreenSetting;
 
 public class ListPage extends ScreenSetting {
 
@@ -43,7 +42,7 @@ public class ListPage extends ScreenSetting {
     }
     private void openGame1(){
         Intent intent=new Intent(this, Game1.class);
-        intent.putExtra(RecorderTest.MAX_AVG, 20.0);
+        intent.putExtra(RecorderTest.MAX_AVG, 60.0);
         startActivity(intent);
     }
     private void openrecorder(){

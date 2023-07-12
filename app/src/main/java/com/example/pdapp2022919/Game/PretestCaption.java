@@ -1,13 +1,11 @@
 package com.example.pdapp2022919.Game;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
 import com.example.pdapp2022919.R;
-import com.example.pdapp2022919.ScreenSetting;
+import com.example.pdapp2022919.SystemManager.ScreenSetting;
 
 public class PretestCaption extends ScreenSetting {
     private int level_difficulty;

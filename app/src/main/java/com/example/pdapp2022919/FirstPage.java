@@ -1,7 +1,5 @@
 package com.example.pdapp2022919;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -13,11 +11,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.pdapp2022919.FileManager;
-import com.example.pdapp2022919.MainPage;
+import com.example.pdapp2022919.Database.User.User;
+import com.example.pdapp2022919.Database.User.UserDao;
+import com.example.pdapp2022919.SystemManager.DatabaseManager;
+import com.example.pdapp2022919.SystemManager.FileManager;
 import com.example.pdapp2022919.Profile.LoginPage;
 import com.example.pdapp2022919.Profile.SignUpPage;
-import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.SystemManager.ScreenSetting;
+import com.example.pdapp2022919.net.Client;
 
 public class FirstPage extends ScreenSetting {
 
@@ -37,7 +38,17 @@ public class FirstPage extends ScreenSetting {
         ImageView DTxlablogo = (ImageView) findViewById(R.id.DTxLabLogo);
         signinButton.setOnClickListener(view -> openProfile());
         signupButton.setOnClickListener(view -> openUserPage());
-        DTxlablogo.setOnClickListener(view -> startActivity(new Intent(this, MainPage.class)));
+        DTxlablogo.setOnClickListener(view -> {
+            UserDao dao = DatabaseManager.getInstance(this).userDao();
+            if (dao.findByUuid(Client.FAILED_UUID.toString()) == null) {
+                dao.addUser(new User(
+                        Client.FAILED_UUID.toString(),
+                        Integer.toString(123456789),
+                        "Guest"
+                ));
+            }
+            startActivity(new Intent(this, MainPage.class));
+        });
     }
 
     private void openProfile(){

@@ -6,7 +6,7 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Build;
 
-import com.example.pdapp2022919.FileManager;
+import com.example.pdapp2022919.SystemManager.FileManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -91,28 +91,28 @@ public class WavRecorder {
     }
 
     @SuppressLint("MissingPermission")
-    public static void startRecording() {
+    public static void startRecording(Runnable onRecord) {
         if (isRecording) return;
         recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE, CHANNEL, AUDIO_ENCODING, BUFFER_SIZE);
         new File(TEMP_FILE_PATH).delete();
         if (recorder.getState() != 1) return;
         isRecording = true;
         recorder.startRecording();
-        new Thread(WavRecorder::recordRawData).start();
+        new Thread(() -> recordRawData(onRecord)).start();
     }
 
-    public static void stopRecording(String saveFilePath) {
+    public static void stopRecording(String saveFilePath, Runnable onSaveSuccess) {
         if (!isRecording || recorder == null) return;
         if (recorder.getState() != 1) return;
         isRecording = false;
         recorder.stop();
         recorder.release();
         if (saveFilePath == null) return;
-        outputWavFile(saveFilePath);
+        new Thread(() -> outputWavFile(saveFilePath, onSaveSuccess)).start();
     }
 
     public static void stopRecording(File file) {
-        stopRecording(file.getAbsolutePath());
+        stopRecording(file.getAbsolutePath(), null);
     }
 
     public static short getMaxAmplitude() {
@@ -138,7 +138,11 @@ public class WavRecorder {
         return (double) markDataSum / markCount;
     }
 
-    private static void recordRawData() {
+    public static boolean isRecording() {
+        return isRecording;
+    }
+
+    private static void recordRawData(Runnable onRecord) {
         try (
                 RandomAccessFile writer = new RandomAccessFile(TEMP_FILE_PATH, "rw");
                 FileChannel channel = writer.getChannel()
@@ -148,6 +152,7 @@ public class WavRecorder {
                 if (recorder.read(buffer, BUFFER_SIZE) != AudioRecord.ERROR_INVALID_OPERATION) {
                     channel.write(buffer);
                     dataProcessing(buffer.compact().order(ByteOrder.LITTLE_ENDIAN).asShortBuffer());
+                    if (onRecord != null) onRecord.run();
                 }
                 buffer.clear();
             }
@@ -170,7 +175,7 @@ public class WavRecorder {
         }
     }
 
-    private static void outputWavFile(String saveFilePath) {
+    private static void outputWavFile(String saveFilePath, Runnable onSaveSuccess) {
         try (
                 RandomAccessFile reader = new RandomAccessFile(TEMP_FILE_PATH, "r");
                 FileChannel rChannel = reader.getChannel();
@@ -185,6 +190,7 @@ public class WavRecorder {
                 wChannel.write(buffer);
                 buffer.clear();
             }
+            if (onSaveSuccess != null) onSaveSuccess.run();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -6,26 +6,30 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.pdapp2022919.FileManager;
+import com.example.pdapp2022919.SystemManager.FileManager;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.Recode.WavRecorder;
-import com.example.pdapp2022919.ScreenSetting;
+import com.example.pdapp2022919.SystemManager.ScreenSetting;
 
 public class Recorder<root> extends ScreenSetting {
 
     private static final String LOG_TAG = "AudioRecordTest";
-
+    private ImageView recorder_state;
     private Button record_btn;
     private Button backhomeButton,next_page,pre_page;
     private TextView page_count,textSentence;
     private String[] short_sentence;
     private int sentence = 0;
+
     private void setSentence(){
         StringBuilder builder = new StringBuilder();
-        page_count.setText((this.sentence /5)+1 + "/" + (short_sentence.length/5));
+        page_count.setText(
+                getString(R.string.num_of_q, sentence /5+1, short_sentence.length/5)
+        );
         for (int i = 0; i < 5; i++) {
             builder.append(this.sentence +i+1);
             builder.append(".\n");
@@ -44,7 +48,12 @@ public class Recorder<root> extends ScreenSetting {
 
     private void startRecording() {
         FileManager.setTimestamp(FileManager.FileType.SHORT_LINE);
-        WavRecorder.startRecording();
+        WavRecorder.startRecording(() -> {
+            runOnUiThread(() -> {
+                if (!WavRecorder.isRecording()) recorder_state.setVisibility(View.GONE);
+                else recorder_state.setVisibility(View.VISIBLE);
+            });
+        });
     }
 
     private void stopRecording() {
@@ -62,11 +71,12 @@ public class Recorder<root> extends ScreenSetting {
         pre_page = findViewById(R.id.pre_page);
         page_count = findViewById(R.id.page_count);
         textSentence = findViewById(R.id.sentence);
+        recorder_state = findViewById(R.id.recorder_state);
         short_sentence = getResources().getStringArray(R.array.short_sentence);
         setSentence();
 
-
-        textSentence.setMovementMethod(new ScrollingMovementMethod());
+        //捲動頁面
+        //textSentence.setMovementMethod(new ScrollingMovementMethod());
         next_page.setOnClickListener(view -> {
             if ((this.sentence/5)+1==(short_sentence.length/5)){
                 return;

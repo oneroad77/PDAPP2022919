@@ -1,7 +1,5 @@
 package com.example.pdapp2022919.Profile;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,10 +7,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.pdapp2022919.Database.User.User;
+import com.example.pdapp2022919.Database.User.UserDao;
 import com.example.pdapp2022919.FirstPage;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
-import com.example.pdapp2022919.ScreenSetting;
+import com.example.pdapp2022919.SystemManager.DatabaseManager;
+import com.example.pdapp2022919.SystemManager.ScreenSetting;
 import com.example.pdapp2022919.net.Client;
 
 public class LoginPage extends ScreenSetting {
@@ -44,6 +45,17 @@ public class LoginPage extends ScreenSetting {
                     if (isSucceed) {
                         runOnUiThread(() -> hint.setVisibility(View.GONE));
                         // TODO 從雲端下載profile
+                        UserDao dao = DatabaseManager.getInstance(this).userDao();
+                        if (dao.findByUuid(Client.getUuid().toString()) == null) {
+                            // TODO 從雲端下載profile 填入User data
+                            dao.addUser(new User(
+                                    Client.getUuid().toString(),
+                                    Integer.toString(id),
+                                    name,
+                                    0,
+                                    0
+                            ));
+                        }
                         startActivity(new Intent(LoginPage.this, MainPage.class));
                     } else runOnUiThread(() -> hint.setVisibility(View.VISIBLE));
                 });
@@ -51,8 +63,4 @@ public class LoginPage extends ScreenSetting {
         });
     }
 
-    private void openMain_page() {
-        Intent intent = new Intent(this, MainPage.class);
-        startActivity(intent);
-    }
 }

@@ -7,14 +7,15 @@ import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.example.pdapp2022919.Game.GameObject.Block;
+import com.example.pdapp2022919.Game.GameObject.GameGui;
+import com.example.pdapp2022919.Game.GameObject.Player;
 import com.example.pdapp2022919.R;
 
 import java.util.Random;
@@ -25,31 +26,17 @@ public class GameView extends View {
     private int level_difficulty;
     private int viewWidth, viewHeight;
     private int ground, speed = 10, xSpeed = 10;
-    private int size = 80, x = -size, y = -size, distance = 0, gap = 0, failCount = 0;
+    private int size = 80, distance = 0, blockCount = 0, failCount = 0;
     private int level = 0;
-    private float center;
-    private float lightHeight;
-    private float lightSize = 125;
     private int xInit;
     private double stander;
     private Paint p = new Paint();
-    private int blockIndex = 0;
-    private Block[] blocks = new Block[2];
-    private boolean isGameOver = false, onNextGap = true, inGap = false;
-    private Bitmap heart = createBitmap(R.drawable.heart, 60, 55);
-    private RandomVegetable randomVegetable = RandomVegetable.getInstance();
-    private Bitmap vegetable;
-    private Bitmap redlight = createBitmap(R.drawable.group127,400,400);
-    private Bitmap greenlight = createBitmap(R.drawable.group129,400,400);
-    private Rect vegSrc, lightSrc,  lightDest;
-    private BitmapShader grassShader = new BitmapShader(
-            createBitmap(R.drawable.grass, 498, 100),
-            Shader.TileMode.MIRROR, Shader.TileMode.MIRROR
-    );
-    private BitmapShader groundShader = new BitmapShader(
-            createBitmap(R.drawable.ground, 992, 452),
-            Shader.TileMode.MIRROR, Shader.TileMode.MIRROR
-    );
+    private boolean isGameOver = false;
+
+    private final Block[] blocks = new Block[4];
+    private Player player;
+    private GameGui gui;
+
     private BitmapShader spikeShader = new BitmapShader(
             createBitmap(R.drawable.spike, 1082, 113),
             Shader.TileMode.REPEAT, Shader.TileMode.REPEAT
@@ -71,65 +58,48 @@ public class GameView extends View {
     public void update(double volume) {
         if (isGameOver) return;
         volume = 20 * (Math.log10(Math.abs(volume)));
-        Block nowBlock = blocks[blockIndex];
+        Block nowBlock = blocks[blockCount];
         // move ball
-        if (volume > stander) {
-            if (y < getLimit(volume)) {
-                y += speed;
-            } else y -= speed * 5;
-        } else y += speed;
-        if (collision()) {
-            if (y < nowBlock.y) y = nowBlock.y - size;
-            else {
-                x = nowBlock.x - size;
-                y += speed;
-            }
-        }
-        else if (x < xInit){
-            x += speed;
-        }
+        player.move(volume, getLimit(volume), nowBlock);
         if (viewWidth <= 0) return;
         // jump over the gap
-        if (onNextGap && nowBlock.x < 0) {
-            gap++;
-            onNextGap = false;
+        if (nowBlock.x + nowBlock.length < 0) {
+            blockCount++;
         }
-        // generate block
-        if (nowBlock.x + nowBlock.length < xInit) {
-            if (blockIndex == 0) blockIndex = 1;
-            else blockIndex = 0;
-            blocks[blockIndex] = new Block(false);
-            onNextGap = true;
+        else if (blockCount == blocks.length - 1 && nowBlock.x < 0) {
+            blockCount++;
         }
         // move block
         for (Block block : blocks) {
-            if (block == null) continue;
             block.x -= xSpeed;
         }
-        if (x + size < 0 || y > viewHeight) {
+        if (player.x + size < 0 || player.y > viewHeight) {
             isGameOver = true;
             failCount++;
+            gui.setHeartCount(3 - failCount);
         }
-        inGap = x < nowBlock.x;
+        // switch light
+        gui.switchLight(player.x < nowBlock.x);
         distance += speed;
     }
 
     public void startGame() {
-        if (!isGameOver) {
-//            this.level++;
-            failCount = 0;
-        }
-        vegetable = createBitmap(randomVegetable.getRandomVegetable(), 500, 500);
-        vegSrc = new Rect(0, 0, vegetable.getWidth() - 1, vegetable.getHeight() - 1);
-        lightSrc = new Rect(0, 0, redlight.getWidth() - 1, redlight.getHeight() - 1);
-        gap = 0;
+        player = new Player(this, xInit, (int) getLimit(stander + 3) - size - 10, stander);
+        blockCount = 0;
         isGameOver = false;
-        x = xInit;
-        y = (int) getLimit(stander + 3) - size - 10;
-        blocks[blockIndex] = new Block(true);
+        int x = 0;
+        int y = (int) getLimit(stander + level_difficulty);
+        // generate block
+        for (int i = 0; i < blocks.length; i++) {
+            int blockLength = i == 0 ? xSpeed * 60 * 3 : xSpeed * 60 * 6;
+            int gapLength = xSpeed * 60 * 3 + random.nextInt(xSpeed * 60);
+            blocks[i] = new Block(this, x, y, blockLength);
+            x += gapLength + blockLength;
+        }
     }
+
     public void setLevelDifficulty(int level_difficulty) {
-        this.level_difficulty =  level_difficulty;
+        this.level_difficulty = level_difficulty;
     }
 
     public void setStander(double avg) {
@@ -141,7 +111,7 @@ public class GameView extends View {
     }
 
     public int getGap() {
-        return gap;
+        return blockCount - 1;
     }
 
     public boolean isGameOver() {
@@ -156,31 +126,26 @@ public class GameView extends View {
         return ground - (volume - stander) / (90 - stander) * ground;
     }
 
-    private boolean collision() {
-        Block nowBlock = blocks[blockIndex];
-        if (nowBlock == null) return false;
-        if (x + size < nowBlock.x) return false;
-        if (x - size > nowBlock.x + nowBlock.length) return false;
-        return y + size >= nowBlock.y;
-    }
-
     public Bitmap createBitmap(int drawableId, int newWidth, int newHeight) {
         Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), drawableId);
         myBitmap = Bitmap.createScaledBitmap(myBitmap, newWidth, newHeight, false);
         return myBitmap;
     }
 
+    public int getViewHeight() {
+        return viewHeight;
+    }
+
+    public int getViewWidth() {
+        return viewWidth;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         p.setStyle(Paint.Style.FILL);
-        //draw hintLight
-        if (inGap) canvas.drawBitmap(greenlight, lightSrc, lightDest,null);
-        else canvas.drawBitmap(redlight, lightSrc, lightDest,null);
-
         // draw ball
-        RectF dest = new RectF(x - size, y - size, x + size, y + size);
-        if (vegetable != null) canvas.drawBitmap(vegetable, vegSrc, dest, null);
+        if (player != null) player.onDraw(canvas);
         // draw spike
         float spikeX = 0;
         float spikeY = viewHeight * 0.95f;
@@ -191,21 +156,12 @@ public class GameView extends View {
         // draw block
         for (Block block : blocks) {
             if (block == null) continue;
-            matrix.setTranslate(block.x, block.y + 100);
-            groundShader.setLocalMatrix(matrix);
-            p.setShader(groundShader);
-            canvas.drawRect(block.x, block.y + 50, block.x + block.length, viewHeight + 100, p);
-            matrix.setTranslate(block.x, block.y - 1);
-            grassShader.setLocalMatrix(matrix);
-            p.setShader(grassShader);
-            canvas.drawRoundRect(block.x, block.y, block.x + block.length, block.y + 100, size, size, p);
-
+            block.onDraw(canvas);
         }
-        for (int i = 0; i < 3 - failCount; i++) {
-            canvas.drawBitmap(heart, center - 30 + 60 * (i - 1) + i * 10, viewHeight * 0.08f, null);
-        }
+        // draw hintLight and heart
+        gui.onDraw(canvas);
         invalidate();
-}
+    }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
@@ -214,33 +170,8 @@ public class GameView extends View {
         viewWidth = right - left;
         viewHeight = bottom - top;
         xInit = viewWidth / 10;
-        center = viewWidth * 0.5f;
-        lightHeight = viewHeight * 0.13f;
         ground = viewHeight / 3 * 2;
-        lightDest = new Rect(
-                (int) (center - lightSize),
-                (int) (lightHeight),
-                (int) (center + lightSize),
-                (int) (lightHeight + lightSize * 2)
-        );
+        gui = new GameGui(this);
     }
 
-    private class Block {
-
-        int x, y, length;
-
-        public Block(boolean init) {
-            if (init) {
-                x = 0;
-                y = (int) getLimit(stander + level_difficulty);
-                length = xSpeed * 60 * 3;
-            }
-            else {
-                x = xSpeed * 60 * 3 + random.nextInt(xSpeed * 60);
-                y = (int) getLimit(stander + level_difficulty);
-                length = xSpeed * 60 * 6;
-            }
-        }
-
-    }
 }

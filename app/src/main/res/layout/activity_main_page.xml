@@ -7,51 +7,54 @@
     android:background="#F2F2F2"
     tools:context=".MainPage">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/start_button"
-        android:layout_width="306dp"
-        android:layout_height="144dp"
-        android:background="@drawable/group_69__1_"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+    <androidx.constraintlayout.helper.widget.Flow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:constraint_referenced_ids="ok_button,cancel_button,questionnaire_button,healthmanager_button"
+        app:flow_verticalGap="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline3"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/history_Button"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/group_108"
-        app:layout_constraintBottom_toTopOf="@+id/guideline8"
-        app:layout_constraintEnd_toStartOf="@+id/guideline6"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline8"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        android:id="@+id/ok_button"
+        android:layout_width="250dp"
+        android:layout_height="117.65dp"
+        android:background="@drawable/startgamebutton"
+        tools:ignore="SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteY="183dp" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/personal_button"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/group_112"
-        app:layout_constraintBottom_toTopOf="@+id/guideline8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toTopOf="@+id/guideline8"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        android:id="@+id/cancel_button"
+        android:layout_width="250dp"
+        android:layout_height="117.65dp"
+        android:background="@drawable/storebutton"
+        tools:ignore="SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteY="257dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/questionnaire_button"
+        android:layout_width="250sp"
+        android:layout_height="117.65dp"
+        android:background="@drawable/questionnairebutton"
+        tools:ignore="SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteY="438dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/healthmanager_button"
+        android:layout_width="250sp"
+        android:layout_height="117.65dp"
+        android:background="@drawable/health"
+        tools:ignore="SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteY="566dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.25" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline24"
@@ -59,7 +62,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:visibility="invisible"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline46"
@@ -83,7 +86,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:visibility="invisible"
-        app:layout_constraintGuide_percent="0.72"
+        app:layout_constraintGuide_percent="0.87"
         tools:visibility="invisible" />
 
     <ImageView
@@ -95,7 +98,7 @@
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toTopOf="@+id/guideline24"
-        app:srcCompat="@drawable/_3" />
+        app:srcCompat="@drawable/closespeech" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signOutButton"

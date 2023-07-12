@@ -81,6 +81,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline23"
-        app:srcCompat="@drawable/_3" />
+        app:srcCompat="@drawable/closespeech" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

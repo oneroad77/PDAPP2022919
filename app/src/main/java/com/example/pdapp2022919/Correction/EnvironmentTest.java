@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.Recode.WavRecorder;
-import com.example.pdapp2022919.ScreenSetting;
+import com.example.pdapp2022919.SystemManager.ScreenSetting;
 
 public class EnvironmentTest extends ScreenSetting {
     private Button nextstepButton;
@@ -48,15 +48,14 @@ public class EnvironmentTest extends ScreenSetting {
     @Override
     protected void onResume() {
         super.onResume();
-        WavRecorder.startRecording();
+        WavRecorder.startRecording(null);
         handler.sendEmptyMessage(1);
-
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        WavRecorder.stopRecording((String) null);
+        WavRecorder.stopRecording((String) null, null);
         handler.removeCallbacksAndMessages(null);
     }
 }

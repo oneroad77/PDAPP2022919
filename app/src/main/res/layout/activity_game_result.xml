@@ -54,7 +54,7 @@
         app:layout_constraintGuide_percent="0.95" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/playAgain"
+        android:id="@+id/delet_clock_button"
         style="@style/logging_page_button"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
     <androidx.constraintlayout.helper.widget.Flow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="playAgain,backHome"
+        app:constraint_referenced_ids="delet_clock_button,backHome"
         app:flow_horizontalGap="25dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintEnd_toEndOf="parent"

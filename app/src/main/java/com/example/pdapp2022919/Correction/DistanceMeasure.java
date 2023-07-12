@@ -1,11 +1,9 @@
 package com.example.pdapp2022919.Correction;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -19,7 +17,7 @@ import android.widget.TextView;
 
 import com.example.pdapp2022919.ListPage;
 import com.example.pdapp2022919.R;
-import com.example.pdapp2022919.ScreenSetting;
+import com.example.pdapp2022919.SystemManager.ScreenSetting;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.Tracker;

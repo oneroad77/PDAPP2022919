@@ -143,4 +143,24 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline15"
         app:layout_constraintStart_toStartOf="@+id/guideline11" />
 
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="30dp"
+        android:layout_height="34dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/textView22"
+        app:layout_constraintTop_toTopOf="@+id/guideline12"
+        app:srcCompat="@drawable/image_63__1_" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="29dp"
+        android:layout_height="22dp"
+        android:text="0枚"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+        app:layout_constraintEnd_toStartOf="@+id/guideline15"
+        app:layout_constraintTop_toTopOf="@+id/guideline12" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

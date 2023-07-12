@@ -1,12 +1,11 @@
 package com.example.pdapp2022919.Game;
 
 import android.content.Intent;
-import android.media.MediaRecorder;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -14,16 +13,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.pdapp2022919.FileManager;
+import com.example.pdapp2022919.Game.GameFeedback.AwardPopUP;
+import com.example.pdapp2022919.SystemManager.FileManager;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.Recode.RecordData;
 import com.example.pdapp2022919.Recode.WavRecorder;
-import com.example.pdapp2022919.ScreenSetting;
+import com.example.pdapp2022919.SystemManager.ScreenSetting;
 
 import java.io.File;
-import java.io.IOException;
 
 public class Game1 extends ScreenSetting {
     public final static String POST = "post_test";
@@ -36,10 +34,12 @@ public class Game1 extends ScreenSetting {
     private RecordData recode_data = new RecordData();
     private long startTime;
     private int level_difficulty;
+    private AwardPopUP awardPopUP;
 
     private void startMeasure() {
         startTime = System.currentTimeMillis();
-        WavRecorder.startRecording();
+        // TODO 錄音狀態
+        WavRecorder.startRecording(null);
         handlerMeasure.sendEmptyMessage(1);
     }
 
@@ -99,6 +99,8 @@ public class Game1 extends ScreenSetting {
         });
         hint_text = findViewById(R.id.hint_text);
         hint_text.setVisibility(View.GONE);
+
+        awardPopUP = new AwardPopUP(this, hint_text);
     }
 
     private int frame = 0;
@@ -113,6 +115,8 @@ public class Game1 extends ScreenSetting {
                         if (gameView.failCount() >= 3) {
                             hint_text.setVisibility(View.VISIBLE);
                             hint_text.setText("訓練結束");
+                            awardPopUP.setStarCount(1);
+                            awardPopUP.showAtLocation(hint_text, Gravity.CENTER, 0, 0);
                             see_result_button.setVisibility(View.VISIBLE);
                             see_result_button.setOnClickListener(view -> openRecorder_test());
                             stopMeasure();
@@ -125,10 +129,13 @@ public class Game1 extends ScreenSetting {
                         stopMeasure();
                         return;
                     }
-                    if (gameView.getGap() >= 4) {
+                    if (gameView.getGap() >= 3) {
                         if (gameView.getLevel() >= 1) {
                             hint_text.setVisibility(View.VISIBLE);
                             hint_text.setText("訓練結束");
+                            if (gameView.failCount() == 0) awardPopUP.setStarCount(3);
+                            else awardPopUP.setStarCount(2);
+                            awardPopUP.showAtLocation(hint_text, Gravity.CENTER, 0, 0);
                             see_result_button.setVisibility(View.VISIBLE);
                             see_result_button.setOnClickListener(view -> openRecorder_test());
                             stopMeasure();

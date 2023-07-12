@@ -1,19 +1,23 @@
 package com.example.pdapp2022919.Game;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.pdapp2022919.FileManager;
+import com.example.pdapp2022919.Database.Game.Game;
+import com.example.pdapp2022919.Database.Game.GameDao;
+import com.example.pdapp2022919.Database.Questionnaire.Questionnaire;
+import com.example.pdapp2022919.Database.Questionnaire.QuestionnaireDao;
+import com.example.pdapp2022919.SystemManager.DatabaseManager;
+import com.example.pdapp2022919.SystemManager.FileManager;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.Recode.RecordData;
-import com.example.pdapp2022919.ScreenSetting;
+import com.example.pdapp2022919.SystemManager.ScreenSetting;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 
 public class GameResult extends ScreenSetting {
 
@@ -26,7 +30,7 @@ public class GameResult extends ScreenSetting {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_result);
         hideSystemUI();
-        PlayAgain = findViewById(R.id.playAgain);
+        PlayAgain = findViewById(R.id.delet_clock_button);
         BackHome = findViewById(R.id.backHome);
         RecordData recode_data = getIntent().getParcelableExtra(Game1.RECORD_DATA);
         result_text = findViewById(R.id.result_text);
@@ -48,6 +52,10 @@ public class GameResult extends ScreenSetting {
             startActivity(new Intent(this, MainPage.class));
         });
         new Thread(() -> FileManager.writeHistoryFile(recode_data)).start();
+        new Thread(() -> {
+            GameDao dao = DatabaseManager.getInstance(this).gameDao();
+            dao.addGame(new Game(recode_data));
+        }).start();
     }
 
     private String covertTime(Long time) {

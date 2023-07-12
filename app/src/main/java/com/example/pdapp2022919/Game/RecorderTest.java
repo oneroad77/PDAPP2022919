@@ -11,13 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.pdapp2022919.FileManager;
+import com.example.pdapp2022919.SystemManager.FileManager;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.Recode.RecordData;
 import com.example.pdapp2022919.Recode.WavRecorder;
-import com.example.pdapp2022919.ScreenSetting;
+import com.example.pdapp2022919.SystemManager.ScreenSetting;
 
 import java.io.File;
 
@@ -62,7 +61,8 @@ public class RecorderTest extends ScreenSetting {
     protected void onResume() {
         super.onResume();
         recordCount = 0;
-        WavRecorder.startRecording();
+        // TODO 錄音狀態
+        WavRecorder.startRecording(null);
         for (int i = 0; i < standard.length; i++) {
             handlerMeasure.sendEmptyMessageDelayed(0, i * (recordTime + restTime));
         }
@@ -142,7 +142,8 @@ public class RecorderTest extends ScreenSetting {
     @Override
     protected void onPause() {
         super.onPause();
-        WavRecorder.stopRecording(savingFile.getAbsolutePath());
+        // TODO 檔案儲存回饋
+        WavRecorder.stopRecording(savingFile.getAbsolutePath(), null);
     }
 
     @Override

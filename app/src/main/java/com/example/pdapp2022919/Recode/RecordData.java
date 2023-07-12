@@ -3,12 +3,11 @@ package com.example.pdapp2022919.Recode;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.pdapp2022919.FileManager;
-import com.example.pdapp2022919.MediaManager;
+import com.example.pdapp2022919.SystemManager.MediaManager;
 
 public class RecordData implements Parcelable {
 
-    public int level_difficulty, level,success_loss;
+    public int level_difficulty, level, success_loss;
     public double pretest_db,post_test_db;
     public long play_how_long,start_play_time,stop_play_time;
 

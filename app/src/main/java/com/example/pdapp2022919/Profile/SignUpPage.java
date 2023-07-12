@@ -8,19 +8,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.pdapp2022919.FileManager;
+import com.example.pdapp2022919.Database.User.User;
+import com.example.pdapp2022919.Database.User.UserDao;
+import com.example.pdapp2022919.SystemManager.DatabaseManager;
+import com.example.pdapp2022919.SystemManager.FileManager;
 import com.example.pdapp2022919.FirstPage;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
-import com.example.pdapp2022919.ScreenSetting;
+import com.example.pdapp2022919.SystemManager.ScreenSetting;
 import com.example.pdapp2022919.net.Client;
 
 public class SignUpPage extends ScreenSetting {
     private TextView hintText1;
-    private EditText editTextTextPersonName,editTextPatientID;
-    private Button enter_Button,backFirst;
+    private EditText editTextTextPersonName, editTextPatientID;
+    private Button enter_Button, backFirst;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,9 +54,16 @@ public class SignUpPage extends ScreenSetting {
                         profile.patient_number = editTextPatientID.getText().toString();
 
                         FileManager.writeProfile(profile);
+
+                        UserDao dao = DatabaseManager.getInstance(this).userDao();
+                        dao.addUser(new User(
+                                Client.getUuid().toString(),
+                                Integer.toString(id),
+                                name
+                        ));
+
                         startActivity(new Intent(SignUpPage.this, MainPage.class));
-                    }
-                    else runOnUiThread(() -> hintText1.setVisibility(View.VISIBLE));
+                    } else runOnUiThread(() -> hintText1.setVisibility(View.VISIBLE));
                 });
             }).start();
         });

@@ -12,44 +12,37 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.example.pdapp2022919.SystemManager.FileManager;
+import com.example.pdapp2022919.Database.Game.Game;
 import com.example.pdapp2022919.R;
-import com.example.pdapp2022919.Recode.RecordData;
 import com.example.pdapp2022919.Recode.WavRecorder;
+import com.example.pdapp2022919.SystemManager.FileManager2;
+import com.example.pdapp2022919.SystemManager.FileType;
+import com.example.pdapp2022919.SystemManager.NameManager;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
-
-import java.io.File;
-
 
 public class RecorderTest extends ScreenSetting {
 
-    public final static String MAX_AVG = "Max_Avg";
+    private static final int restTime = 5000;
+    private static final int recordTime = 3000;
+
     private TextView hint_word, tvResult;
     private ImageView Green_light, Red_light;
     private int recordCount = 0;
     private double[] standard = new double[3];
     private double avg;
     private boolean post_test;
-    private int level_difficulty;
-    private File savingFile;
     private TextView countDown;
-    private int restTime = 5000;
-    private int recordTime = 3000;
+    private Game recode_data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        hideSystemUI();
-        post_test = getIntent().getBooleanExtra(Game1.POST, false);
-        level_difficulty = getIntent().getIntExtra(ChooseLevel.level_difficulty, 1);
         super.onCreate(savedInstanceState);
+        hideSystemUI();
+        recode_data = getIntent().getParcelableExtra(NameManager.RECORD_DATA);
+        post_test = getIntent().getBooleanExtra(NameManager.POST, false);
         setContentView(R.layout.activity_recorder_test);
         TextView Post_Retest = findViewById(R.id.Post_Retest);
-        if (post_test) {
-            Post_Retest.setText("後測");
-            savingFile = FileManager.getPostTestFile();
-        } else {
-            savingFile = FileManager.getPreTestFile();
-        }
+        if (post_test) Post_Retest.setText("後測");
         hint_word = findViewById(R.id.hint_word);
         Green_light = findViewById(R.id.Green_light);
         Red_light = findViewById(R.id.Red_light);
@@ -77,7 +70,7 @@ public class RecorderTest extends ScreenSetting {
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what) {
                 case 0:
-                    hint_word.setText("綠燈亮時請「啊」持續3秒");
+                    hint_word.setText("綠燈亮時請「啊」\n持續3秒");
                     handlerMeasure.sendEmptyMessageDelayed(1, restTime);
                     Message count = new Message();
                     count.what = 4;
@@ -100,8 +93,7 @@ public class RecorderTest extends ScreenSetting {
                     WavRecorder.enableMark(false);
                     double amp = WavRecorder.getMarkAverage();
                     standard[recordCount++] = amp;
-                    double db = WavRecorder.getDB(amp);
-                    tvResult.setText(String.format("%2.0f", db));
+                    tvResult.setText(String.format("%2.0f", WavRecorder.getDB(amp)));
                     if (recordCount == standard.length) {
                         double sum = 0;
                         for (double i : standard) {
@@ -109,16 +101,19 @@ public class RecorderTest extends ScreenSetting {
                         }
                         avg = WavRecorder.getDB(sum / standard.length);
                         Intent intent;
+                        String path;
+                        // TODO 檔案儲存回饋
                         if (post_test) {
                             intent = new Intent(RecorderTest.this, GameResult.class);
-                            RecordData recode_data = getIntent().getParcelableExtra(Game1.RECORD_DATA);
-                            recode_data.post_test_db = db;
-                            intent.putExtra(Game1.RECORD_DATA, recode_data);
+                            path = FileManager2.getWavPath(FileType.POSTTEST, recode_data);
+                            recode_data.Posttest_db = avg;
                         } else {
                             intent = new Intent(RecorderTest.this, Game1.class);
-                            intent.putExtra(MAX_AVG, avg);
-                            intent.putExtra(ChooseLevel.level_difficulty, level_difficulty);
+                            path = FileManager2.getWavPath(FileType.PRETEST, recode_data);
+                            recode_data.Pretest_db = avg;
                         }
+                        WavRecorder.stopRecording(path, null);
+                        intent.putExtra(NameManager.RECORD_DATA, recode_data);
                         startActivity(intent);
                     }
                     break;
@@ -143,7 +138,7 @@ public class RecorderTest extends ScreenSetting {
     protected void onPause() {
         super.onPause();
         // TODO 檔案儲存回饋
-        WavRecorder.stopRecording(savingFile.getAbsolutePath(), null);
+        WavRecorder.stopRecording(null);
     }
 
     @Override

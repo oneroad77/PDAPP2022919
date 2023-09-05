@@ -130,11 +130,17 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.15" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/basket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
+        android:layout_width="86dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/image_96"
+        android:text="菜 籃"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

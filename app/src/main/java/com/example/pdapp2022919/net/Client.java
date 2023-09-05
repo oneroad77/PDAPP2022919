@@ -1,12 +1,12 @@
 package com.example.pdapp2022919.net;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.pdapp2022919.Database.User.User;
+import com.example.pdapp2022919.Database.User.UserDao;
+import com.example.pdapp2022919.SystemManager.DatabaseManager;
 import com.flyn.fc_message.base.RawMessageCodec;
 import com.flyn.fc_message.message.FileMessage;
 import com.flyn.fc_message.message.KeyMessage;
@@ -18,11 +18,9 @@ import com.flyn.fc_message.secure.RsaCodec;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -38,13 +36,10 @@ import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
-import javax.crypto.ShortBufferException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -56,7 +51,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
-import io.netty.channel.ChannelOutboundInvoker;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
@@ -64,7 +58,7 @@ import io.netty.handler.codec.LengthFieldPrepender;
 
 public class Client {
 
-    public static final UUID FAILED_UUID = new UUID(0, 0);
+    public static final UUID GUEST_UUID = new UUID(0, 0);
 
     private static final int bufferSize = 1024 * 32;
     private static final String host = "140.135.101.62";
@@ -74,7 +68,7 @@ public class Client {
     private static final Cipher cipher;
     private static final KeyGenerator keyGen;
 
-    private static UUID uuid = FAILED_UUID;
+    private static UUID uuid = GUEST_UUID;
 
     static {
         Dotenv dotenv = Dotenv.configure()
@@ -119,12 +113,26 @@ public class Client {
         return data;
     }
 
+    public static void loadUuid(Context context) {
+        UserDao dao = DatabaseManager.getInstance(context).userDao();
+        User user = dao.getUser();
+        if (user == null) {
+            user = new User(
+                    Client.GUEST_UUID.toString(),
+                    Integer.toString(123456789),
+                    "Guest"
+            );
+            dao.addUser(user);
+        }
+        uuid = UUID.fromString(user.uuid);
+    }
+
     public static UUID getUuid() {
         return uuid;
     }
 
     public static void logout() {
-        uuid = FAILED_UUID;
+        uuid = GUEST_UUID;
     }
 
     public static void login(Context context, int id, String name, ClientCallback callback) {
@@ -140,7 +148,7 @@ public class Client {
             public void channelRead(@NonNull ChannelHandlerContext ctx, @NonNull Object msg) {
                 if (msg instanceof UUIDMessage) {
                     Client.uuid = ((UUIDMessage) msg).getUuid();
-                    callback.callback(!uuid.equals(FAILED_UUID));
+                    callback.callback(!uuid.equals(GUEST_UUID));
                 }
             }
         });
@@ -159,7 +167,7 @@ public class Client {
             public void channelRead(@NonNull ChannelHandlerContext ctx, @NonNull Object msg) {
                 if (msg instanceof UUIDMessage) {
                     Client.uuid = ((UUIDMessage) msg).getUuid();
-                    callback.callback(!uuid.equals(FAILED_UUID));
+                    callback.callback(!uuid.equals(GUEST_UUID));
                 }
             }
 

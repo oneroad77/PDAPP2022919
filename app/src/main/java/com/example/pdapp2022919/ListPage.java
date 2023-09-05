@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.example.pdapp2022919.Database.Game.Game;
 import com.example.pdapp2022919.Game.ChooseLevel;
 import com.example.pdapp2022919.Game.Game1;
-import com.example.pdapp2022919.ShortRecorder.Recorder;
-import com.example.pdapp2022919.Game.RecorderTest;
+import com.example.pdapp2022919.Game.GameResult;
+import com.example.pdapp2022919.ShortRecorder.ShortRecorder;
+import com.example.pdapp2022919.SystemManager.NameManager;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
+
+import java.util.UUID;
 
 public class ListPage extends ScreenSetting {
 
@@ -32,21 +36,26 @@ public class ListPage extends ScreenSetting {
     }
 
     private void  openMain_page(){
-        Intent intent=new Intent(this, MainPage.class);
+        Intent intent = new Intent(this, MainPage.class);
         startActivity(intent);
     }
 
     private void openChooseLevel(){
-        Intent intent=new Intent(this,ChooseLevel.class);
+        Intent intent = new Intent(this,ChooseLevel.class);
         startActivity(intent);
     }
     private void openGame1(){
-        Intent intent=new Intent(this, Game1.class);
-        intent.putExtra(RecorderTest.MAX_AVG, 60.0);
+        Intent intent = new Intent(this, Game1.class);
+        Game data = new Game();
+        data.Game_diffculty = 1;
+        data.Pretest_db = 70.0;
+        data.Posttest_db = 60.0;
+        data.Pass = true;
+        intent.putExtra(NameManager.RECORD_DATA, data);
         startActivity(intent);
     }
     private void openrecorder(){
-        Intent intent=new Intent(this, Recorder.class);
+        Intent intent = new Intent(this, ShortRecorder.class);
         startActivity(intent);
     }
 }

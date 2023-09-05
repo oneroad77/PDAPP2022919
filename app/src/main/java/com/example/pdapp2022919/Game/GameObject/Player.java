@@ -8,12 +8,16 @@ import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import com.example.pdapp2022919.Database.User.User;
+import com.example.pdapp2022919.Database.User.UserDao;
+import com.example.pdapp2022919.Database.Vegetable.Vegetable;
 import com.example.pdapp2022919.Game.GameView;
-import com.example.pdapp2022919.Game.RandomVegetable;
+import com.example.pdapp2022919.SystemManager.DatabaseManager;
+import com.example.pdapp2022919.net.Client;
 
 public class Player extends GameObject {
 
-    private static final int BALL_RADIUS = 80;
+    public static final int BALL_RADIUS = 100;
     private static final int SPEED = 10;
 
     private final double stander;
@@ -26,12 +30,15 @@ public class Player extends GameObject {
     public Player(GameView view, int px, int py, double stander) {
         super(view);
         this.x = px;
-        this.y = py;
+        this.y = py - BALL_RADIUS;
         this.stander = stander;
         this.originX = px;
 
-        RandomVegetable randomVegetable = RandomVegetable.getInstance();
-        vegetable = createBitmap(view, randomVegetable.getRandomVegetable(), 500, 500);
+        UserDao dao = DatabaseManager.getInstance(view.getContext()).userDao();
+        User user = dao.getUser();
+        int checked = user.checked_vegetable;
+
+        vegetable = createBitmap(view, Vegetable.getVegetable(checked).drawableID, 550, 550);
         vegSrc = new Rect(0, 0, vegetable.getWidth() - 1, vegetable.getHeight() - 1);
     }
 

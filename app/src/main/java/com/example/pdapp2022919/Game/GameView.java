@@ -1,13 +1,7 @@
 package com.example.pdapp2022919.Game;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.BitmapShader;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -16,32 +10,27 @@ import androidx.annotation.Nullable;
 import com.example.pdapp2022919.Game.GameObject.Block;
 import com.example.pdapp2022919.Game.GameObject.GameGui;
 import com.example.pdapp2022919.Game.GameObject.Player;
-import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.Game.GameObject.Spike;
 
 import java.util.Random;
 
 public class GameView extends View {
 
-    private static Random random = new Random();
+    private static final Random random = new Random();
+    private static final int xSpeed = 10;
+
     private int level_difficulty;
     private int viewWidth, viewHeight;
-    private int ground, speed = 10, xSpeed = 10;
-    private int size = 80, distance = 0, blockCount = 0, failCount = 0;
-    private int level = 0;
+    private int ground;
+    private int blockCount = 0, failCount = 0;
     private int xInit;
     private double stander;
-    private Paint p = new Paint();
     private boolean isGameOver = false;
 
     private final Block[] blocks = new Block[4];
     private Player player;
     private GameGui gui;
-
-    private BitmapShader spikeShader = new BitmapShader(
-            createBitmap(R.drawable.spike, 1082, 113),
-            Shader.TileMode.REPEAT, Shader.TileMode.REPEAT
-    );
-    private Matrix matrix = new Matrix();
+    private Spike spike;
 
     public GameView(Context context) {
         super(context);
@@ -73,18 +62,18 @@ public class GameView extends View {
         for (Block block : blocks) {
             block.x -= xSpeed;
         }
-        if (player.x + size < 0 || player.y > viewHeight) {
+        spike.x -= 10;
+        if (spike.x < -viewWidth * 2) spike.x = 0;
+        if (player.x + Player.BALL_RADIUS < 0 || player.y > viewHeight) {
             isGameOver = true;
             failCount++;
-            gui.setHeartCount(3 - failCount);
         }
         // switch light
         gui.switchLight(player.x < nowBlock.x);
-        distance += speed;
     }
 
     public void startGame() {
-        player = new Player(this, xInit, (int) getLimit(stander + 3) - size - 10, stander);
+        player = new Player(this, xInit, (int) getLimit(stander + 3) - 10, stander);
         blockCount = 0;
         isGameOver = false;
         int x = 0;
@@ -106,10 +95,6 @@ public class GameView extends View {
         stander = avg;
     }
 
-    public int getLevel() {
-        return level + 1;
-    }
-
     public int getGap() {
         return blockCount - 1;
     }
@@ -126,12 +111,6 @@ public class GameView extends View {
         return ground - (volume - stander) / (90 - stander) * ground;
     }
 
-    public Bitmap createBitmap(int drawableId, int newWidth, int newHeight) {
-        Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), drawableId);
-        myBitmap = Bitmap.createScaledBitmap(myBitmap, newWidth, newHeight, false);
-        return myBitmap;
-    }
-
     public int getViewHeight() {
         return viewHeight;
     }
@@ -143,22 +122,17 @@ public class GameView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        p.setStyle(Paint.Style.FILL);
         // draw ball
         if (player != null) player.onDraw(canvas);
         // draw spike
-        float spikeX = 0;
-        float spikeY = viewHeight * 0.95f;
-        p.setShader(spikeShader);
-        matrix.setTranslate(spikeX - distance, spikeY - 1);
-        spikeShader.setLocalMatrix(matrix);
-        canvas.drawRect(spikeX, spikeY, viewWidth, viewHeight, p);
+        spike.onDraw(canvas);
         // draw block
         for (Block block : blocks) {
             if (block == null) continue;
             block.onDraw(canvas);
         }
         // draw hintLight and heart
+        gui.setHeartCount(3 - failCount);
         gui.onDraw(canvas);
         invalidate();
     }
@@ -169,9 +143,10 @@ public class GameView extends View {
         if (!changed) return;
         viewWidth = right - left;
         viewHeight = bottom - top;
-        xInit = viewWidth / 10;
+        xInit = viewWidth / 8;
         ground = viewHeight / 3 * 2;
         gui = new GameGui(this);
+        spike = new Spike(this);
     }
 
 }

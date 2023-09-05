@@ -6,6 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".Game.ChooseLevel">
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/back_main_page_button8"
+        android:layout_width="49dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="5dp"
+        android:background="#00FFFFFF"
+        android:text="@string/k"
+        android:textColor="#8A8A8A"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.036"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.013"
+        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline37"
         android:layout_width="wrap_content"

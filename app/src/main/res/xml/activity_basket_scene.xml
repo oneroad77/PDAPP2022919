@@ -1,28 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:motion="http://schemas.android.com/apk/res-auto">
-
     <Transition
         android:id="@+id/forward"
-        motion:constraintSetStart="@+id/start"
+        motion:constraintSetStart="@+id/end"
         motion:constraintSetEnd="@+id/next"
         motion:duration="1000">
         <OnSwipe
-            motion:dragDirection="dragUp"
+            motion:dragDirection="dragDown"
+            motion:touchAnchorSide="bottom" />
+    </Transition>
+    <Transition
+        android:id="@+id/forward"
+        motion:constraintSetStart="@+id/next"
+        motion:constraintSetEnd="@+id/start"
+        motion:duration="1000">
+        <OnSwipe
+            motion:dragDirection="dragDown"
             motion:touchAnchorSide="bottom" />
     </Transition>
 
     <Transition
         android:id="@+id/backward"
         motion:constraintSetStart="@+id/start"
-        motion:constraintSetEnd="@+id/previous"
+        motion:constraintSetEnd="@+id/next"
         motion:duration="1000" >
         <OnSwipe
-            motion:dragDirection="dragDown"
+            motion:dragDirection="dragUp"
             motion:touchAnchorSide="top" />
     </Transition>
 
-    <ConstraintSet android:id="@+id/previous">
+    <Transition
+        android:id="@+id/backward2"
+        motion:constraintSetStart="@+id/next"
+        motion:constraintSetEnd="@+id/end"
+        motion:duration="1000" >
+        <OnSwipe
+            motion:dragDirection="dragUp"
+            motion:touchAnchorSide="top" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
         <Constraint
             android:layout_height="91dp"
             android:layout_width="82dp"
@@ -47,7 +65,7 @@
             motion:layout_constraintEnd_toEndOf="parent" />
     </ConstraintSet>
 
-    <ConstraintSet android:id="@+id/start">
+    <ConstraintSet android:id="@+id/next">
         <Constraint
             android:layout_height="91dp"
             motion:layout_constraintTop_toTopOf="parent"
@@ -72,7 +90,7 @@
             motion:layout_constraintBottom_toBottomOf="parent" />
     </ConstraintSet>
 
-    <ConstraintSet android:id="@+id/next">
+    <ConstraintSet android:id="@+id/end">
         <Constraint
             android:layout_height="100dp"
             motion:layout_constraintTop_toTopOf="parent"
@@ -96,5 +114,8 @@
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintBottom_toBottomOf="parent" />
     </ConstraintSet>
+<!--    <ConstraintSet-->
+<!--        android:id="@+id/Enter id"-->
+<!--        motion:deriveConstraintsFrom="@+id/start" />-->
 
 </MotionScene>

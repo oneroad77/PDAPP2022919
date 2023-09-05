@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFEFE"
-    tools:context=".ShortRecorder.Recorder">
+    tools:context=".ShortRecorder.ShortRecorder">
 
     <androidx.constraintlayout.helper.widget.Flow
         android:id="@+id/flow2"
@@ -35,8 +35,9 @@
         android:layout_width="50dp"
         android:layout_height="52dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/ic_backhome"
+        android:backgroundTint="#289A93"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +46,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:scrollbars="vertical"
         android:textAlignment="textStart"
@@ -69,6 +70,7 @@
         android:layout_width="77dp"
         android:layout_height="77dp"
         android:background="@drawable/ic_start"
+        android:backgroundTint="#289A93"
         android:rotation="0"
         tools:layout_editor_absoluteX="291dp"
         tools:layout_editor_absoluteY="790dp" />
@@ -78,6 +80,7 @@
         android:layout_width="77dp"
         android:layout_height="77dp"
         android:background="@drawable/ic_start"
+        android:backgroundTint="#289A93"
         android:rotation="-180"
         tools:layout_editor_absoluteX="44dp"
         tools:layout_editor_absoluteY="790dp" />

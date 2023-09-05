@@ -29,5 +29,4 @@ public interface ClockDao {
             " minute LIKE :min AND" +
             " clock_state LIKE :state")
     Clock getClock(int hour, int min, byte state);
-
 }

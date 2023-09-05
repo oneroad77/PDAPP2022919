@@ -60,7 +60,7 @@ public class AwardPopUP extends PopupWindow {
         }
         new Thread(() -> {
             UserDao dao = DatabaseManager.getInstance(context).userDao();
-            User user = dao.findByUuid(Client.getUuid().toString());
+            User user = dao.getUser();
             user.star_count += starCount;
             isTen = user.star_count >= 10;
             dao.updateUser(user);
@@ -76,7 +76,7 @@ public class AwardPopUP extends PopupWindow {
         popupWindow.showAtLocation(token, Gravity.CENTER, 0, 0);
         new Thread(() -> {
             UserDao dao = DatabaseManager.getInstance(context).userDao();
-            User user = dao.findByUuid(Client.getUuid().toString());
+            User user = dao.getUser();
             user.star_count -= 10;
             user.coin_count += 1;
             dao.updateUser(user);

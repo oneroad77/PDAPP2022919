@@ -8,19 +8,21 @@ import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
 
 public class PretestCaption extends ScreenSetting {
-    private int level_difficulty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        level_difficulty = getIntent().getIntExtra(ChooseLevel.level_difficulty,1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pretest_caption);
         hideSystemUI();
-        Button pretestcaption = (Button) findViewById(R.id.PretestNextButton);
-        pretestcaption.setOnClickListener(view -> {
+        Button pretestCaption = (Button) findViewById(R.id.PretestNextButton);
+        Button back_main_page_button9 = (Button) findViewById(R.id.back_main_page_button9);
+        pretestCaption.setOnClickListener(view -> {
             Intent intent = new Intent(PretestCaption.this, RecorderTest.class);
-            intent.putExtra(ChooseLevel.level_difficulty,level_difficulty);
+            intent.putExtras(getIntent());
             startActivity(intent);
+        });
+        back_main_page_button9.setOnClickListener(view -> {
+            startActivity(new Intent(this,ChooseLevel.class));
         });
     }
 }

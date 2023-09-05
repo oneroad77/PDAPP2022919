@@ -1,28 +1,58 @@
 package com.example.pdapp2022919.Questionnaire;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pdapp2022919.Database.Questionnaire.Questionnaire;
 import com.example.pdapp2022919.Database.Questionnaire.QuestionnaireDao;
+import com.example.pdapp2022919.HealthManager.QRecoder;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.SystemManager.DatabaseManager;
 import com.example.pdapp2022919.SystemManager.NameManager;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
 import com.example.pdapp2022919.net.Client;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class QResult extends ScreenSetting {
     private String qkind;
-    private TextView EvaluationResult,Grade,TestTimeText;
+    private TextView EvaluationResult, Grade, TestTimeText;
     private Long Qsuestion_time;
+    private Button information_button;
+    private PopupWindow questionnaire_popup;
+    private final QRecoderAdapter adapter = new QRecoderAdapter();
+    private RecyclerView QrecycleView;
+
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,26 +61,45 @@ public class QResult extends ScreenSetting {
         EvaluationResult = findViewById(R.id.EvaluationResult);
         Button HomeButton = findViewById(R.id.HomeButton);
         Grade = findViewById(R.id.Grade);
+        information_button = findViewById(R.id.information_button);
+        information_button.setVisibility(View.GONE);
         TestTimeText = findViewById(R.id.TestTimeText);
+        QrecycleView = findViewById(R.id.lineChart);
+        QrecycleView.setLayoutManager(new LinearLayoutManager(this));
+        QrecycleView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        QrecycleView.setAdapter(adapter);
         String qsuestion_time = DATE_FORMAT.format(Qsuestion_time);
         Intent intent = getIntent();
-        qkind = intent.getStringExtra(NameManager.q_kind);
-        int[] reply = intent.getIntArrayExtra(NameManager.reply_answer);
+        qkind = intent.getStringExtra(NameManager.Q_KIND);
+        int[] reply = intent.getIntArrayExtra(NameManager.REPLY_ANSWER);
         HomeButton.setOnClickListener(view -> {
             startActivity(new Intent(this, MainPage.class));
         });
-        EvaluationResult.setText(qkind+" 評估結果");
+        EvaluationResult.setText(qkind + " 評估結果");
         Grade.setText(calculate(qkind, reply) + "");
         TestTimeText.setText(qsuestion_time);
+        if (Objects.equals(qkind, NameManager.VHI)) {
+            information_button.setVisibility(View.VISIBLE);
+        } else information_button.setVisibility(View.GONE);
 
+        information_button.setOnClickListener(view -> {
+            new Handler(Looper.getMainLooper()).post(() -> {
+                PopupWindow popupWindow = new popupwindow(this);
+                popupWindow.showAtLocation(
+                        LayoutInflater.from(this).inflate(R.layout.questionnaire_popup, null),
+                        Gravity.CENTER, 0, 0
+                );
+            });
+        });
         new Thread(() -> {
             QuestionnaireDao dao = DatabaseManager.getInstance(this).questionnaireDao();
-            dao.addQuestionnaire(new Questionnaire(Qsuestion_time,qkind,calculate(qkind, reply),Arrays.toString(reply)));
+            dao.addQuestionnaire(new Questionnaire(Qsuestion_time, qkind, calculate(qkind, reply), Arrays.toString(reply)));
+            List<Questionnaire> list = dao.getTypeQuestionnaire(Client.getUuid().toString(), qkind);
+            runOnUiThread(() -> adapter.setList(list));
         }).start();
-
     }
 
-    private int calculate (String kind, int[] reply) {
+    private int calculate(String kind, int[] reply) {
         int result = 0;
         switch (kind) {
             case NameManager.VOS:
@@ -66,15 +115,56 @@ public class QResult extends ScreenSetting {
                     result += i;
                 }
                 break;
+            case NameManager.SUS:
+                result += (reply[0]);
+                result += (4 - reply[1]);
+                result += (reply[2]);
+                result += (4 - reply[3]);
+                result += (reply[4]);
+                result += (4 - reply[5]);
+                result += (reply[6]);
+                result += (4 - reply[7]);
+                result += (reply[8]);
+                result += (4 - reply[9]);
+                result *= 2.5;
+                break;
         }
         return result;
     }
-    //陣列轉字串
+
+    public class popupwindow extends PopupWindow implements View.OnClickListener {
+        View view;
+
+        public popupwindow(Context mContext) {
+            this.view = LayoutInflater.from(mContext).inflate(R.layout.questionnaire_popup, null);
+            this.setOutsideTouchable(true);
+            this.view.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                        dismiss();
+                    }
+                    return true;
+                }
+            });
+            this.setContentView(this.view);
+            this.setHeight(RelativeLayout.LayoutParams.MATCH_PARENT);
+            this.setWidth(RelativeLayout.LayoutParams.MATCH_PARENT);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+        }
+    }
+
+}
+
+        //陣列轉字串
 //    private String reply_result (int[] reply) {
 //        String result = "";
 //        for (int i : reply) {
 //            result += reply[i] + "";
 //        }
 //        return result;
-//    }
-}
+

@@ -27,7 +27,7 @@ public class EnvironmentTest extends ScreenSetting {
                     WavRecorder.enableMark(false);
                     double avgdb = WavRecorder.getDB(WavRecorder.getMarkAverage());
                     WavRecorder.enableMark(true);
-                    realTimeDBText.setText(String.format("max:%2.0fdB\navg:%2.0fdB", db, avgdb));
+                    realTimeDBText.setText(String.format("%2.0f", avgdb));
                     break;
 
             }

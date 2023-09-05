@@ -1,39 +1,26 @@
 package com.example.pdapp2022919.HealthManager.AlarmClock;
 
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.pdapp2022919.Database.Clock.Clock;
 import com.example.pdapp2022919.Database.Clock.ClockDao;
-import com.example.pdapp2022919.Database.User.User;
-import com.example.pdapp2022919.Database.User.UserDao;
-import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.SystemManager.DatabaseManager;
 import com.example.pdapp2022919.SystemManager.NameManager;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
-import com.example.pdapp2022919.net.Client;
 
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
 
-public class EditClock extends AppCompatActivity {
+public class EditClock extends ScreenSetting {
 
     private CheckBox[] Day = new CheckBox[7] ;
     private Button store_button, delet_clock_button,cancel_button;
@@ -49,8 +36,8 @@ public class EditClock extends AppCompatActivity {
         setContentView(R.layout.activity_edit_clock);
 
         Intent intent = getIntent();
-        boolean isEditMode = intent.getBooleanExtra(NameManager.is_edit_mode, false);
-        Clock clock = intent.getParcelableExtra(NameManager.clock_data);
+        boolean isEditMode = intent.getBooleanExtra(NameManager.IS_EDIT_MODE, false);
+        Clock clock = intent.getParcelableExtra(NameManager.CLOCK_DATA);
 
         Day[0]= findViewById(R.id.monday);
         Day[1]= findViewById(R.id.Tuesday);
@@ -63,7 +50,7 @@ public class EditClock extends AppCompatActivity {
         timePicker = findViewById(R.id.timePicker);
         store_button = findViewById(R.id.store_button);
         cancel_button = findViewById(R.id.cancel_button);
-        delet_clock_button = findViewById(R.id.delet_clock_button);
+        delet_clock_button = findViewById(R.id.back_history_page);
 
         for (int i = 0; i < Day.length; i++) {
             int finalI = i;

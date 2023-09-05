@@ -22,6 +22,8 @@
         android:layout_width="250dp"
         android:layout_height="117.65dp"
         android:background="@drawable/startgamebutton"
+        android:backgroundTint="@color/button_feedback"
+        android:backgroundTintMode="multiply"
         tools:ignore="SpeakableTextPresentCheck"
         tools:layout_editor_absoluteY="183dp" />
 
@@ -30,6 +32,8 @@
         android:layout_width="250dp"
         android:layout_height="117.65dp"
         android:background="@drawable/storebutton"
+        android:backgroundTint="@color/button_feedback"
+        android:backgroundTintMode="multiply"
         tools:ignore="SpeakableTextPresentCheck"
         tools:layout_editor_absoluteY="257dp" />
 
@@ -38,6 +42,8 @@
         android:layout_width="250sp"
         android:layout_height="117.65dp"
         android:background="@drawable/questionnairebutton"
+        android:backgroundTint="@color/button_feedback"
+        android:backgroundTintMode="multiply"
         tools:ignore="SpeakableTextPresentCheck"
         tools:layout_editor_absoluteY="438dp" />
 
@@ -46,6 +52,8 @@
         android:layout_width="250sp"
         android:layout_height="117.65dp"
         android:background="@drawable/health"
+        android:backgroundTint="@color/button_feedback"
+        android:backgroundTintMode="multiply"
         tools:ignore="SpeakableTextPresentCheck"
         tools:layout_editor_absoluteY="566dp" />
 

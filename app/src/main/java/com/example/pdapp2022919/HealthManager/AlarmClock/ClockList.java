@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -19,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pdapp2022919.Database.Clock.Clock;
 import com.example.pdapp2022919.Database.Clock.ClockDao;
+import com.example.pdapp2022919.HealthManager.HealthMangerList;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.SystemManager.DatabaseManager;
 import com.example.pdapp2022919.SystemManager.NameManager;
@@ -29,7 +29,7 @@ import java.util.Calendar;
 import java.util.List;
 
 
-public class ClockList extends AppCompatActivity {
+public class ClockList extends ScreenSetting {
 
     RecyclerView clockRecyclerView;
     private final ClockListAdapter adapter = new ClockListAdapter();
@@ -40,18 +40,22 @@ public class ClockList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clock_list);
         Button addButton = findViewById(R.id.addButton);
+        Button back_main_page_button6 = findViewById(R.id.back_main_page_button6);
         clockRecyclerView = findViewById(R.id.clock_recyclerView);
         clockRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         clockRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         clockRecyclerView.setAdapter(adapter);
         addButton.setOnClickListener(view -> {
             Intent intent = new Intent(this, EditClock.class);
-            intent.putExtra(NameManager.is_edit_mode, false);
+            intent.putExtra(NameManager.IS_EDIT_MODE, false);
             calendar.setTimeInMillis(System.currentTimeMillis());
             int Hour= calendar.get(Calendar.HOUR_OF_DAY);
             int Minute= calendar.get(Calendar.MINUTE);
-            intent.putExtra(NameManager.clock_data,new Clock(Hour, Minute, (byte) 0XFF));
+            intent.putExtra(NameManager.CLOCK_DATA,new Clock(Hour, Minute, (byte) 0XFF));
             startActivity(intent);
+        });
+        back_main_page_button6.setOnClickListener(view -> {
+            startActivity(new Intent(this, HealthMangerList.class));
         });
     }
 
@@ -129,8 +133,8 @@ public class ClockList extends AppCompatActivity {
             }
             holder.itemView.setOnClickListener((view) -> {
                 Intent intent = new Intent(holder.context, EditClock.class);
-                intent.putExtra(NameManager.is_edit_mode, true);
-                intent.putExtra(NameManager.clock_data, clock);
+                intent.putExtra(NameManager.IS_EDIT_MODE, true);
+                intent.putExtra(NameManager.CLOCK_DATA, clock);
                 holder.context.startActivity(intent);
             });
         }

@@ -8,6 +8,7 @@ import com.example.pdapp2022919.Database.Clock.ClockDao;
 import com.example.pdapp2022919.Database.Game.GameDao;
 import com.example.pdapp2022919.Database.PdDatabase;
 import com.example.pdapp2022919.Database.Questionnaire.QuestionnaireDao;
+import com.example.pdapp2022919.Database.ShortLine.ShortLineDao;
 import com.example.pdapp2022919.Database.User.UserDao;
 
 public class DatabaseManager {
@@ -49,4 +50,7 @@ public class DatabaseManager {
         return database.gameDao();
     }
 
+    public ShortLineDao shortLineDao() {
+        return database.shortLineDao();
+    }
 }

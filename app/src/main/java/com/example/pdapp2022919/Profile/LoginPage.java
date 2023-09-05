@@ -56,6 +56,15 @@ public class LoginPage extends ScreenSetting {
                                     0
                             ));
                         }
+                        else {
+                            dao.updateUser(new User(
+                                    Client.getUuid().toString(),
+                                    Integer.toString(id),
+                                    name,
+                                    0,
+                                    0
+                            ));
+                        }
                         startActivity(new Intent(LoginPage.this, MainPage.class));
                     } else runOnUiThread(() -> hint.setVisibility(View.VISIBLE));
                 });

@@ -5,57 +5,81 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.pdapp2022919.Database.Game.Game;
 import com.example.pdapp2022919.Database.Game.GameDao;
-import com.example.pdapp2022919.Database.Questionnaire.Questionnaire;
-import com.example.pdapp2022919.Database.Questionnaire.QuestionnaireDao;
-import com.example.pdapp2022919.SystemManager.DatabaseManager;
-import com.example.pdapp2022919.SystemManager.FileManager;
+import com.example.pdapp2022919.ListPage;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
-import com.example.pdapp2022919.Recode.RecordData;
+import com.example.pdapp2022919.SystemManager.DatabaseManager;
+import com.example.pdapp2022919.SystemManager.MediaManager;
+import com.example.pdapp2022919.SystemManager.NameManager;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
+import com.example.pdapp2022919.SystemManager.gameHistoryListAdapter;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
+import java.util.List;
 
 public class GameResult extends ScreenSetting {
 
     private static final SimpleDateFormat DATE = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-    private TextView result_text;
-    private Button PlayAgain,BackHome;
+    private TextView diffculty_text_view,success_loss_text_view;
+    private TextView posttestdb_text_view,pretestdb_text_view,play_how_long_text_view;
+    private Button PlayAgain, BackHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_result);
         hideSystemUI();
-        PlayAgain = findViewById(R.id.delet_clock_button);
+        PlayAgain = findViewById(R.id.back_history_page);
         BackHome = findViewById(R.id.backHome);
-        RecordData recode_data = getIntent().getParcelableExtra(Game1.RECORD_DATA);
-        result_text = findViewById(R.id.result_text);
-        result_text.append(getString(R.string.level_difficulty, getLevelDifficulty(recode_data.level_difficulty)));
+        Game record_data = getIntent().getParcelableExtra(NameManager.RECORD_DATA);
+        record_data.stop_play_time = System.currentTimeMillis();
+        diffculty_text_view = findViewById(R.id.diffculty_text_view);
+        pretestdb_text_view = findViewById(R.id.pretestdb_text_view);
+        success_loss_text_view = findViewById(R.id.success_loss_text_view);
+        posttestdb_text_view = findViewById(R.id.posttestdb_text_view);
+        play_how_long_text_view = findViewById(R.id.play_how_long_text_view);
 
-        result_text.append(getString(R.string.pretest_db, recode_data.pretest_db));
-        result_text.append(getString(R.string.post_test_db, recode_data.post_test_db));
-        result_text.append(getString(R.string.play_how_long, covertTime(recode_data.play_how_long)));
-        result_text.append(getString(
-                R.string.start_play_time,
-                DATE.format(recode_data.start_play_time),
-                DATE.format(recode_data.stop_play_time)
-        ));
+        diffculty_text_view.setText(getString(R.string.level_difficulty, getLevelDifficulty(record_data.Game_diffculty)));
+        pretestdb_text_view.setText(getString(R.string.pretest_db, record_data.Pretest_db));
+        success_loss_text_view.setText(getsuccess_loss(record_data.Pass));
+        posttestdb_text_view.setText(getString(R.string.post_test_db, record_data.Posttest_db));
+        play_how_long_text_view.setText(getString(R.string.play_how_long, covertTime(record_data.Play_how_long)));
+
+        gameHistoryListAdapter adapter = new gameHistoryListAdapter(record_data);
 
         PlayAgain.setOnClickListener(view -> {
-            startActivity(new Intent(this,ChooseLevel.class));
+            startActivity(new Intent(this, ListPage.class));
         });
         BackHome.setOnClickListener(view -> {
             startActivity(new Intent(this, MainPage.class));
         });
-        new Thread(() -> FileManager.writeHistoryFile(recode_data)).start();
         new Thread(() -> {
+            // TODO update
             GameDao dao = DatabaseManager.getInstance(this).gameDao();
-            dao.addGame(new Game(recode_data));
+            dao.addGame(record_data);
         }).start();
+        RecyclerView audioListView = findViewById(R.id.game_audio);
+        audioListView.setLayoutManager(new LinearLayoutManager(this));
+        audioListView.setNestedScrollingEnabled(false);
+        audioListView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        audioListView.setAdapter(adapter);
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MediaManager.releasePlayer();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MediaManager.stopPlayer();
     }
 
     private String covertTime(Long time) {
@@ -67,8 +91,9 @@ public class GameResult extends ScreenSetting {
         long sec = time;
         return String.format("%02d:%02d:%02d", hour, min, sec);
     }
-    private String getLevelDifficulty(int difficulty){
-        switch (difficulty){
+
+    private String getLevelDifficulty(int difficulty) {
+        switch (difficulty) {
             case 1:
                 return "簡單";
             case 2:
@@ -79,4 +104,12 @@ public class GameResult extends ScreenSetting {
                 return "";
         }
     }
+
+    private String getsuccess_loss(boolean success) {
+      if (success) {
+          return"成功";
+      }
+      return "失敗";
+    }
+
 }

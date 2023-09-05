@@ -4,9 +4,8 @@ import android.annotation.SuppressLint;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.os.Build;
 
-import com.example.pdapp2022919.SystemManager.FileManager;
+import com.example.pdapp2022919.SystemManager.FileManager2;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,8 +14,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.ShortBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class WavRecorder {
 
@@ -39,18 +36,7 @@ public class WavRecorder {
 
     static {
         BUFFER_SIZE = AudioRecord.getMinBufferSize(8000, CHANNEL, AUDIO_ENCODING);
-        // TODO create temp folder
-        File tempFolder = new File(FileManager.getFileDir(), "temp");
-        if (!tempFolder.exists()) {
-            try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    Files.createDirectories(Paths.get(tempFolder.getAbsolutePath()));
-                }
-            } catch (IOException exp) {
-                exp.printStackTrace();
-            }
-        }
-        TEMP_FILE_PATH = FileManager.getFileDir() + "/temp/temp_record.raw";
+        TEMP_FILE_PATH = FileManager2.getTempRaw();
         // initial header
         HEADER[0] = 'R'; // RIFF/WAVE header
         HEADER[1] = 'I';
@@ -111,8 +97,18 @@ public class WavRecorder {
         new Thread(() -> outputWavFile(saveFilePath, onSaveSuccess)).start();
     }
 
-    public static void stopRecording(File file) {
-        stopRecording(file.getAbsolutePath(), null);
+    public static void stopRecording(String saveFilePath) {
+        stopRecording(saveFilePath, null);
+    }
+
+    @SuppressLint("MissingPermission")
+    public static void resumeRecording() {
+        if (isRecording) return;
+        recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE, CHANNEL, AUDIO_ENCODING, BUFFER_SIZE);
+        if (recorder.getState() != 1) return;
+        isRecording = true;
+        recorder.startRecording();
+        new Thread(() -> recordRawData(null)).start();
     }
 
     public static short getMaxAmplitude() {
@@ -135,6 +131,7 @@ public class WavRecorder {
     }
 
     public static double getMarkAverage() {
+        if (markCount == 0) return 0;
         return (double) markDataSum / markCount;
     }
 

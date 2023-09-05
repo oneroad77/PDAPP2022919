@@ -4,6 +4,7 @@
 
     <uses-sdk tools:overrideLibrary="androidx.wear.tiles.material" />
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -205,7 +206,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ShortRecorder.Recorder"
+            android:name=".ShortRecorder.ShortRecorder"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -218,25 +219,27 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".MainPage"
-            android:exported="false" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".Profile.SignUpPage"
             android:exported="false" />
-
         <meta-data
             android:name="android.app.lib_name"
             android:value="" />
 
         <activity
             android:name=".FirstPage"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
 
             <meta-data
                 android:name="android.app.lib_name"

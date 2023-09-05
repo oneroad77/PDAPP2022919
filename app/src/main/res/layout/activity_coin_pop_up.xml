@@ -8,7 +8,7 @@
     tools:context=".Game.GameFeedback.CoinPopUp">
 
     <TextView
-        android:id="@+id/coin_text"
+        android:id="@+id/vegetable_name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="金幣"
@@ -28,13 +28,13 @@
         app:layout_constraintGuide_percent="0.19" />
 
     <ImageView
-        android:id="@+id/coin_image"
+        android:id="@+id/vegetable_image"
         android:layout_width="350dp"
         android:layout_height="350dp"
         android:background="@drawable/image_62__1_"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coin_text" />
+        app:layout_constraintTop_toBottomOf="@+id/vegetable_name_text" />
 
     <TextView
         android:id="@+id/textView18"
@@ -46,5 +46,5 @@
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coin_image" />
+        app:layout_constraintTop_toBottomOf="@+id/vegetable_image" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F2F2F2"
     tools:context=".HealthManager.HealthMangerList">
 
     <androidx.constraintlayout.widget.Guideline
@@ -29,6 +30,8 @@
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:background="@drawable/group_112"
+        android:backgroundTint="@color/button_feedback"
+        android:backgroundTintMode="multiply"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -36,6 +39,9 @@
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:background="@drawable/group_109"
+        android:backgroundTint="@color/button_feedback"
+        android:backgroundTintMode="multiply"
+        android:visibility="visible"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -43,6 +49,8 @@
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:background="@drawable/group_135"
+        android:backgroundTint="@color/button_feedback"
+        android:backgroundTintMode="multiply"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -50,6 +58,8 @@
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:background="@drawable/group_108"
+        android:backgroundTint="@color/button_feedback"
+        android:backgroundTintMode="multiply"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -59,6 +69,8 @@
         android:layout_marginStart="3dp"
         android:layout_marginTop="5dp"
         android:background="#00FFFFFF"
+        android:backgroundTint="@color/button_feedback"
+        android:backgroundTintMode="multiply"
         android:text="@string/k"
         android:textColor="#8A8A8A"
         android:textSize="30sp"

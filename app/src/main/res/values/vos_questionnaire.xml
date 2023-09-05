@@ -16,7 +16,7 @@
         <item>5 沒有聲音</item>
     </string-array>
     <string-array name="vos_answer2">
-        <item>1 很好限制</item>
+        <item>1 很多限制</item>
         <item>2 一點限制 </item>
         <item>3 不會限制</item>
     </string-array>

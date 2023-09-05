@@ -24,4 +24,9 @@ public interface QuestionnaireDao {
             " ORDER BY time DESC")
     List<Questionnaire> getAllQuestionnaire(String uuid);
 
+    @Query("SELECT * FROM questionnaire WHERE uuid LIKE :uuid" +
+            " AND q_type LIKE :type" +
+            " ORDER BY time DESC")
+    List<Questionnaire> getTypeQuestionnaire(String uuid, String type);
+
 }

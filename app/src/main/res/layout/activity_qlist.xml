@@ -4,7 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F2F2F2"
     tools:context=".Questionnaire.QList">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/SUS"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/qlist_button"
+        android:backgroundTint="#0E41C3"
+        android:backgroundTintMode="multiply"
+        android:text="系統易用量表"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/back_main_page_button5"
@@ -41,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.31" />
+        app:layout_constraintGuide_percent="0.16" />
 
     <androidx.constraintlayout.helper.widget.Flow
         android:layout_width="0dp"
@@ -50,7 +62,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:orientation="vertical"
-        app:constraint_referenced_ids="VHI_10,VOS"
+        app:constraint_referenced_ids="VHI_10,VOS,SUS"
         app:flow_verticalGap="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +85,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/qlist_button"
-        android:backgroundTint="#0E41C3"
+        android:backgroundTint="#05941F"
         android:backgroundTintMode="multiply"
         android:text="VOS"
         android:textColor="#FFFFFF"

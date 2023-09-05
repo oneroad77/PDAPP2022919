@@ -7,6 +7,16 @@
     tools:context=".Game.RecorderTest">
 
     <ImageView
+        android:id="@+id/recorder_state2"
+        android:layout_width="109dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/group_139"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="@+id/guideline13"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
         android:id="@+id/Green_light"
         android:layout_width="150dp"
         android:layout_height="150dp"
@@ -21,10 +31,13 @@
 
     <TextView
         android:id="@+id/hint_word"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
-        android:textSize="24sp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Post_Retest" />
@@ -56,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.58" />
+        app:layout_constraintGuide_percent="0.54" />
 
     <TextView
         android:id="@+id/Post_Retest"
@@ -84,12 +97,13 @@
         android:id="@+id/countDown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_marginTop="16dp"
         android:textColor="#E97C7A7A"
         android:textSize="50sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/Green_light"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Green_light" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

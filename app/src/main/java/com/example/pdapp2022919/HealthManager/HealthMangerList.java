@@ -21,7 +21,7 @@ public class HealthMangerList extends ScreenSetting {
         setContentView(R.layout.activity_health_manger_list);
         Button back_main_page_button4= (Button) findViewById(R.id.back_main_page_button4);
         Button personal_button= (Button) findViewById(R.id.personal_button);
-        Button alarmclock_button= (Button) findViewById(R.id.alarmclock_button);
+//        Button alarmclock_button= (Button) findViewById(R.id.alarmclock_button);
         Button QRecord_button= (Button) findViewById(R.id.QRecord_button);
         Button history_Button= (Button) findViewById(R.id.history_Button);
         back_main_page_button4.setOnClickListener(view -> {
@@ -30,9 +30,9 @@ public class HealthMangerList extends ScreenSetting {
         personal_button.setOnClickListener(view -> {
             startActivity(new Intent(this,PersonalData.class));
         });
-        alarmclock_button.setOnClickListener(view -> {
-            startActivity(new Intent(this,ClockList.class));
-        });
+//        alarmclock_button.setOnClickListener(view -> {
+//            startActivity(new Intent(this,ClockList.class));
+//        });
         QRecord_button.setOnClickListener(view -> {
             startActivity(new Intent(this,QRecoder.class));
         });

@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import com.example.pdapp2022919.Database.User.User;
 import com.example.pdapp2022919.Database.User.UserDao;
 import com.example.pdapp2022919.SystemManager.DatabaseManager;
-import com.example.pdapp2022919.SystemManager.FileManager;
 import com.example.pdapp2022919.FirstPage;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
@@ -48,12 +47,12 @@ public class SignUpPage extends ScreenSetting {
                 Client.register(this, id, name, isSucceed -> {
                     if (isSucceed) {
                         runOnUiThread(() -> hintText1.setVisibility(View.GONE));
-                        FileManager.setTimestamp(FileManager.FileType.PROFILE);
-                        ProfileData profile = new ProfileData();
-                        profile.patient_name = name;
-                        profile.patient_number = editTextPatientID.getText().toString();
-
-                        FileManager.writeProfile(profile);
+//                        FileManager.setTimestamp(FileManager.FileType.PROFILE);
+//                        ProfileData profile = new ProfileData();
+//                        profile.patient_name = name;
+//                        profile.patient_number = editTextPatientID.getText().toString();
+//
+//                        FileManager.writeProfile(profile);
 
                         UserDao dao = DatabaseManager.getInstance(this).userDao();
                         dao.addUser(new User(

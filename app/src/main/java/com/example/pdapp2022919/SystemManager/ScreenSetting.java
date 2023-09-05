@@ -8,11 +8,14 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pdapp2022919.R;
+
 public class ScreenSetting extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //鎖住螢幕不能轉向
+        overridePendingTransition(R.anim.transition_fade_in, R.anim.trainsitions_fade_out);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         hideSystemUI();
     }
@@ -28,9 +31,9 @@ public class ScreenSetting extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            return false;
-//        }
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return false;
+        }
         return super.onKeyDown(keyCode, event);
     }
 

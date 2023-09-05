@@ -35,7 +35,7 @@ public class QContent extends ScreenSetting {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qcontent);
         Intent intent = getIntent();
-        qkind = intent.getStringExtra(NameManager.q_kind);
+        qkind = intent.getStringExtra(NameManager.Q_KIND);
 
         lastQelesButton = findViewById(R.id.lastQelesButton);
         NumofQ = findViewById(R.id.NumofQ);
@@ -44,12 +44,12 @@ public class QContent extends ScreenSetting {
         nextQelesButton = findViewById(R.id.nextQelesButton);
         progressBar2 = findViewById(R.id.progressBar2);
         answerButtonGroup = findViewById(R.id.answer_button_group);
-        int questionID = intent.getIntExtra(NameManager.question, -1);
+        int questionID = intent.getIntExtra(NameManager.QUESTION, -1);
         if (questionID == -1) return;
         questions = getResources().getStringArray(questionID);
         reply = new int[questions.length];
         Arrays.fill(reply, -1);
-        answers = intent.getIntArrayExtra(NameManager.answer);
+        answers = intent.getIntArrayExtra(NameManager.ANSWER);
 
         answerButtons[0] = findViewById(R.id.AnswerButton1);
         answerButtons[1] = findViewById(R.id.AnswerButton2);
@@ -73,8 +73,8 @@ public class QContent extends ScreenSetting {
 
         Finish_Button.setOnClickListener(view -> {
             Intent resultIntent = new Intent(this, QResult.class);
-            resultIntent.putExtra(NameManager.reply_answer, reply);
-            resultIntent.putExtra(NameManager.q_kind, qkind);
+            resultIntent.putExtra(NameManager.REPLY_ANSWER, reply);
+            resultIntent.putExtra(NameManager.Q_KIND, qkind);
             startActivity(resultIntent);
         });
 

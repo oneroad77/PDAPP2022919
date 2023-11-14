@@ -118,8 +118,8 @@ public class Calendar extends ScreenSetting {
             }
 
             // mark date
+            events.clear();
             for (String s : markedDay) {
-                events.clear();
                 java.util.Calendar instance = java.util.Calendar.getInstance();
                 try {
                     instance.setTime(Objects.requireNonNull(DATE_FORMAT.parse(s)));

@@ -120,7 +120,9 @@ public class Client {
             user = new User(
                     Client.GUEST_UUID.toString(),
                     Integer.toString(123456789),
-                    "Guest"
+                    "Guest",
+                    0,
+                    2
             );
             dao.addUser(user);
         }

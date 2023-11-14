@@ -12,29 +12,29 @@
       android:id="@+id/voice_practice_button"
       android:layout_width="313dp"
       android:layout_height="110dp"
-      android:layout_marginTop="32dp"
+      android:layout_marginTop="16dp"
       android:background="@drawable/group_104"
       android:backgroundTint="@color/button_feedback"
       android:backgroundTintMode="multiply"
       app:layout_constraintEnd_toStartOf="@+id/guideline7"
       app:layout_constraintHorizontal_bias="1.0"
       app:layout_constraintStart_toStartOf="@+id/guideline7"
-      app:layout_constraintTop_toTopOf="@+id/guideline2"
+      app:layout_constraintTop_toBottomOf="@+id/keepv_practice_Button"
       tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
   <androidx.appcompat.widget.AppCompatButton
       android:id="@+id/keepv_practice_Button"
       android:layout_width="313dp"
       android:layout_height="110dp"
-      android:layout_marginTop="16dp"
+      android:layout_marginTop="32dp"
       android:background="@drawable/group_114"
       android:backgroundTint="@color/button_feedback"
       android:backgroundTintMode="multiply"
       android:visibility="visible"
       app:layout_constraintEnd_toStartOf="@+id/guideline7"
-      app:layout_constraintHorizontal_bias="0.501"
+      app:layout_constraintHorizontal_bias="0.45"
       app:layout_constraintStart_toStartOf="@+id/guideline7"
-      app:layout_constraintTop_toBottomOf="@+id/high_low_practice_button"
+      app:layout_constraintTop_toTopOf="@+id/guideline2"
       tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
   <TextView

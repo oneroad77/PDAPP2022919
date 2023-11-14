@@ -58,7 +58,9 @@ public class SignUpPage extends ScreenSetting {
                         dao.addUser(new User(
                                 Client.getUuid().toString(),
                                 Integer.toString(id),
-                                name
+                                name,
+                                0,
+                                2
                         ));
 
                         startActivity(new Intent(SignUpPage.this, MainPage.class));

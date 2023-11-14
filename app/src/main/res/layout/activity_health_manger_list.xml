@@ -41,7 +41,7 @@
         android:background="@drawable/group_109"
         android:backgroundTint="@color/button_feedback"
         android:backgroundTintMode="multiply"
-        android:visibility="visible"
+        android:visibility="gone"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <androidx.appcompat.widget.AppCompatButton

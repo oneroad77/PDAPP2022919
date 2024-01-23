@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
@@ -7,7 +8,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.pdapp2022919"
+        applicationId "com.dtx804lab.pdapp2022919"
         minSdk 23
         targetSdk 33
         versionCode 1
@@ -46,6 +47,7 @@ dependencies {
     implementation 'io.netty:netty-all:4.1.75.Final'
     implementation 'androidx.work:work-runtime:2.7.1'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    implementation files("libs/TarsosDSP-Android-2.4.jar")
 
 //    implementation 'com.google.firebase:firebase-inappmessaging:20.1.2'
     testImplementation 'junit:junit:4.13.2'

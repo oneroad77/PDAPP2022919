@@ -82,7 +82,8 @@
                     android:backgroundTint="@color/vegetable_enable"
                     android:backgroundTintMode="multiply"
                     android:button="@drawable/vegetable_check"
-                    android:buttonTint="@color/vegetable_check1" />
+                    android:buttonTint="@color/vegetable_check1"
+                    tools:ignore="DuplicateSpeakableTextCheck,DuplicateSpeakableTextCheck" />
 
                 <RadioButton
                     android:id="@+id/f2"

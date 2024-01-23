@@ -138,7 +138,7 @@
         android:layout_marginEnd="32dp"
         android:orientation="horizontal"
         android:visibility="visible"
-        app:constraint_referenced_ids="textView6,MediaNumberText,textView8,NameText,password_error,BirthdayText,textView7,phoneText,textView10,radioGroup"
+        app:constraint_referenced_ids="textView6,MediaNumberText,textView8,NameText,password_error,BirthdayText,textView7,phoneText,pitch_number,radioGroup"
         app:flow_maxElementsWrap="2"
         app:flow_verticalGap="20dp"
         app:flow_wrapMode="chain"

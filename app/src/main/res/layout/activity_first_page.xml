@@ -58,7 +58,7 @@
         android:backgroundTint="#FF6D00"
         android:backgroundTintMode="src_in"
         android:text="返回"
-        android:textColor="@color/ic_launcher_background"
+        android:textColor="#0D47A1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DTxLabLogo"

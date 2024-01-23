@@ -8,6 +8,7 @@ import com.example.pdapp2022919.Database.Game.Game;
 import com.example.pdapp2022919.Game.ChooseLevel;
 import com.example.pdapp2022919.Game.Game1;
 import com.example.pdapp2022919.Game.GameResult;
+import com.example.pdapp2022919.PitchGame.PitchGameMain;
 import com.example.pdapp2022919.ShortRecorder.ShortRecorder;
 import com.example.pdapp2022919.SystemManager.NameManager;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
@@ -31,7 +32,7 @@ public class ListPage extends ScreenSetting {
 
         backmainpageButton.setOnClickListener(view -> openMain_page());
         voicepButton.setOnClickListener(view -> openChooseLevel());
-        higlowButton.setOnClickListener(view -> openGame1());
+        higlowButton.setOnClickListener(view -> openPitchGameMain());
         keeppracticeButton.setOnClickListener(view -> openrecorder());
     }
 
@@ -44,7 +45,12 @@ public class ListPage extends ScreenSetting {
         Intent intent = new Intent(this,ChooseLevel.class);
         startActivity(intent);
     }
-    private void openGame1(){
+    private void openPitchGameMain(){
+        Intent intent = new Intent(this, PitchGameMain.class);
+        startActivity(intent);
+    }
+
+    private void debug(){
         Intent intent = new Intent(this, Game1.class);
         Game data = new Game();
         data.Game_diffculty = 1;

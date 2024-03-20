@@ -4,7 +4,7 @@ import com.example.pdapp2022919.R;
 
 public enum Vegetable {
 
-    CABBAGE(R.string.cabbage, R.drawable.image_97),
+    CABBAGE(R.string.cabbage, R.drawable.cabbage),
     WATERMELON(R.string.watermelon,R.drawable.image_99),
     BANANA(R.string.banana,R.drawable.image_100),
     LEMON(R.string.lemon,R.drawable.image_102),

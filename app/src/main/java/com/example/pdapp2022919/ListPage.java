@@ -46,15 +46,16 @@ public class ListPage extends ScreenSetting {
         startActivity(intent);
     }
     private void openPitchGameMain(){
-        Intent intent = new Intent(this, PitchGameMain.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, PitchGameMain.class);
+//        startActivity(intent);
+        debug();
     }
 
     private void debug(){
         Intent intent = new Intent(this, Game1.class);
         Game data = new Game();
         data.Game_diffculty = 1;
-        data.Pretest_db = 70.0;
+        data.Pretest_db = 45.0;
         data.Posttest_db = 60.0;
         data.Pass = true;
         intent.putExtra(NameManager.RECORD_DATA, data);

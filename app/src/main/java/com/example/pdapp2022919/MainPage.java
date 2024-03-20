@@ -11,22 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
 
 import com.example.pdapp2022919.Correction.EnvironmentTest;
-import com.example.pdapp2022919.Database.User.User;
-import com.example.pdapp2022919.Database.User.UserDao;
+import com.example.pdapp2022919.Database.Correction.Correction;
 import com.example.pdapp2022919.HealthManager.HealthMangerList;
 import com.example.pdapp2022919.Questionnaire.QList;
 import com.example.pdapp2022919.Store.StorePage;
-import com.example.pdapp2022919.SystemManager.DatabaseManager;
 import com.example.pdapp2022919.SystemManager.FileManager2;
+import com.example.pdapp2022919.SystemManager.NameManager;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
 import com.example.pdapp2022919.net.Client;
 import com.google.android.material.button.MaterialButton;
@@ -44,6 +41,7 @@ public class MainPage extends ScreenSetting {
         checkPermission();
         createNotificationChannel();
         FileManager2.setFileDir(getFilesDir().getAbsolutePath());
+        FileManager2.createHintVoice(this);
         Client.loadUuid(this);
 
         MaterialButton singoutButton = findViewById(R.id.signOutButton);
@@ -81,8 +79,12 @@ public class MainPage extends ScreenSetting {
         });
 
         startgameButton.setOnClickListener(view -> {
-            startActivity(new Intent(this, EnvironmentTest.class));
+            Correction correction = new Correction();
+            Intent intent = new Intent(this, EnvironmentTest.class);
+            intent.putExtra(NameManager.CORRECTION_OBJ, correction);
+            startActivity(intent);
         });
+
         store_button.setOnClickListener(view -> {
             startActivity(new Intent(this, StorePage.class));
         });

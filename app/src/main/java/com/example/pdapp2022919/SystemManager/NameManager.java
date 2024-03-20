@@ -22,4 +22,6 @@ public class NameManager {
     public final static String RECORD_DATA = "RECORD_DATA";
     public final static String POST = "post_test";
 
+    public final static String CORRECTION_OBJ = "CORRECTION_TIME";
+
 }

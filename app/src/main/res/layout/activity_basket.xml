@@ -78,7 +78,7 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="15dp"
                     android:layout_marginBottom="15dp"
-                    android:background="@drawable/image_97"
+                    android:background="@drawable/cabbage"
                     android:backgroundTint="@color/vegetable_enable"
                     android:backgroundTintMode="multiply"
                     android:button="@drawable/vegetable_check"

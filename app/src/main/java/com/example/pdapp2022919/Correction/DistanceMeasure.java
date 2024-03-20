@@ -15,8 +15,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.pdapp2022919.Database.Correction.Correction;
+import com.example.pdapp2022919.Database.Correction.CorrectionDao;
 import com.example.pdapp2022919.ListPage;
 import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.SystemManager.DatabaseManager;
+import com.example.pdapp2022919.SystemManager.NameManager;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -28,7 +32,7 @@ import com.google.android.gms.vision.face.LargestFaceFocusingProcessor;
 import java.io.IOException;
 
 public class DistanceMeasure extends ScreenSetting {
-
+    private float distance;
     private CameraSource cameraSource;
     private Button finishButton;
     private ImageView demoPicture;
@@ -55,8 +59,15 @@ public class DistanceMeasure extends ScreenSetting {
         demoPicture = findViewById(R.id.demoPicture);
         finishButton = findViewById(R.id.finishButton);
         disHint = findViewById(R.id.DistanceHint);
+        Correction correction = getIntent().getParcelableExtra(NameManager.CORRECTION_OBJ);
         finishButton.setOnClickListener(view -> {
+
             startActivity(new Intent(this, ListPage.class));
+            new Thread(() -> {
+                correction.Distance_cm = distance / 10;
+                CorrectionDao dao = DatabaseManager.getInstance(this).correctionDao();
+                dao.addCorrection(correction);
+            }).start();
         });
         Camera camera = frontCam();
         Camera.Parameters campar = camera.getParameters();
@@ -171,7 +182,6 @@ public class DistanceMeasure extends ScreenSetting {
             float deltaX = Math.abs(leftEyePos.x - rightEyePos.x);
             float deltaY = Math.abs(leftEyePos.y - rightEyePos.y);
 
-            float distance;
             if (deltaX >= deltaY) {
                 distance = F * (AVERAGE_EYE_DISTANCE / sensorX) * (IMAGE_WIDTH / deltaX);
             } else {

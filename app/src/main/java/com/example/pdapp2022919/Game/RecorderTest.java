@@ -23,7 +23,7 @@ import com.example.pdapp2022919.SystemManager.ScreenSetting;
 public class RecorderTest extends ScreenSetting {
 
     private static final int restTime = 5000;
-    private static final int recordTime = 3000;
+    private static final int recordTime = 5000;
 
     private TextView hint_word, tvResult;
     private ImageView Green_light, Red_light;
@@ -70,7 +70,7 @@ public class RecorderTest extends ScreenSetting {
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what) {
                 case 0:
-                    hint_word.setText("綠燈亮時請「啊」\n持續3秒");
+                    hint_word.setText("綠燈亮時請「啊」\n持續5秒");
                     handlerMeasure.sendEmptyMessageDelayed(1, restTime);
                     Message count = new Message();
                     count.what = 4;

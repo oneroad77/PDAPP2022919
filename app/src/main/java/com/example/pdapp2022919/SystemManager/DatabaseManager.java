@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.room.Room;
 
 import com.example.pdapp2022919.Database.Clock.ClockDao;
+import com.example.pdapp2022919.Database.Correction.CorrectionDao;
 import com.example.pdapp2022919.Database.Game.GameDao;
 import com.example.pdapp2022919.Database.PdDatabase;
 import com.example.pdapp2022919.Database.Questionnaire.QuestionnaireDao;
@@ -52,5 +53,9 @@ public class DatabaseManager {
 
     public ShortLineDao shortLineDao() {
         return database.shortLineDao();
+    }
+
+    public CorrectionDao correctionDao(){
+        return database.correctionDao();
     }
 }

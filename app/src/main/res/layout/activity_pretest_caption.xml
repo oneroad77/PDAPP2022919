@@ -71,7 +71,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:text="綠燈亮起，請以您最大的音量持續「啊」三秒鐘，紅燈亮起時停止，重複三次。"
+        android:text="綠燈亮起，請以您最大的音量持續「啊」三 秒鐘，紅燈亮起時停止，重複三次。"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

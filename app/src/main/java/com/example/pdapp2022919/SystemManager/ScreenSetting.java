@@ -32,7 +32,7 @@ public class ScreenSetting extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return false;
+//            return false;
         }
         return super.onKeyDown(keyCode, event);
     }

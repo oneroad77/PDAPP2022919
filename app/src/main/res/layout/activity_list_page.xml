@@ -57,7 +57,7 @@
       android:layout_height="115dp"
       android:layout_marginTop="20dp"
       android:background="@drawable/group_105"
-      android:visibility="gone"
+      android:visibility="visible"
       app:layout_constraintEnd_toStartOf="@+id/guideline7"
       app:layout_constraintHorizontal_bias="0.483"
       app:layout_constraintStart_toStartOf="@+id/guideline7"

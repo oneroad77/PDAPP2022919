@@ -10,11 +10,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.example.pdapp2022919.Database.Correction.Correction;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.Recode.WavRecorder;
+import com.example.pdapp2022919.SystemManager.NameManager;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
 
+import java.util.Objects;
+
 public class EnvironmentTest extends ScreenSetting {
+
+    private double db = 0;
     private Button nextstepButton;
     private TextView realTimeDBText;
     private Handler handler = new Handler(Looper.getMainLooper()) {
@@ -23,7 +29,7 @@ public class EnvironmentTest extends ScreenSetting {
             switch (msg.what){
                 case 1:
                     handler.sendEmptyMessageDelayed(1, 500);
-                    double db = WavRecorder.getDB(WavRecorder.getMaxAmplitude());
+                    db = WavRecorder.getDB(WavRecorder.getMaxAmplitude());
                     WavRecorder.enableMark(false);
                     double avgdb = WavRecorder.getDB(WavRecorder.getMarkAverage());
                     WavRecorder.enableMark(true);
@@ -38,10 +44,14 @@ public class EnvironmentTest extends ScreenSetting {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_environment_test);
         hideSystemUI();
+        Correction correction = getIntent().getParcelableExtra(NameManager.CORRECTION_OBJ);
         nextstepButton = findViewById(R.id.nextStepButton);
         realTimeDBText = findViewById(R.id.realTimeDB);
         nextstepButton.setOnClickListener(view -> {
-            startActivity(new Intent(this,DistanceMeasure.class));
+            correction.Environment_dB = db;
+            Intent intent = new Intent(this,DistanceMeasure.class);
+            intent.putExtra(NameManager.CORRECTION_OBJ, correction);
+            startActivity(intent);
         });
     }
 

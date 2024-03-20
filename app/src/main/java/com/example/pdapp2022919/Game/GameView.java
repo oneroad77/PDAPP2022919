@@ -11,6 +11,9 @@ import com.example.pdapp2022919.Game.GameObject.Block;
 import com.example.pdapp2022919.Game.GameObject.GameGui;
 import com.example.pdapp2022919.Game.GameObject.Player;
 import com.example.pdapp2022919.Game.GameObject.Spike;
+import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.SystemManager.FileManager2;
+import com.example.pdapp2022919.SystemManager.MediaManager;
 
 import java.util.Random;
 
@@ -31,6 +34,7 @@ public class GameView extends View {
     private Player player;
     private GameGui gui;
     private Spike spike;
+    private boolean isPlayVoice = false;
 
     public GameView(Context context) {
         super(context);
@@ -51,11 +55,18 @@ public class GameView extends View {
         // move ball
         player.move(volume, getLimit(volume), nowBlock);
         if (viewWidth <= 0) return;
+        // play hint
+        if (!isPlayVoice && nowBlock.x + nowBlock.length < xSpeed * 60 * 2) {
+            isPlayVoice = true;
+            MediaManager.playAudio(FileManager2.getHintVoicePath(), null);
+        }
         // jump over the gap
         if (nowBlock.x + nowBlock.length < 0) {
             blockCount++;
+            isPlayVoice = false;
         }
         else if (blockCount == blocks.length - 1 && nowBlock.x < 0) {
+            // game finished
             blockCount++;
         }
         // move block
@@ -81,7 +92,7 @@ public class GameView extends View {
         // generate block
         for (int i = 0; i < blocks.length; i++) {
             int blockLength = i == 0 ? xSpeed * 60 * 3 : xSpeed * 60 * 6;
-            int gapLength = xSpeed * 60 * 3 + random.nextInt(xSpeed * 60);
+            int gapLength = xSpeed * 60 * 5;
             blocks[i] = new Block(this, x, y, blockLength);
             x += gapLength + blockLength;
         }

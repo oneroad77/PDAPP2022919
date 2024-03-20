@@ -1,11 +1,16 @@
 package com.example.pdapp2022919.SystemManager;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.Build;
+import android.os.FileObserver;
 
 import com.example.pdapp2022919.HealthManager.History.HistoryItem;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Locale;
@@ -13,6 +18,7 @@ import java.util.Locale;
 public class FileManager2 {
 
     private static String fileDir;
+    private static final String hintVoiceDir = "/hint_voice";
 
     public static void setFileDir(String path) {
         fileDir = path;
@@ -41,6 +47,36 @@ public class FileManager2 {
             }
         }
         return true;
+    }
+
+    public static void createHintVoice(Context context) {
+        try {
+            String folderPath = fileDir + hintVoiceDir;
+            createFolder(folderPath);
+            String[] voicePaths = context.getAssets().list("hint_voice");
+            assert voicePaths != null;
+            for (String path : voicePaths) {
+                String newPath = folderPath + path;
+                InputStream is = context.getAssets().open("hint_voice/" + path);
+                FileOutputStream fos = new FileOutputStream(newPath);
+                byte[] buffer = new byte[1024];
+                int byteCount = is.read(buffer);
+                while (byteCount != -1) {
+                    fos.write(buffer, 0, byteCount);
+                    byteCount = is.read(buffer);
+                }
+                fos.flush();
+                is.close();
+                fos.close();
+            }
+            System.out.println("finish");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String getHintVoicePath() {
+        return fileDir + hintVoiceDir + "start_hint_voice.mp3";
     }
 
     private static void createFolder(String path) {

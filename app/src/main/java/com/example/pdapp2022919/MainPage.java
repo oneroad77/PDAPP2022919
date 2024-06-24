@@ -20,6 +20,7 @@ import androidx.core.app.ActivityCompat;
 import com.example.pdapp2022919.Correction.EnvironmentTest;
 import com.example.pdapp2022919.Database.Correction.Correction;
 import com.example.pdapp2022919.HealthManager.HealthMangerList;
+import com.example.pdapp2022919.Questionnaire.QCaption;
 import com.example.pdapp2022919.Questionnaire.QList;
 import com.example.pdapp2022919.Store.StorePage;
 import com.example.pdapp2022919.SystemManager.FileManager2;
@@ -89,7 +90,7 @@ public class MainPage extends ScreenSetting {
             startActivity(new Intent(this, StorePage.class));
         });
         questionnaire_button.setOnClickListener(view -> {
-            startActivity(new Intent(this, QList.class));
+            startActivity(new Intent(this, QCaption.class));
         });
         healthmanager_button.setOnClickListener(view -> {
             startActivity(new Intent(this, HealthMangerList.class));

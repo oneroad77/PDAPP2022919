@@ -20,7 +20,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/HomeButton"
+        app:layout_constraintBottom_toTopOf="@+id/homeOrVHI"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/qhistory_text" />
@@ -50,11 +50,11 @@
         app:layout_constraintTop_toBottomOf="@+id/EvaluationResult" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/HomeButton"
+        android:id="@+id/homeOrVHI"
         android:layout_width="184dp"
         android:layout_height="65dp"
         android:background="@drawable/logging_page_button_f"
-        android:text="回到首頁"
+        android:text="繼續"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline12"

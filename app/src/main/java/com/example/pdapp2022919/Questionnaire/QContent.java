@@ -39,8 +39,8 @@ public class QContent extends ScreenSetting {
 
         lastQelesButton = findViewById(R.id.lastQelesButton);
         NumofQ = findViewById(R.id.NumofQ);
-        Finish_Button = findViewById(R.id.Finish_Button);
-        question = findViewById(R.id.question);
+        Finish_Button = findViewById(R.id.Finish_Button1);
+        question = findViewById(R.id.questionnaire_caption);
         nextQelesButton = findViewById(R.id.nextQelesButton);
         progressBar2 = findViewById(R.id.progressBar2);
         answerButtonGroup = findViewById(R.id.answer_button_group);

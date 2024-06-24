@@ -7,13 +7,11 @@ import android.widget.Button;
 import com.example.pdapp2022919.Database.Game.Game;
 import com.example.pdapp2022919.Game.ChooseLevel;
 import com.example.pdapp2022919.Game.Game1;
-import com.example.pdapp2022919.Game.GameResult;
-import com.example.pdapp2022919.PitchGame.PitchGameMain;
-import com.example.pdapp2022919.ShortRecorder.ShortRecorder;
+import com.example.pdapp2022919.Game.PretestCaption;
+import com.example.pdapp2022919.KeepLong.KeepLongPage;
+import com.example.pdapp2022919.ShortRecorder.ShortRecorederChoose;
 import com.example.pdapp2022919.SystemManager.NameManager;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
-
-import java.util.UUID;
 
 public class ListPage extends ScreenSetting {
 
@@ -25,15 +23,17 @@ public class ListPage extends ScreenSetting {
         Button backmainpageButton = findViewById(R.id.back_main_page_button);
         Button voicepButton= findViewById(R.id.voice_practice_button);
         Button higlowButton= findViewById(R.id.high_low_practice_button);
-        Button keeppracticeButton= findViewById(R.id.keepv_practice_Button);
+        Button shortrecorder = findViewById(R.id.shortrecorder_Button);
+        Button keeplong = findViewById(R.id.keep_long_button);
 
 
 //        Button muscletrainButton= findViewById(R.id.muscle_train_button);
 
         backmainpageButton.setOnClickListener(view -> openMain_page());
-        voicepButton.setOnClickListener(view -> openChooseLevel());
+        voicepButton.setOnClickListener(view -> openChooseLevel(1));
         higlowButton.setOnClickListener(view -> openPitchGameMain());
-        keeppracticeButton.setOnClickListener(view -> openrecorder());
+        shortrecorder.setOnClickListener(view -> openrecorder());
+        keeplong.setOnClickListener(view -> openkeeplong());
     }
 
     private void  openMain_page(){
@@ -41,8 +41,11 @@ public class ListPage extends ScreenSetting {
         startActivity(intent);
     }
 
-    private void openChooseLevel(){
-        Intent intent = new Intent(this,ChooseLevel.class);
+    private void openChooseLevel(int difficulty){
+        Intent intent = new Intent(this,PretestCaption.class);
+        Game data = new Game();
+        data.Game_diffculty = difficulty;
+        intent.putExtra(NameManager.RECORD_DATA, data);
         startActivity(intent);
     }
     private void openPitchGameMain(){
@@ -62,7 +65,19 @@ public class ListPage extends ScreenSetting {
         startActivity(intent);
     }
     private void openrecorder(){
-        Intent intent = new Intent(this, ShortRecorder.class);
+        Intent intent = new Intent(this, ShortRecorederChoose.class);
         startActivity(intent);
     }
+    private void openkeeplong(){
+        Intent intent = new Intent(this, KeepLongPage.class);
+        startActivity(intent);
+    }
+    private void next(int difficulty) {
+        Intent intent = new Intent(this, PretestCaption.class);
+        Game data = new Game();
+        data.Game_diffculty = difficulty;
+        intent.putExtra(NameManager.RECORD_DATA, data);
+        startActivity(intent);
+    }
+
 }

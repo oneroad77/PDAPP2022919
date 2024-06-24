@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.example.pdapp2022919.Database.Game.Game;
-import com.example.pdapp2022919.HealthManager.HealthMangerList;
 import com.example.pdapp2022919.ListPage;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.SystemManager.NameManager;
@@ -18,9 +17,9 @@ public class ChooseLevel extends ScreenSetting {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_level);
         hideSystemUI();
-        Button easy = findViewById(R.id.levl1_Button);
+        Button easy = findViewById(R.id.word_Button);
         Button medium = findViewById(R.id.levl2_Button);
-        Button hard = findViewById(R.id.levl3_Button);
+        Button hard = findViewById(R.id.santance_Button);
         Button back_main_page_button8 =findViewById(R.id.back_main_page_button8);
         easy.setOnClickListener(view -> next(1));
         medium.setOnClickListener(view -> next(2));

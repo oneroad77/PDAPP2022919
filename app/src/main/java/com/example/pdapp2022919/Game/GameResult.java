@@ -29,6 +29,8 @@ public class GameResult extends ScreenSetting {
     private TextView diffculty_text_view,success_loss_text_view;
     private TextView posttestdb_text_view,pretestdb_text_view,play_how_long_text_view;
     private Button PlayAgain, BackHome;
+    private Game recode_data;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +55,32 @@ public class GameResult extends ScreenSetting {
 
         gameHistoryListAdapter adapter = new gameHistoryListAdapter(record_data);
 
-        PlayAgain.setOnClickListener(view -> {
-            startActivity(new Intent(this, ListPage.class));
+        PlayAgain.setOnClickListener(view ->{
+            switch (recode_data.Game_diffculty){
+                case 1:
+                    next(1);
+                    break;
+                case 2:
+                    next(2);
+                    break;
+                case 3:
+                    next(3);
+                    break;
+            }
+
         });
         BackHome.setOnClickListener(view -> {
-            startActivity(new Intent(this, MainPage.class));
+            switch (recode_data.Game_diffculty){
+                case 1:
+                    next(2);
+                    break;
+                case 2:
+                    next(3);
+                    break;
+                case 3:
+                    setBackHome();
+                    break;
+            }
         });
         new Thread(() -> {
             // TODO update
@@ -111,5 +134,15 @@ public class GameResult extends ScreenSetting {
       }
       return "失敗";
     }
-
+    private void next(int difficulty) {
+        Intent intent = new Intent(this,PretestCaption.class);
+        Game data = new Game();
+        data.Game_diffculty = difficulty;
+        intent.putExtra(NameManager.RECORD_DATA, data);
+        startActivity(intent);
+    }
+    private void setBackHome(){
+        Intent intent = new Intent (this,MainPage.class);
+        startActivity(intent);
+    }
 }

@@ -24,4 +24,8 @@ public class NameManager {
 
     public final static String CORRECTION_OBJ = "CORRECTION_TIME";
 
+    public final static String SHORT_RECORDER = "SHORT_RECORDER";
+    public final static String KEEP_LONG = "KEEP_LONG";
+
+
 }

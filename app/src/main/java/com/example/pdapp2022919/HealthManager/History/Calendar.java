@@ -25,6 +25,8 @@ import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.example.pdapp2022919.Database.Game.Game;
 import com.example.pdapp2022919.Database.Game.GameDao;
+import com.example.pdapp2022919.Database.KeepLong.KeepLong;
+import com.example.pdapp2022919.Database.KeepLong.KeepLongDao;
 import com.example.pdapp2022919.Database.ShortLine.ShortLine;
 import com.example.pdapp2022919.Database.ShortLine.ShortLineDao;
 import com.example.pdapp2022919.HealthManager.HealthMangerList;
@@ -192,7 +194,6 @@ public class Calendar extends ScreenSetting {
             }).start();
 
         }
-
         private void getData(long from, long to) {
             GameDao dao = DatabaseManager.getInstance(Calendar.this).gameDao();
             List<Game> games = dao.getGames(Client.getUuid().toString(), from, to);
@@ -201,6 +202,10 @@ public class Calendar extends ScreenSetting {
             ShortLineDao dao2 = DatabaseManager.getInstance(Calendar.this).shortLineDao();
             List<ShortLine> shortLines = dao2.getShortLines(Client.getUuid().toString(), from, to);
             historyList.addAll(shortLines);
+
+            KeepLongDao dao3 = DatabaseManager.getInstance(Calendar.this).keepLongDao();
+            List<KeepLong> keepLongs = dao3.getKeepLong(Client.getUuid().toString(),from,to);
+            historyList.addAll(keepLongs);
         }
 
         @NonNull

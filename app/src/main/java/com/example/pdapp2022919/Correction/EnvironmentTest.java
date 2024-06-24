@@ -29,10 +29,11 @@ public class EnvironmentTest extends ScreenSetting {
             switch (msg.what){
                 case 1:
                     handler.sendEmptyMessageDelayed(1, 500);
-                    db = WavRecorder.getDB(WavRecorder.getMaxAmplitude());
+//                    db = WavRecorder.getDB(WavRecorder.getMaxAmplitude());
                     WavRecorder.enableMark(false);
                     double avgdb = WavRecorder.getDB(WavRecorder.getMarkAverage());
                     WavRecorder.enableMark(true);
+                    db = avgdb;
                     realTimeDBText.setText(String.format("%2.0f", avgdb));
                     break;
 

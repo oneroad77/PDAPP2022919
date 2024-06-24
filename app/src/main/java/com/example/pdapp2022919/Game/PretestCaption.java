@@ -14,7 +14,7 @@ public class PretestCaption extends ScreenSetting {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pretest_caption);
         hideSystemUI();
-        Button pretestCaption = (Button) findViewById(R.id.PretestNextButton);
+        Button pretestCaption = (Button) findViewById(R.id.caption_ok);
         Button back_main_page_button9 = (Button) findViewById(R.id.back_main_page_button9);
         pretestCaption.setOnClickListener(view -> {
             Intent intent = new Intent(PretestCaption.this, RecorderTest.class);

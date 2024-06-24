@@ -34,13 +34,6 @@
         app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline38"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.54" />
-
-    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline39"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,7 +52,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline37" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/levl1_Button"
+        android:id="@+id/word_Button"
         style="@style/logging_page_button"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -77,7 +70,7 @@
         android:textSize="34sp" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/levl3_Button"
+        android:id="@+id/santance_Button"
         style="@style/logging_page_button"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -89,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:constraint_referenced_ids="levl1_Button,levl2_Button,levl3_Button"
+        app:constraint_referenced_ids="word_Button,levl2_Button,santance_Button"
         app:flow_verticalGap="40dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline39"
         app:layout_constraintEnd_toEndOf="parent"

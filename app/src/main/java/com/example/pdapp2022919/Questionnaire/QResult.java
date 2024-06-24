@@ -2,7 +2,6 @@ package com.example.pdapp2022919.Questionnaire;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,21 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pdapp2022919.Database.Questionnaire.Questionnaire;
 import com.example.pdapp2022919.Database.Questionnaire.QuestionnaireDao;
-import com.example.pdapp2022919.HealthManager.QRecoder;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.SystemManager.DatabaseManager;
 import com.example.pdapp2022919.SystemManager.NameManager;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
 import com.example.pdapp2022919.net.Client;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -59,7 +49,7 @@ public class QResult extends ScreenSetting {
         setContentView(R.layout.activity_qresult);
         Qsuestion_time = System.currentTimeMillis();
         EvaluationResult = findViewById(R.id.EvaluationResult);
-        Button HomeButton = findViewById(R.id.HomeButton);
+        Button homeOrVHI = findViewById(R.id.homeOrVHI);
         Grade = findViewById(R.id.Grade);
         information_button = findViewById(R.id.information_button);
         information_button.setVisibility(View.GONE);
@@ -72,9 +62,33 @@ public class QResult extends ScreenSetting {
         Intent intent = getIntent();
         qkind = intent.getStringExtra(NameManager.Q_KIND);
         int[] reply = intent.getIntArrayExtra(NameManager.REPLY_ANSWER);
-        HomeButton.setOnClickListener(view -> {
+
+        if (Objects.equals(qkind, NameManager.VOS)){
+            homeOrVHI.setText("繼續填寫");
+            homeOrVHI.setOnClickListener(view -> {
+                int VHI_10_questionID = R.array.VHI_10_question;
+                int[] VHI_10_answerID = new int[] {
+                        R.array.VHI_10_answer,
+                        R.array.VHI_10_answer,
+                        R.array.VHI_10_answer,
+                        R.array.VHI_10_answer,
+                        R.array.VHI_10_answer,
+                        R.array.VHI_10_answer,
+                        R.array.VHI_10_answer,
+                        R.array.VHI_10_answer,
+                        R.array.VHI_10_answer,
+                        R.array.VHI_10_answer
+                };
+                qkind(NameManager.VHI, VHI_10_questionID, VHI_10_answerID);
+            });
+        }
+        else  {
+           homeOrVHI.setText("回到首頁");
+            homeOrVHI.setOnClickListener(view -> {
             startActivity(new Intent(this, MainPage.class));
         });
+        }
+
         EvaluationResult.setText(qkind + " 評估結果");
         Grade.setText(calculate(qkind, reply) + "");
         TestTimeText.setText(qsuestion_time);
@@ -157,7 +171,13 @@ public class QResult extends ScreenSetting {
         public void onClick(View view) {
         }
     }
-
+    private void qkind (String kind, int questionID, int[] answerID) {
+        Intent intent = new Intent(this, QContent.class);
+        intent.putExtra(NameManager.Q_KIND, kind);
+        intent.putExtra(NameManager.QUESTION, questionID);
+        intent.putExtra(NameManager.ANSWER, answerID);
+        startActivity(intent);
+    }
 }
 
         //陣列轉字串

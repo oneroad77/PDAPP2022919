@@ -15,6 +15,8 @@
     <string name="level_difficulty">%s</string>
     <string name="game_illustrate">請發出比前測更大的音量來控制青菜\n小心別掉下懸崖囉~!</string>
     <string name="short_sentence"></string>
+    <string name="questionnaire_caption">請選擇更符合您最近一周狀態的答案。</string>
+
 
     <string name="volume_game">音量練習</string>
     <string name="short_line_game">短句練習</string>
@@ -53,5 +55,8 @@
     <string name="orange">橘子</string>
     <string name="green_grape">綠葡萄</string>
     <string name="tomato">番茄</string>
-
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="keep_long">請發出最長的「%s」音</string>
+    <string name="keep_long2">開始前請記得深呼吸</string>
 </resources>

@@ -27,7 +27,7 @@
         tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/PretestNextButton"
+        android:id="@+id/caption_ok"
         style="@style/logging_page_button"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         app:layout_constraintGuide_percent="0.9" />
 
     <TextView
-        android:id="@+id/question"
+        android:id="@+id/questionnaire_caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="前測說明"
@@ -65,7 +65,7 @@
         app:layout_constraintGuide_percent="0.1" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/caption_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -76,6 +76,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/question" />
+        app:layout_constraintTop_toBottomOf="@+id/questionnaire_caption" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

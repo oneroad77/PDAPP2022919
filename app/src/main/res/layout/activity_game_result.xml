@@ -63,6 +63,7 @@
         style="@style/logging_page_button"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/gray_button"
         android:text="再玩一次"
         android:textColor="@color/word1" />
 
@@ -71,7 +72,8 @@
         style="@style/logging_page_button"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="回到首頁"
+        android:background="@drawable/gray_button"
+        android:text="下一關"
         android:textColor="@color/word1" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -191,5 +193,24 @@
         android:text="前測分貝："
         android:textSize="24sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/hint2_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:paddingLeft="5dp"
+        android:paddingTop="40dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="40dp"
+        android:text="剩餘休息時間:/n60秒"
+        android:textSize="45sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline21"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="@+id/guideline17"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

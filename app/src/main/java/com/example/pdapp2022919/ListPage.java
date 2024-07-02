@@ -9,6 +9,7 @@ import com.example.pdapp2022919.Game.ChooseLevel;
 import com.example.pdapp2022919.Game.Game1;
 import com.example.pdapp2022919.Game.PretestCaption;
 import com.example.pdapp2022919.KeepLong.KeepLongPage;
+import com.example.pdapp2022919.PitchGame.PitchGameMain;
 import com.example.pdapp2022919.ShortRecorder.ShortRecorederChoose;
 import com.example.pdapp2022919.SystemManager.NameManager;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
@@ -22,16 +23,13 @@ public class ListPage extends ScreenSetting {
         hideSystemUI();
         Button backmainpageButton = findViewById(R.id.back_main_page_button);
         Button voicepButton= findViewById(R.id.voice_practice_button);
-        Button higlowButton= findViewById(R.id.high_low_practice_button);
+        Button PitchGameButton= findViewById(R.id.high_low_practice_button);
         Button shortrecorder = findViewById(R.id.shortrecorder_Button);
         Button keeplong = findViewById(R.id.keep_long_button);
 
-
-//        Button muscletrainButton= findViewById(R.id.muscle_train_button);
-
         backmainpageButton.setOnClickListener(view -> openMain_page());
         voicepButton.setOnClickListener(view -> openChooseLevel(1));
-        higlowButton.setOnClickListener(view -> openPitchGameMain());
+        PitchGameButton.setOnClickListener(view -> openPitchGameMain());
         shortrecorder.setOnClickListener(view -> openrecorder());
         keeplong.setOnClickListener(view -> openkeeplong());
     }
@@ -49,9 +47,8 @@ public class ListPage extends ScreenSetting {
         startActivity(intent);
     }
     private void openPitchGameMain(){
-//        Intent intent = new Intent(this, PitchGameMain.class);
-//        startActivity(intent);
-        debug();
+        Intent intent = new Intent(this, PitchGameMain.class);
+        startActivity(intent);
     }
 
     private void debug(){

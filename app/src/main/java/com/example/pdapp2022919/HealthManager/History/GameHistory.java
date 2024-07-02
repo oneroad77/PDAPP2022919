@@ -14,7 +14,6 @@ import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.SystemManager.MediaManager;
 import com.example.pdapp2022919.SystemManager.NameManager;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
-import com.example.pdapp2022919.SystemManager.gameHistoryListAdapter;
 
 import java.text.SimpleDateFormat;
 

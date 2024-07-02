@@ -34,6 +34,13 @@ public class FileManager2 {
         return getFolder(type, item) + "/" + type.fileName + ".wav";
     }
 
+    public static String getWavPath(FileType type, HistoryItem item, int index) {
+        if (index <= 0) {
+            return getWavPath(type, item);
+        }
+        return getFolder(type, item) + "/" + type.fileName + "-" + index + ".wav";
+    }
+
     public static String getTempRaw() {
         String folder = fileDir + "/temp";
         createFolder(folder);

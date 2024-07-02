@@ -1,4 +1,4 @@
-package com.example.pdapp2022919.SystemManager;
+package com.example.pdapp2022919.HealthManager.History;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pdapp2022919.Database.Game.Game;
 import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.SystemManager.FileType;
+import com.example.pdapp2022919.SystemManager.MediaManager;
 
 import java.io.File;
 

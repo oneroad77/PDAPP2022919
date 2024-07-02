@@ -1,31 +1,20 @@
 package com.example.pdapp2022919.HealthManager.History;
 
-import static com.example.pdapp2022919.HealthManager.History.Calendar.DATE_FORMAT;
-
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pdapp2022919.Database.KeepLong.KeepLong;
 import com.example.pdapp2022919.R;
-import com.example.pdapp2022919.SystemManager.KeepLongAdapter;
 import com.example.pdapp2022919.SystemManager.MediaManager;
 import com.example.pdapp2022919.SystemManager.NameManager;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
-import com.example.pdapp2022919.SystemManager.gameHistoryListAdapter;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class KeepLongHistory extends ScreenSetting {
     private RecyclerView keeplongList;

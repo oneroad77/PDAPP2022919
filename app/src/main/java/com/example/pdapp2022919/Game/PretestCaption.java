@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.example.pdapp2022919.ListPage;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
 
@@ -22,7 +23,7 @@ public class PretestCaption extends ScreenSetting {
             startActivity(intent);
         });
         back_main_page_button9.setOnClickListener(view -> {
-            startActivity(new Intent(this,ChooseLevel.class));
+            startActivity(new Intent(this, ListPage.class));
         });
     }
 }

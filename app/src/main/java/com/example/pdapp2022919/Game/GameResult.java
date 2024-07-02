@@ -2,34 +2,41 @@ package com.example.pdapp2022919.Game;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pdapp2022919.Database.Game.Game;
 import com.example.pdapp2022919.Database.Game.GameDao;
-import com.example.pdapp2022919.ListPage;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.Recode.WavRecorder;
 import com.example.pdapp2022919.SystemManager.DatabaseManager;
+import com.example.pdapp2022919.SystemManager.FileManager2;
+import com.example.pdapp2022919.SystemManager.FileType;
 import com.example.pdapp2022919.SystemManager.MediaManager;
 import com.example.pdapp2022919.SystemManager.NameManager;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
-import com.example.pdapp2022919.SystemManager.gameHistoryListAdapter;
+import com.example.pdapp2022919.HealthManager.History.gameHistoryListAdapter;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 public class GameResult extends ScreenSetting {
 
     private static final SimpleDateFormat DATE = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-    private TextView diffculty_text_view,success_loss_text_view;
-    private TextView posttestdb_text_view,pretestdb_text_view,play_how_long_text_view;
-    private Button PlayAgain, BackHome;
-    private Game recode_data;
+    private TextView diffculty_text_view, success_loss_text_view,hint_text;
+    private TextView posttestdb_text_view, pretestdb_text_view, play_how_long_text_view;
+    private Button PlayAgain, nextround_back_Button;
+    private Game record_data;
+    private Boolean countend = false;
 
 
     @Override
@@ -38,25 +45,31 @@ public class GameResult extends ScreenSetting {
         setContentView(R.layout.activity_game_result);
         hideSystemUI();
         PlayAgain = findViewById(R.id.back_history_page);
-        BackHome = findViewById(R.id.backHome);
-        Game record_data = getIntent().getParcelableExtra(NameManager.RECORD_DATA);
+        nextround_back_Button = findViewById(R.id.backHome);
+        record_data = getIntent().getParcelableExtra(NameManager.RECORD_DATA);
         record_data.stop_play_time = System.currentTimeMillis();
         diffculty_text_view = findViewById(R.id.diffculty_text_view);
         pretestdb_text_view = findViewById(R.id.pretestdb_text_view);
         success_loss_text_view = findViewById(R.id.success_loss_text_view);
         posttestdb_text_view = findViewById(R.id.posttestdb_text_view);
         play_how_long_text_view = findViewById(R.id.play_how_long_text_view);
-
+        hint_text = findViewById(R.id.hint2_text);
         diffculty_text_view.setText(getString(R.string.level_difficulty, getLevelDifficulty(record_data.Game_diffculty)));
         pretestdb_text_view.setText(getString(R.string.pretest_db, record_data.Pretest_db));
         success_loss_text_view.setText(getsuccess_loss(record_data.Pass));
         posttestdb_text_view.setText(getString(R.string.post_test_db, record_data.Posttest_db));
         play_how_long_text_view.setText(getString(R.string.play_how_long, covertTime(record_data.Play_how_long)));
+        handlerMeasure.sendEmptyMessage(60);
 
         gameHistoryListAdapter adapter = new gameHistoryListAdapter(record_data);
 
-        PlayAgain.setOnClickListener(view ->{
-            switch (recode_data.Game_diffculty){
+        PlayAgain.setOnClickListener(view -> {
+            if (!countend) {
+                hint_text.setVisibility(View.VISIBLE);
+
+                return;
+            }
+            switch (this.record_data.Game_diffculty) {
                 case 1:
                     next(1);
                     break;
@@ -69,8 +82,12 @@ public class GameResult extends ScreenSetting {
             }
 
         });
-        BackHome.setOnClickListener(view -> {
-            switch (recode_data.Game_diffculty){
+        nextround_back_Button.setOnClickListener(view -> {
+            if (!countend) {
+                hint_text.setVisibility(View.VISIBLE);
+                return;
+            }
+            switch (this.record_data.Game_diffculty) {
                 case 1:
                     next(2);
                     break;
@@ -93,6 +110,7 @@ public class GameResult extends ScreenSetting {
         audioListView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         audioListView.setAdapter(adapter);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -129,20 +147,41 @@ public class GameResult extends ScreenSetting {
     }
 
     private String getsuccess_loss(boolean success) {
-      if (success) {
-          return"成功";
-      }
-      return "失敗";
+        if (success) {
+            return "成功";
+        }
+        return "失敗";
     }
+
     private void next(int difficulty) {
-        Intent intent = new Intent(this,PretestCaption.class);
+        Intent intent = new Intent(this, PretestCaption.class);
+        intent.putExtra(NameManager.POST, false);
         Game data = new Game();
         data.Game_diffculty = difficulty;
         intent.putExtra(NameManager.RECORD_DATA, data);
         startActivity(intent);
     }
-    private void setBackHome(){
-        Intent intent = new Intent (this,MainPage.class);
+
+    private void setBackHome() {
+        Intent intent = new Intent(this, MainPage.class);
         startActivity(intent);
     }
+
+    private Handler handlerMeasure = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            if (msg.what >= 0) {
+                hint_text.setText("剩餘休息時間:\n"+msg.what+"秒");
+                handlerMeasure.sendEmptyMessageDelayed(msg.what - 1, 1000);
+
+            } else {
+                countend = true;
+                PlayAgain.setBackgroundResource(R.drawable.logging_page_button_f);
+                nextround_back_Button.setBackgroundResource(R.drawable.logging_page_button_f);
+            }
+
+            super.handleMessage(msg);
+        }
+    };
+
 }

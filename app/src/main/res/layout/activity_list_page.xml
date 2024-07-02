@@ -61,7 +61,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="32dp"
       android:orientation="vertical"
-      app:constraint_referenced_ids="shortrecorder_Button,voice_practice_button,long_practice_button,keep_long_button,high_low_practice_button"
+      app:constraint_referenced_ids="voice_practice_button,long_practice_button,keep_long_button,shortrecorder_Button,high_low_practice_button"
       app:flow_verticalGap="15dp"
       app:layout_constraintEnd_toStartOf="@+id/guideline7"
       app:layout_constraintHorizontal_bias="0.418"
@@ -106,7 +106,7 @@
       android:layout_width="325dp"
       android:layout_height="115dp"
       android:background="@drawable/group_105"
-      android:visibility="visible"
+      android:visibility="invisible"
       tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck"
       tools:layout_editor_absoluteX="206dp"
       tools:layout_editor_absoluteY="130dp" />

@@ -1,6 +1,5 @@
-package com.example.pdapp2022919.SystemManager;
+package com.example.pdapp2022919.HealthManager.History;
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -15,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pdapp2022919.Database.KeepLong.KeepLong;
 import com.example.pdapp2022919.R;
+import com.example.pdapp2022919.SystemManager.FileType;
+import com.example.pdapp2022919.SystemManager.MediaManager;
 
 import java.io.File;
 
@@ -135,9 +136,9 @@ public class KeepLongAdapter extends RecyclerView.Adapter<KeepLongAdapter.ViewHo
     private String audioName(int position) {
         String path = audioFiles[position].getName();
         path = path.substring(0, path.length() - 4);
-        if (path.equals(FileType.KEEP_LONG_a.fileName)) return "「啊」";
-        if (path.equals(FileType.KEEP_LONG_i.fileName)) return "「衣」";
-        if (path.equals(FileType.KEEP_LONG_u.fileName)) return "「屋」";
+        if (path.contains(FileType.KEEP_LONG_a.fileName)) return "「啊」";
+        if (path.contains(FileType.KEEP_LONG_i.fileName)) return "「衣」";
+        if (path.contains(FileType.KEEP_LONG_u.fileName)) return "「屋」";
 
         return "";
     }

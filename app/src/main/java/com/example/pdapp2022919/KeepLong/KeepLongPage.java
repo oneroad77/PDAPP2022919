@@ -42,7 +42,7 @@ public class KeepLongPage extends ScreenSetting {
         START, RECORD, END
     }
 
-    private int x = 0;
+    private int x = 0, T = 1;
     private State state = State.START;
 
     private void startRecording() {
@@ -59,13 +59,13 @@ public class KeepLongPage extends ScreenSetting {
         String path;
         switch (x) {
             case 0:
-                path = FileManager2.getWavPath(FileType.KEEP_LONG_a, keepLong);
+                path = FileManager2.getWavPath(FileType.KEEP_LONG_a, keepLong, T);
                 break;
             case 1:
-                path = FileManager2.getWavPath(FileType.KEEP_LONG_i, keepLong);
+                path = FileManager2.getWavPath(FileType.KEEP_LONG_i, keepLong, T);
                 break;
             case 2:
-                path = FileManager2.getWavPath(FileType.KEEP_LONG_u, keepLong);
+                path = FileManager2.getWavPath(FileType.KEEP_LONG_u, keepLong, T);
                 break;
             default:
                 path = "";
@@ -111,6 +111,7 @@ public class KeepLongPage extends ScreenSetting {
                 startRecording();
                 BT1.setText("停止");
                 BT1.setBackgroundResource(R.drawable.red_button);
+                next_word_BT.setVisibility(INVISIBLE);
                 if (timeStarted == false) {
                     timeStarted = true;
                     startTimer();
@@ -125,11 +126,18 @@ public class KeepLongPage extends ScreenSetting {
                 break;
             case RECORD:
                 BT1.setText("重來");
-                BT1.setBackgroundResource(R.drawable.finish_button);
+                BT1.setBackgroundResource(R.drawable.logging_page_button_f);
                 green_light_image.setVisibility(INVISIBLE);
                 timer_text.setVisibility(INVISIBLE);
                 timeStarted = false;
-
+                if (timerTask != null) {
+                    timerTask.cancel();
+                    time = 0.0;
+                    timeStarted = false;
+                    timer_text.setText(formatTime(0));
+                }
+                T++;
+                state = State.START;
                 // TODO BT color red
                 textVisible(VISIBLE);
                 next_word_BT.setVisibility(VISIBLE);
@@ -146,7 +154,7 @@ public class KeepLongPage extends ScreenSetting {
                         startActivity(intent);
                     });
                 }
-                state = State.END;
+
                 break;
             case END:
                 BT1.setText("開始");
@@ -155,21 +163,15 @@ public class KeepLongPage extends ScreenSetting {
                 timer_text.setVisibility(INVISIBLE);
                 next_word_BT.setVisibility(View.INVISIBLE);
                 state = State.START;
-                timeStarted = false;
-                if(timerTask != null)
-                {
-                    timerTask.cancel();
-                    time = 0.0;
-                    timeStarted = false;
-                    timer_text.setText(formatTime(0));
-                }
                 break;
         }
     }
 
     private void change_word() {
         x = x + 1;
+        state = State.END;
         setState();
+        T = 1;
         aiu_word.setText(words[x]);
         content1_text.setText(getString(R.string.keep_long, words[x]));
     }
@@ -199,6 +201,6 @@ public class KeepLongPage extends ScreenSetting {
     }
 
     private String formatTime(int seconds) {
-        return String.format(String.format("%02d", seconds));
+        return String.format(String.format("%d", seconds));
     }
 }

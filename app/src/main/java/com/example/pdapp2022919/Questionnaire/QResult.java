@@ -63,11 +63,11 @@ public class QResult extends ScreenSetting {
         qkind = intent.getStringExtra(NameManager.Q_KIND);
         int[] reply = intent.getIntArrayExtra(NameManager.REPLY_ANSWER);
 
-        if (Objects.equals(qkind, NameManager.VOS)){
+        if (Objects.equals(qkind, NameManager.VOS)) {
             homeOrVHI.setText("繼續填寫");
             homeOrVHI.setOnClickListener(view -> {
                 int VHI_10_questionID = R.array.VHI_10_question;
-                int[] VHI_10_answerID = new int[] {
+                int[] VHI_10_answerID = new int[]{
                         R.array.VHI_10_answer,
                         R.array.VHI_10_answer,
                         R.array.VHI_10_answer,
@@ -81,12 +81,28 @@ public class QResult extends ScreenSetting {
                 };
                 qkind(NameManager.VHI, VHI_10_questionID, VHI_10_answerID);
             });
-        }
-        else  {
-           homeOrVHI.setText("回到首頁");
+        } else if (Objects.equals(qkind, NameManager.VHI)) {
+            homeOrVHI.setText("繼續填寫");
             homeOrVHI.setOnClickListener(view -> {
-            startActivity(new Intent(this, MainPage.class));
-        });
+                int PHQ_9_questionID = R.array.phq_9_question;
+                int[] PHQ_9_answerID = new int[]{
+                        R.array.phq_9_answer,
+                        R.array.phq_9_answer,
+                        R.array.phq_9_answer,
+                        R.array.phq_9_answer,
+                        R.array.phq_9_answer,
+                        R.array.phq_9_answer,
+                        R.array.phq_9_answer,
+                        R.array.phq_9_answer,
+                        R.array.phq_9_answer
+                };
+                qkind(NameManager.PHQ, PHQ_9_questionID, PHQ_9_answerID);
+            });
+        } else {
+            homeOrVHI.setText("回到首頁");
+            homeOrVHI.setOnClickListener(view -> {
+                startActivity(new Intent(this, MainPage.class));
+            });
         }
 
         EvaluationResult.setText(qkind + " 評估結果");
@@ -142,6 +158,18 @@ public class QResult extends ScreenSetting {
                 result += (4 - reply[9]);
                 result *= 2.5;
                 break;
+
+            case NameManager.PHQ:
+                result += (reply[0]);
+                result += (reply[1]);
+                result += (reply[2]);
+                result += (reply[3]);
+                result += (reply[4]);
+                result += (reply[5]);
+                result += (reply[6]);
+                result += (reply[7]);
+                result += (reply[8]);
+                break;
         }
         return result;
     }
@@ -171,7 +199,8 @@ public class QResult extends ScreenSetting {
         public void onClick(View view) {
         }
     }
-    private void qkind (String kind, int questionID, int[] answerID) {
+
+    private void qkind(String kind, int questionID, int[] answerID) {
         Intent intent = new Intent(this, QContent.class);
         intent.putExtra(NameManager.Q_KIND, kind);
         intent.putExtra(NameManager.QUESTION, questionID);
@@ -180,7 +209,7 @@ public class QResult extends ScreenSetting {
     }
 }
 
-        //陣列轉字串
+//陣列轉字串
 //    private String reply_result (int[] reply) {
 //        String result = "";
 //        for (int i : reply) {

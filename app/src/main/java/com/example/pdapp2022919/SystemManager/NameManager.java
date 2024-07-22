@@ -6,6 +6,8 @@ public class NameManager {
     public final static String VHI ="VHI-10";
     public final static String VOS ="VOS";
     public final static String SUS ="SUS";
+    public final static String PHQ ="PHQ-9";
+
     public final static String Q_KIND ="Q_KIND";
     public final static String REPLY_ANSWER ="REPLY_ANSWER";
     public final static String QUESTION ="QUESTION";

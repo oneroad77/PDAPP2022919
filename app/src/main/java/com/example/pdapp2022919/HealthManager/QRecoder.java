@@ -135,9 +135,9 @@ public class QRecoder extends ScreenSetting {
         ILineDataSet VOS = createSet(NameManager.VOS,0xFF05941F );//取得曲線(因為只有一條，故為0，若有多條則需指定)
         VOS.setAxisDependency(YAxis.AxisDependency.LEFT);
         dataSets.add(VOS);
-        ILineDataSet SUS = createSet(NameManager.SUS, 0xFF0072E3);//取得曲線(因為只有一條，故為0，若有多條則需指定)
-        SUS.setAxisDependency(YAxis.AxisDependency.LEFT);
-        dataSets.add(SUS);
+        ILineDataSet PHQ = createSet(NameManager.PHQ, 0xFF0072E3);//取得曲線(因為只有一條，故為0，若有多條則需指定)
+        PHQ.setAxisDependency(YAxis.AxisDependency.LEFT);
+        dataSets.add(PHQ);
         lineChart2.setData(new LineData(dataSets));
         Legend legend = lineChart2.getLegend();
         legend.setForm(Legend.LegendForm.CIRCLE);
@@ -203,7 +203,7 @@ public class QRecoder extends ScreenSetting {
                 case NameManager.VOS:
                     data.addEntry(new Entry(time, list.get(i).q_score), 1);
                     break;
-                case NameManager.SUS:
+                case NameManager.PHQ:
                     data.addEntry(new Entry(time, list.get(i).q_score), 2);
                     break;
             }

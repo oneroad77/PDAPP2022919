@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,11 @@ public class Game1 extends ScreenSetting {
     private long startTime;
     private int times = 0;
     private AwardPopUP awardPopUP;
+    private ImageView overdB_hint;
+    private Boolean isTimerRunning= false ;
+    private Long startoverdBTime;
+    public static Boolean isoverdB =false;
+
 
     private void startMeasure() {
         startTime = System.currentTimeMillis();
@@ -91,6 +97,7 @@ public class Game1 extends ScreenSetting {
 
         db_avg_tv = findViewById(R.id.db_avg_tv);
         db_avg_tv.setText("前測分貝："+getString(R.string.pretest_db, recordData.Pretest_db));
+        overdB_hint = findViewById(R.id.overdB_hint);
 
         see_result_button = findViewById(R.id.see_result_button);
         game_illustrate = findViewById(R.id.gameIllustrate);
@@ -175,6 +182,29 @@ public class Game1 extends ScreenSetting {
                     double db = WavRecorder.getDB(amp);
                     real_time_db.setText("即時分貝："+getString(R.string.now_db, db));
                     real_time_db.setVisibility(View.VISIBLE);
+                    if (db >= recordData.Pretest_db + 3) {
+                        if (!isTimerRunning) {
+                            // 開始計時
+                            startoverdBTime = System.currentTimeMillis();
+                            isTimerRunning = true;
+                        } else {
+                            long currentTime = System.currentTimeMillis();
+                            if (currentTime - startoverdBTime >= 500) { // 0.5秒
+                                if (currentTime - startoverdBTime >= 2500) {
+                                    overdB_hint.setVisibility(View.INVISIBLE);
+                                    isoverdB = false;
+                                } else {
+                                    overdB_hint.setVisibility(View.VISIBLE);
+                                    isoverdB = true;
+                                }
+                            }
+                        }
+                    }else {
+                            isTimerRunning =false;
+                            startTime = 0;
+                            overdB_hint.setVisibility(View.INVISIBLE);
+                            isoverdB = false;
+                    }
                     frame = 0;
                 }
                 frame++;

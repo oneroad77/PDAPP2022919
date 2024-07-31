@@ -27,7 +27,7 @@ public class ShortRecorderViewModel extends ViewModel {
     public void init(Context ctx, String[] words) {
         t1 = new TextToSpeech(ctx, status -> {
             if (status != TextToSpeech.ERROR) {
-                t1.setLanguage(Locale.CHINESE);
+                t1.setLanguage(Locale.TAIWAN);
             }
         });
         t1.setOnUtteranceProgressListener(new UtteranceProgressListener() {

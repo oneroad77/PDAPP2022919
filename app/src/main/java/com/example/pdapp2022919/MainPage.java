@@ -121,12 +121,12 @@ public class MainPage extends ScreenSetting {
             permissions.add(android.Manifest.permission.CAMERA);
             requestCode |= 2;
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                permissions.add(Manifest.permission.POST_NOTIFICATIONS);
-                requestCode |= 4;
-            }
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+//                permissions.add(Manifest.permission.POST_NOTIFICATIONS);
+//                requestCode |= 4;
+//            }
+//        }
         if (permissions.isEmpty()) return;
         ActivityCompat.requestPermissions(this, permissions.toArray(new String[0]), requestCode);
     }

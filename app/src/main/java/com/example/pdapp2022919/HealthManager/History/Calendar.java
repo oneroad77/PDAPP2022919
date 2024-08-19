@@ -23,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
+import com.example.pdapp2022919.Database.CompareGame.CompareGame;
+import com.example.pdapp2022919.Database.CompareGame.CompareGameDao;
 import com.example.pdapp2022919.Database.Game.Game;
 import com.example.pdapp2022919.Database.Game.GameDao;
 import com.example.pdapp2022919.Database.KeepLong.KeepLong;
@@ -108,14 +110,21 @@ public class Calendar extends ScreenSetting {
             HashSet<String> markedDay = new HashSet<>();
 
             // get all date and filter duplicate date
-            GameDao dao = DatabaseManager.getInstance(this).gameDao();
-            List<Long> games = dao.getAllTime(Client.getUuid().toString());
-            for (Long time : games) {
+            CompareGameDao dao = DatabaseManager.getInstance(this).compareGameDao();
+            List<Long> compareGames = dao.getAllTime(Client.getUuid().toString());
+            for (Long time : compareGames) {
                 markedDay.add(DATE_FORMAT.format(time));
             }
+
             ShortLineDao dao2 = DatabaseManager.getInstance(this).shortLineDao();
             List<Long> shortLines = dao2.getAllTime(Client.getUuid().toString());
             for (Long time : shortLines) {
+                markedDay.add(DATE_FORMAT.format(time));
+            }
+
+            KeepLongDao dao3 = DatabaseManager.getInstance(this).keepLongDao();
+            List<Long> keepLongs = dao2.getAllTime(Client.getUuid().toString());
+            for (Long time : keepLongs) {
                 markedDay.add(DATE_FORMAT.format(time));
             }
 
@@ -195,8 +204,8 @@ public class Calendar extends ScreenSetting {
 
         }
         private void getData(long from, long to) {
-            GameDao dao = DatabaseManager.getInstance(Calendar.this).gameDao();
-            List<Game> games = dao.getGames(Client.getUuid().toString(), from, to);
+            CompareGameDao dao = DatabaseManager.getInstance(Calendar.this).compareGameDao();
+            List<CompareGame> games = dao.getCompareGame(Client.getUuid().toString(), from, to);
             historyList.addAll(games);
 
             ShortLineDao dao2 = DatabaseManager.getInstance(Calendar.this).shortLineDao();

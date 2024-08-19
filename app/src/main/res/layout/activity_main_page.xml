@@ -34,6 +34,7 @@
         android:background="@drawable/storebutton"
         android:backgroundTint="@color/button_feedback"
         android:backgroundTintMode="multiply"
+        android:visibility="gone"
         tools:ignore="SpeakableTextPresentCheck"
         tools:layout_editor_absoluteY="257dp" />
 

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CompareGame.CompereGame">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline95"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline96"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline98"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline99"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <ImageView
+        android:id="@+id/recorder_state4"
+        android:layout_width="109dp"
+        android:layout_height="34dp"
+        android:background="@drawable/group_139"
+        android:visibility="invisible"
+
+        app:layout_constraintStart_toStartOf="@+id/guideline95"
+        app:layout_constraintTop_toTopOf="@+id/guideline96"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/comparecontent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="啊"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline98"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline95"
+        app:layout_constraintTop_toTopOf="@+id/guideline100" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.12" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline101"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.61" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/comparecontent_start_Button"
+        style="@style/logging_page_button"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="開始"
+        android:textColor="@color/word1"
+        android:textSize="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline102"
+        app:layout_constraintEnd_toStartOf="@+id/guideline98"
+        app:layout_constraintStart_toStartOf="@+id/guideline95"
+        app:layout_constraintTop_toTopOf="@+id/guideline102" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline102"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.79" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/next_content_Button"
+        style="@style/logging_page_button"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/finish_button"
+        android:text="下一個"
+        android:textColor="@color/word1"
+        android:textSize="50dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline103"
+        app:layout_constraintEnd_toStartOf="@+id/guideline98"
+        app:layout_constraintStart_toStartOf="@+id/guideline95"
+        app:layout_constraintTop_toTopOf="@+id/guideline103" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline103"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.91" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

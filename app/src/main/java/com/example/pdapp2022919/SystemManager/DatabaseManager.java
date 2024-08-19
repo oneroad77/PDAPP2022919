@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.room.Room;
 
 import com.example.pdapp2022919.Database.Clock.ClockDao;
+import com.example.pdapp2022919.Database.CompareGame.CompareGameDao;
 import com.example.pdapp2022919.Database.Correction.CorrectionDao;
 import com.example.pdapp2022919.Database.Game.GameDao;
 import com.example.pdapp2022919.Database.KeepLong.KeepLongDao;
@@ -61,4 +62,5 @@ public class DatabaseManager {
     }
 
     public KeepLongDao keepLongDao(){return database.keeplongDao();}
+    public CompareGameDao compareGameDao(){return database.comparegameDao();}
 }

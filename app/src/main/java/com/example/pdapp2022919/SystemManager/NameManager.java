@@ -30,6 +30,7 @@ public class NameManager {
 
     public final static String SHORT_RECORDER = "SHORT_RECORDER";
     public final static String KEEP_LONG = "KEEP_LONG";
+    public final static String COMPARE_GAME = "COMPARE_GAME";
 
 
 }

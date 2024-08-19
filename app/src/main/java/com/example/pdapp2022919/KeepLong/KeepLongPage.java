@@ -42,7 +42,7 @@ public class KeepLongPage extends ScreenSetting {
         START, RECORD, END
     }
 
-    private int x = 0, T = 1;
+    private int x = 0, T = 0;
     private State state = State.START;
 
     private void startRecording() {
@@ -171,7 +171,7 @@ public class KeepLongPage extends ScreenSetting {
         x = x + 1;
         state = State.END;
         setState();
-        T = 1;
+        T = 0;
         aiu_word.setText(words[x]);
         content1_text.setText(getString(R.string.keep_long, words[x]));
     }

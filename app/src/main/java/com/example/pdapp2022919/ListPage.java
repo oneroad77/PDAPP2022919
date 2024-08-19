@@ -4,9 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.example.pdapp2022919.CompareGame.CompareGamePage;
 import com.example.pdapp2022919.Database.Game.Game;
-import com.example.pdapp2022919.Game.ChooseLevel;
-import com.example.pdapp2022919.Game.Game1;
 import com.example.pdapp2022919.Game.PretestCaption;
 import com.example.pdapp2022919.KeepLong.KeepLongPage;
 import com.example.pdapp2022919.PitchGame.PitchGameMain;
@@ -40,10 +39,7 @@ public class ListPage extends ScreenSetting {
     }
 
     private void openChooseLevel(int difficulty){
-        Intent intent = new Intent(this,PretestCaption.class);
-        Game data = new Game();
-        data.Game_diffculty = difficulty;
-        intent.putExtra(NameManager.RECORD_DATA, data);
+        Intent intent = new Intent(this,CompareGamePage.class);
         startActivity(intent);
     }
     private void openPitchGameMain(){
@@ -52,7 +48,7 @@ public class ListPage extends ScreenSetting {
     }
 
     private void debug(){
-        Intent intent = new Intent(this, Game1.class);
+        Intent intent = new Intent(this, CompareGamePage.class);
         Game data = new Game();
         data.Game_diffculty = 1;
         data.Pretest_db = 45.0;

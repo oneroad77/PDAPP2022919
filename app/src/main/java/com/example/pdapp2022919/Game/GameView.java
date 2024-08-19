@@ -106,6 +106,10 @@ public class GameView extends View {
         stander = avg;
     }
 
+    public void setAttentionVisible(boolean isVisible) {
+        player.setAttentionVisible(isVisible);
+    }
+
     public int getGap() {
         return blockCount - 1;
     }

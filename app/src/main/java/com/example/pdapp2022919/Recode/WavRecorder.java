@@ -15,6 +15,12 @@ import java.nio.ByteOrder;
 import java.nio.ShortBuffer;
 import java.nio.channels.FileChannel;
 
+import be.tarsos.dsp.AudioDispatcher;
+import be.tarsos.dsp.AudioProcessor;
+import be.tarsos.dsp.io.android.AudioDispatcherFactory;
+import be.tarsos.dsp.pitch.PitchDetectionHandler;
+import be.tarsos.dsp.pitch.PitchProcessor;
+
 public class WavRecorder {
 
     private static final int BPP = 16;
@@ -33,6 +39,11 @@ public class WavRecorder {
     private static int markCount = 0;
     private static long markDataSum = 0;
     private static AudioRecord recorder;
+
+    // pitch
+    private static boolean isPitchDetecting = false;
+    private static AudioDispatcher dispatcher = null;
+    private static float pitch = -1;
 
     static {
         BUFFER_SIZE = AudioRecord.getMinBufferSize(8000, CHANNEL, AUDIO_ENCODING);
@@ -139,6 +150,43 @@ public class WavRecorder {
         return isRecording;
     }
 
+    // pitch
+    public interface PitchDetectingHandler {
+        void onDetecting(float pitch);
+    }
+
+    public static void startPitchDetecting(PitchDetectingHandler handler) {
+        if (isPitchDetecting) return;
+        isPitchDetecting = true;
+
+        PitchDetectionHandler detectionHandler = (res, e) -> {
+            float pitch = res.getPitch();
+            if (pitch == -1) return;
+            WavRecorder.pitch = pitch;
+            if (handler == null) return;
+            handler.onDetecting(pitch);
+        };
+
+        AudioProcessor pitchProcessor = new PitchProcessor(
+                PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, 22050, 1024, detectionHandler);
+        dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(22050, 1024, 0);
+        dispatcher.addAudioProcessor(pitchProcessor);
+
+        Thread audioThread = new Thread(dispatcher, "Audio Thread");
+        audioThread.start();
+    }
+
+    public static void stopPitchDetecting() {
+        if (!isPitchDetecting) return;
+        isPitchDetecting = false;
+        dispatcher.stop();
+        WavRecorder.pitch = -1;
+    }
+
+    public static float getPitch() {
+        return pitch;
+    }
+
     private static void recordRawData(Runnable onRecord) {
         try (
                 RandomAccessFile writer = new RandomAccessFile(TEMP_FILE_PATH, "rw");
@@ -199,7 +247,6 @@ public class WavRecorder {
         HEADER[5] = (byte) ((dataLength >> 8) & 0xff);
         HEADER[6] = (byte) ((dataLength >> 16) & 0xff);
         HEADER[7] = (byte) ((dataLength >> 24) & 0xff);
-
         HEADER[40] = (byte) (audioLength & 0xff);
         HEADER[41] = (byte) ((audioLength >> 8) & 0xff);
         HEADER[42] = (byte) ((audioLength >> 16) & 0xff);

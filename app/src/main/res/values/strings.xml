@@ -9,13 +9,14 @@
     <string name="pretest">前測</string>
     <string name="post_test_db">%2.0f</string>
     <string name="pretest_db"> %2.0f</string>
+    <string name="pitch"> %.2f</string>
     <string name="now_db">%2.0f</string>
     <string name="play_how_long">%s</string>
     <string name="start_play_time">%s~%n%s</string>
     <string name="level_difficulty">%s</string>
     <string name="game_illustrate">請發出比前測更大的音量來控制青菜\n小心別掉下懸崖囉~!</string>
     <string name="short_sentence"></string>
-    <string name="questionnaire_caption">請選擇更符合您最近一周狀態的答案。</string>
+    <string name="questionnaire_caption">接下來會填寫以下三個量表，分別為:VOS、VHI-10、PHQ-9， 請選擇更符合您"最近一周"狀態的答案。</string>
 
 
     <string name="volume_game">音量練習</string>

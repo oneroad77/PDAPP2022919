@@ -46,6 +46,8 @@ public class Game implements HistoryItem, Parcelable {
     public double Posttest_db;
     public boolean Pass;
 
+
+
     public Game() {
         this.uuid = Client.getUuid().toString();
         this.start_play_time = System.currentTimeMillis();

@@ -22,6 +22,24 @@
         android:layout_height="wrap_content"
         android:text="TextView" />
 
+    <TextView
+        android:id="@+id/pre_pitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteX="37dp"
+        tools:layout_editor_absoluteY="111dp" />
+
+    <TextView
+        android:id="@+id/realtime_pitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteX="62dp"
+        tools:layout_editor_absoluteY="64dp" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/back"
         android:layout_width="17dp"
@@ -57,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:constraint_referenced_ids="realtimedb,db_avg_tv"
+        app:constraint_referenced_ids="realtimedb,db_avg_tv,realtime_pitch,pre_pitch"
         app:layout_constraintStart_toStartOf="@+id/guideline11"
         app:layout_constraintTop_toTopOf="@+id/guideline12" />
 

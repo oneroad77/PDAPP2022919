@@ -28,6 +28,7 @@ public class Player extends GameObject {
     private final Rect vegSrc;
     private final Matrix matrix = new Matrix();
     private final RectF dest = new RectF(0, 0, BALL_RADIUS * 2, BALL_RADIUS * 2);
+    private boolean isAttentionVisible = false;
 
     public Player(GameView view, int px, int py, double stander) {
         super(view);
@@ -63,6 +64,10 @@ public class Player extends GameObject {
         }
     }
 
+    public void setAttentionVisible(boolean isVisible) {
+        isAttentionVisible = isVisible;
+    }
+
     private boolean collision(Block block) {
         if (block == null) return false;
         if (x + BALL_RADIUS < block.x) return false;
@@ -76,7 +81,7 @@ public class Player extends GameObject {
         matrix.setTranslate(x - BALL_RADIUS, y - BALL_RADIUS);
         canvas.setMatrix(matrix);
         if (vegetable != null) canvas.drawBitmap(vegetable, vegSrc, dest, null);
-        if (Game1.isoverdB == true) {
+        if (isAttentionVisible) {
             if (attention_hint != null) canvas.drawBitmap(attention_hint, vegSrc, dest, null);
         }
         canvas.restore();

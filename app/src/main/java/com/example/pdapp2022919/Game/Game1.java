@@ -1,5 +1,6 @@
 package com.example.pdapp2022919.Game;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,23 +33,25 @@ public class Game1 extends ScreenSetting {
 
     private GameView gameView;
     private Button startGameButton, back, see_result_button, continue_game_button;
-    private TextView real_time_db, hint_text, level_text,game_illustrate, db_avg_tv;
+    private TextView real_time_db, hint_text, level_text,game_illustrate, db_avg_tv,pre_pitch,realtime_pitch;
     private GameStatus status = GameStatus.WAITING;
     private boolean first_time = true;
     private Game recordData;
+    private float pitchData;
     private long startTime;
     private int times = 0;
     private AwardPopUP awardPopUP;
     private ImageView overdB_hint;
-    private Boolean isTimerRunning= false ;
-    private Long startoverdBTime;
-    public static Boolean isoverdB =false;
+    private boolean isTimerRunning= false ;
+    private long startoverdBTime;
+    private long isoverdB = -1;
 
 
     private void startMeasure() {
         startTime = System.currentTimeMillis();
         // TODO 錄音狀態
         WavRecorder.startRecording(null);
+        WavRecorder.startPitchDetecting(null);
         handlerMeasure.sendEmptyMessage(1);
     }
 
@@ -78,8 +81,10 @@ public class Game1 extends ScreenSetting {
                 path = "";
         }
         WavRecorder.stopRecording(path);
+        WavRecorder.stopPitchDetecting();
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +92,7 @@ public class Game1 extends ScreenSetting {
         setContentView(R.layout.activity_game);
         Intent intent = getIntent();
         recordData = intent.getParcelableExtra(NameManager.RECORD_DATA);
+        pitchData = intent.getFloatExtra(NameManager.PITCH_DATA, -1);
 
         gameView = findViewById(R.id.gameView);
         gameView.setStander(recordData.Pretest_db);
@@ -94,6 +100,12 @@ public class Game1 extends ScreenSetting {
 
         level_text = findViewById(R.id.level_text);
         level_text.setText(recordData.getDifficultText());
+
+
+        pre_pitch = findViewById(R.id.pre_pitch);
+        pre_pitch.setText("前測音調"+getString(R.string.pitch,pitchData));
+        realtime_pitch = findViewById(R.id.realtime_pitch);
+        realtime_pitch.setVisibility(View.GONE);
 
         db_avg_tv = findViewById(R.id.db_avg_tv);
         db_avg_tv.setText("前測分貝："+getString(R.string.pretest_db, recordData.Pretest_db));
@@ -130,6 +142,7 @@ public class Game1 extends ScreenSetting {
         hint_text.setVisibility(View.GONE);
 
         awardPopUP = new AwardPopUP(this, hint_text);
+
     }
 
     private int frame = 0;
@@ -182,28 +195,25 @@ public class Game1 extends ScreenSetting {
                     double db = WavRecorder.getDB(amp);
                     real_time_db.setText("即時分貝："+getString(R.string.now_db, db));
                     real_time_db.setVisibility(View.VISIBLE);
+                    float pitch = WavRecorder.getPitch();
+                    realtime_pitch.setText("即時音調"+getString(R.string.pitch,pitch));
+                    realtime_pitch.setVisibility(View.INVISIBLE);
+                    long currentTime = System.currentTimeMillis();
                     if (db >= recordData.Pretest_db + 3) {
                         if (!isTimerRunning) {
                             // 開始計時
-                            startoverdBTime = System.currentTimeMillis();
+                            startoverdBTime = currentTime;
                             isTimerRunning = true;
-                        } else {
-                            long currentTime = System.currentTimeMillis();
-                            if (currentTime - startoverdBTime >= 500) { // 0.5秒
-                                if (currentTime - startoverdBTime >= 2500) {
-                                    overdB_hint.setVisibility(View.INVISIBLE);
-                                    isoverdB = false;
-                                } else {
-                                    overdB_hint.setVisibility(View.VISIBLE);
-                                    isoverdB = true;
-                                }
-                            }
+                        } else if (currentTime - startoverdBTime > 3000) {
+                            gameView.setAttentionVisible(true);
+                            overdB_hint.setVisibility(View.VISIBLE);
+                            isoverdB = currentTime;
                         }
-                    }else {
-                            isTimerRunning =false;
-                            startTime = 0;
-                            overdB_hint.setVisibility(View.INVISIBLE);
-                            isoverdB = false;
+                    } else if (currentTime - isoverdB > 500) {
+                        isTimerRunning = false;
+                        gameView.setAttentionVisible(false);
+                        overdB_hint.setVisibility(View.INVISIBLE);
+                        isoverdB = -1;
                     }
                     frame = 0;
                 }

@@ -20,12 +20,14 @@ import com.example.pdapp2022919.SystemManager.FileType;
 import com.example.pdapp2022919.SystemManager.NameManager;
 import com.example.pdapp2022919.SystemManager.ScreenSetting;
 
+import java.util.ArrayList;
+
 public class RecorderTest extends ScreenSetting {
 
-    private static final int restTime = 1000;
-    private static final int recordTime = 1000;
+    private static final int restTime = 5000;
+    private static final int recordTime = 5000;
 
-    private TextView hint_word, tvResult;
+    private TextView hint_word, tvResult, pitch_text;
     private ImageView Green_light, Red_light;
     private int recordCount = 0;
     private double[] standard = new double[3];
@@ -33,6 +35,8 @@ public class RecorderTest extends ScreenSetting {
     private boolean post_test;
     private TextView countDown;
     private Game recode_data;
+
+    private ArrayList<Float> pitchList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,8 @@ public class RecorderTest extends ScreenSetting {
         Red_light = findViewById(R.id.Red_light);
         tvResult = findViewById(R.id.tvResult);
         countDown = findViewById(R.id.countDown);
+
+        pitch_text = findViewById(R.id.pitch_text);
     }
 
     @Override
@@ -59,6 +65,10 @@ public class RecorderTest extends ScreenSetting {
         for (int i = 0; i < standard.length; i++) {
             handlerMeasure.sendEmptyMessageDelayed(0, i * (recordTime + restTime));
         }
+        WavRecorder.startPitchDetecting(pitch -> {
+            pitchList.add(pitch);
+            runOnUiThread(() -> pitch_text.setText("" + pitch));
+        });
     }
 
     /**
@@ -114,6 +124,7 @@ public class RecorderTest extends ScreenSetting {
                         }
                         WavRecorder.stopRecording(path, null);
                         intent.putExtra(NameManager.RECORD_DATA, recode_data);
+                        intent.putExtra(NameManager.PITCH_DATA, basePitch(pitchList));
                         startActivity(intent);
                     }
                     break;
@@ -139,11 +150,20 @@ public class RecorderTest extends ScreenSetting {
         super.onPause();
         // TODO 檔案儲存回饋
         WavRecorder.stopRecording(null);
+        WavRecorder.stopPitchDetecting();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         handlerMeasure.removeCallbacksAndMessages(null);
+    }
+
+    private float basePitch(ArrayList<Float> pitchList) {
+        float sum = 0;
+        for (float pitch : pitchList) {
+            sum += pitch;
+        }
+        return sum / pitchList.size();
     }
 }

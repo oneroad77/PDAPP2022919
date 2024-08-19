@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pdapp2022919.Database.Game.Game;
 import com.example.pdapp2022919.Database.Game.GameDao;
+import com.example.pdapp2022919.ListPage;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.Recode.WavRecorder;
@@ -28,11 +29,12 @@ import com.example.pdapp2022919.SystemManager.ScreenSetting;
 import com.example.pdapp2022919.HealthManager.History.gameHistoryListAdapter;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class GameResult extends ScreenSetting {
 
     private static final SimpleDateFormat DATE = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-    private TextView diffculty_text_view, success_loss_text_view,hint_text;
+    private TextView diffculty_text_view, success_loss_text_view, hint_text;
     private TextView posttestdb_text_view, pretestdb_text_view, play_how_long_text_view;
     private Button PlayAgain, nextround_back_Button;
     private Game record_data;
@@ -55,6 +57,11 @@ public class GameResult extends ScreenSetting {
         play_how_long_text_view = findViewById(R.id.play_how_long_text_view);
         hint_text = findViewById(R.id.hint2_text);
         diffculty_text_view.setText(getString(R.string.level_difficulty, getLevelDifficulty(record_data.Game_diffculty)));
+        if (record_data.Game_diffculty == 3) {
+            nextround_back_Button.setText("結束");
+
+        }
+
         pretestdb_text_view.setText(getString(R.string.pretest_db, record_data.Pretest_db));
         success_loss_text_view.setText(getsuccess_loss(record_data.Pass));
         posttestdb_text_view.setText(getString(R.string.post_test_db, record_data.Posttest_db));
@@ -163,7 +170,7 @@ public class GameResult extends ScreenSetting {
     }
 
     private void setBackHome() {
-        Intent intent = new Intent(this, MainPage.class);
+        Intent intent = new Intent(this, ListPage.class);
         startActivity(intent);
     }
 
@@ -171,13 +178,20 @@ public class GameResult extends ScreenSetting {
         @Override
         public void handleMessage(@NonNull Message msg) {
             if (msg.what >= 0) {
-                hint_text.setText("剩餘休息時間:\n"+msg.what+"秒");
+                hint_text.setText("剩餘休息時間:\n" + msg.what + "秒\n喝水，休息一下");
                 handlerMeasure.sendEmptyMessageDelayed(msg.what - 1, 1000);
 
             } else {
                 countend = true;
-                PlayAgain.setBackgroundResource(R.drawable.logging_page_button_f);
-                nextround_back_Button.setBackgroundResource(R.drawable.logging_page_button_f);
+                if (record_data.Game_diffculty == 3) {
+                    nextround_back_Button.setText("結束");
+                    PlayAgain.setBackgroundResource(R.drawable.logging_page_button_f);
+                    nextround_back_Button.setBackgroundResource(R.drawable.finish_button );
+
+                } else {
+                    PlayAgain.setBackgroundResource(R.drawable.logging_page_button_f);
+                    nextround_back_Button.setBackgroundResource(R.drawable.logging_page_button_f);
+                }
             }
 
             super.handleMessage(msg);

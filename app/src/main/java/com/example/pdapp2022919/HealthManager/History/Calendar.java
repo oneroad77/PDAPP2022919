@@ -25,8 +25,6 @@ import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.example.pdapp2022919.Database.CompareGame.CompareGame;
 import com.example.pdapp2022919.Database.CompareGame.CompareGameDao;
-import com.example.pdapp2022919.Database.Game.Game;
-import com.example.pdapp2022919.Database.Game.GameDao;
 import com.example.pdapp2022919.Database.KeepLong.KeepLong;
 import com.example.pdapp2022919.Database.KeepLong.KeepLongDao;
 import com.example.pdapp2022919.Database.ShortLine.ShortLine;
@@ -122,8 +120,10 @@ public class Calendar extends ScreenSetting {
                 markedDay.add(DATE_FORMAT.format(time));
             }
 
+
+
             KeepLongDao dao3 = DatabaseManager.getInstance(this).keepLongDao();
-            List<Long> keepLongs = dao2.getAllTime(Client.getUuid().toString());
+            List<Long> keepLongs = dao3.getAllTime(Client.getUuid().toString());
             for (Long time : keepLongs) {
                 markedDay.add(DATE_FORMAT.format(time));
             }

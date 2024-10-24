@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pdapp2022919.Database.Game.Game;
 import com.example.pdapp2022919.Database.Game.GameDao;
+import com.example.pdapp2022919.ListPage;
 import com.example.pdapp2022919.MainPage;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.Recode.WavRecorder;
@@ -28,6 +29,7 @@ import com.example.pdapp2022919.SystemManager.ScreenSetting;
 import com.example.pdapp2022919.HealthManager.History.gameHistoryListAdapter;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class GameResult extends ScreenSetting {
 
@@ -163,7 +165,7 @@ public class GameResult extends ScreenSetting {
     }
 
     private void setBackHome() {
-        Intent intent = new Intent(this, MainPage.class);
+        Intent intent = new Intent(this, ListPage.class);
         startActivity(intent);
     }
 

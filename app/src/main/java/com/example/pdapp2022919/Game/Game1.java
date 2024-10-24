@@ -182,7 +182,7 @@ public class Game1 extends ScreenSetting {
                     double db = WavRecorder.getDB(amp);
                     real_time_db.setText("即時分貝："+getString(R.string.now_db, db));
                     real_time_db.setVisibility(View.VISIBLE);
-                    if (db >= recordData.Pretest_db + 3) {
+                    if (db >= recordData.Pretest_db + 5) {
                         if (!isTimerRunning) {
                             // 開始計時
                             startoverdBTime = System.currentTimeMillis();

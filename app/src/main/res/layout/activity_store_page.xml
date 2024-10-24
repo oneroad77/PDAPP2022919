@@ -21,17 +21,15 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/back_main_page_button3"
-        android:layout_width="49dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="5dp"
-        android:background="#00FFFFFF"
-        android:text="@string/k"
+        android:layout_width="55dp"
+        android:layout_height="47dp"
+        android:background="@drawable/image_114"
+        android:backgroundTint="@color/date_button_text_color"
         android:textColor="#8A8A8A"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline104"
+        app:layout_constraintTop_toTopOf="@+id/guideline103"
         tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     <TextView
@@ -143,5 +141,19 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline103"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline104"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

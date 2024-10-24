@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.pdapp2022919.Database.ShortLine.ShortLine;
 import com.example.pdapp2022919.Database.ShortLine.ShortLineDao;
+import com.example.pdapp2022919.ListPage;
 import com.example.pdapp2022919.R;
 import com.example.pdapp2022919.Recode.WavRecorder;
 import com.example.pdapp2022919.SystemManager.DatabaseManager;
@@ -75,7 +76,7 @@ public class ShortRecorderV2 extends ScreenSetting {
                 next.setBackground(AppCompatResources.getDrawable(this, R.drawable.group1491));
                 next.setOnClickListener(view -> {
                     Intent intent = new Intent();
-                    intent.setClass(this, ShortRecorederChoose.class);
+                    intent.setClass(this, ListPage.class);
                     startActivity(intent);
                 });
             }

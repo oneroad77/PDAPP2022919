@@ -22,8 +22,8 @@ import com.example.pdapp2022919.SystemManager.ScreenSetting;
 
 public class RecorderTest extends ScreenSetting {
 
-    private static final int restTime = 1000;
-    private static final int recordTime = 1000;
+    private static final int restTime = 5000;
+    private static final int recordTime = 5000;
 
     private TextView hint_word, tvResult;
     private ImageView Green_light, Red_light;

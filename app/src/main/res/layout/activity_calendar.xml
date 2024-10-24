@@ -8,21 +8,15 @@
 
   <androidx.appcompat.widget.AppCompatButton
       android:id="@+id/back_main_page_button2"
-      android:layout_width="49dp"
-      android:layout_height="43dp"
-      android:layout_marginStart="3dp"
-      android:layout_marginTop="5dp"
-      android:background="#00FFFFFF"
-      android:text="@string/k"
+      android:layout_width="55dp"
+      android:layout_height="47dp"
+      android:background="@drawable/image_114"
+      android:backgroundTint="@color/date_button_text_color"
       android:textColor="#8A8A8A"
       android:textSize="30sp"
       android:textStyle="bold"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.036"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.013"
+      app:layout_constraintStart_toStartOf="@+id/guideline113"
+      app:layout_constraintTop_toTopOf="@+id/guideline115"
       tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
   <com.applandeo.materialcalendarview.CalendarView
@@ -74,6 +68,27 @@
       app:layout_constraintTop_toBottomOf="@+id/calendarView">
 
   </androidx.recyclerview.widget.RecyclerView>
+
+  <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/guideline113"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layout_constraintGuide_percent="0.05" />
+
+  <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/guideline114"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      app:layout_constraintGuide_begin="45dp" />
+
+  <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/guideline115"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      app:layout_constraintGuide_percent="0.02" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
